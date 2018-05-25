@@ -4,7 +4,7 @@
 Hints:
 1. download [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
 2. you can use https://robomongo.org/ to use a GUI
-3. create DB `PPSN` and table `users` users should have an _id, name:String, psw:String
+3. create DB `PPSN` and table `User` User should have an _id, name:String, psw:String
 
 
 ## Start Server
