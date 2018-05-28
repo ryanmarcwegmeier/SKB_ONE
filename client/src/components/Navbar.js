@@ -7,7 +7,7 @@ class Navbar extends Component {
 
     render() {
         return (
-            <nav id={"nav-top"} className="shadow p-2 mb-2 rounded navbar navbar-expand-md navbar-dark bg-info container-fluid fixed-top">
+            <nav id={"nav-top"} className="shadow rounded navbar navbar-expand-md navbar-dark bg-danger container-fluid ">
                 <a href={"https://github.com/SNetMERN/SKB_ONE"}>
                     <img src={logo} alt={"Logo"} style={{width:'20vh', borderRadius:'5px'}}/>
                 </a>

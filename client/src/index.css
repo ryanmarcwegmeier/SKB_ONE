@@ -3,3 +3,18 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.content{
+  height:100vh;
+  overflow:auto
+}
+
+
+.hov:hover {
+  cursor: pointer;
+}
+
+main {
+  z-index:100;
+  position:relative;
+}

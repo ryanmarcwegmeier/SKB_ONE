@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../components/Header'
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 
 class User extends Component {
@@ -15,8 +16,10 @@ class User extends Component {
     render() {
         return (
             <div className="App">
-                <Header act={['','active','']}/>
-                <main className={'bg-light container-fluid'} style={{zIndex:100, position:'relative'}}>
+                <Navbar act={['','active','']}/>
+                <div className={"content"}>
+                <Header />
+                <main className={'bg-light container-fluid'}>
                     <div className={'row'}>
                         <div className={'col-sm-11 ml-auto mr-auto'}>
                             <h1>Users</h1>
@@ -31,6 +34,7 @@ class User extends Component {
                 </main>
 
                 <Footer/>
+                </div>
 
             </div>
 
