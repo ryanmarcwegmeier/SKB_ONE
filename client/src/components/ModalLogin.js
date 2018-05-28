@@ -21,7 +21,7 @@ class ModalLogin extends Component {
                                 <button type="button" className="close" data-dismiss="modal">&times;</button>
                             </div>
 
-                            <form action="http://localhost:3001/login" method="post">
+                            <form action="/login" method="post">
                                 <div className="modal-body">
 
                                     <div className="form-group">

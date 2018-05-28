@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.post('/', function(req, res, next) {
+    res.json('username');
     res.redirect('http://localhost:3000/index');
 });
 
