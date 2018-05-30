@@ -2,6 +2,35 @@ import React, { Component } from 'react';
 
 class ModalLogin extends Component {
 
+    constructor(props){
+        super(props);
+        this.login = this.login.bind(this);
+    }
+
+    login(event){
+        event.preventDefault();
+        fetch('/login', {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                "username": this.username.value,
+                "password":this.password.value
+            })
+        }).then((res) => {
+            if (res.ok){
+                return res.json();
+            } else {
+                throw new Error ('Something went wrong with your fetch');
+            }
+        }).then((status) => {
+            if (status.status==200){
+            //    set props
+            }
+        })
+    };
+
+
+
     render() {
 
         return (
@@ -21,16 +50,16 @@ class ModalLogin extends Component {
                                 <button type="button" className="close" data-dismiss="modal">&times;</button>
                             </div>
 
-                            <form onSubmit={'Hier kommt das '}>
+                            <form onSubmit={this.login}>
                                 <div className="modal-body">
 
                                     <div className="form-group">
                                         <label htmlFor="username">Username</label>
-                                        <input type="text" className="form-control" id="username" placeholder="Username"/>
+                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="username" placeholder="Username"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="psw">Password</label>
-                                        <input type="password" className="form-control" id="username" placeholder="Password"/>
+                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="username" placeholder="Password"/>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
