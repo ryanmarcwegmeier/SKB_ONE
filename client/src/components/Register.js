@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ModalLogin from './ModalLogin';
+import ModalSignUp from './ModalSignUp';
 
 class Register extends Component {
 
@@ -8,7 +9,7 @@ class Register extends Component {
         return (
             <div className={'text-white'}>
                 <ModalLogin/>
-                <span className={'mr-2'}>Sign UP</span><i className="fas fa-user-plus"></i>
+                <ModalSignUp/>
             </div>
         );
     }
