@@ -20,7 +20,7 @@ var userSchema = new Schema({
     username: String,
     firstname: String,
     lastname: String,
-    telnr: Number,
+    tel: Number,
     email: String,
     password: String
 });
@@ -37,9 +37,9 @@ app.post('/createUser', (req, res) => {
     user.save((err, user) => {
         if (err) {
             if(err.code === 11000) {
-                console.log("User already exists");
-                res.send('ERROR');
+                console.log("User already exists");                
             } else console.log(err);
+            res.send('ERROR');
         } else {
             console.log("saved : " + JSON.stringify(user));
             res.send('OK');
@@ -56,16 +56,15 @@ app.post("/readUser", (req, res, next) => {
         if(err) {
             console.log(err);
             res.send('ERROR');
+        } else {            
+            res.json({
+                "username": user.username,
+                "firstname": user.firstname,
+                "lastname": user.lastname,
+                "telnr": user.telnr,
+                "email": user.email
+            });
         }
-        res.render('showUser', {
-            title: 'Details for User: ' + user.userName,
-            username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            telnr: user.telnr,
-            email: user.email
-            //password: user.password
-        });
     });
 });
 
@@ -77,12 +76,12 @@ app.get("/readAllUsers", (req, res, next) => {
         if(err) {
             console.log(err);
             res.send('ERROR');
+        } else {
+            var users = user.map((user) => {
+                return user;
+            });
+            res.json(users);
         }
-
-        var users = user.map((user) => {
-            return user;
-        });
-        res.render('readAllUsersSuccess', {title: 'Details for all Users', users: users});
     });
 });
 
