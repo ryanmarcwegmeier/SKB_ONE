@@ -21,7 +21,7 @@ class ModalLogin extends Component {
                                 <button type="button" className="close" data-dismiss="modal">&times;</button>
                             </div>
 
-                            <form action="/login" method="post">
+                            <form onSubmit={'Hier kommt das '}>
                                 <div className="modal-body">
 
                                     <div className="form-group">

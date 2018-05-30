@@ -17,4 +17,8 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.post("/create",function () {
+    
+})
+
 module.exports = router;
