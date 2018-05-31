@@ -1,6 +1,12 @@
+var express = require('express');
+// require('express').Router();
+var router = express.Router();
+
+/* should be available from app.js
 // parse application/x-www-form-urlencoded
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
+*/
 
 // MONGODB
 var mongoose = require('mongoose');
@@ -30,40 +36,35 @@ var userModel = mongoose.model('User', userSchema);
 /*
 * create new user if it doesn't exists
 * */
-app.post('/createUser', (req, res) => {
+router.post('/createUser', (req, res) => {
 
     var user = new userModel(req.body);
 
     user.save((err, user) => {
         if (err) {
             if(err.code === 11000) {
-                console.log("User already exists");                
+                console.log("User already exists");
+                res.send(500, 'user already exists');
             } else console.log(err);
-            res.send('ERROR');
+            res.send(500, 'ERROR: create failed');
         } else {
             console.log("saved : " + JSON.stringify(user));
-            res.send('OK');
+            res.send(200, 'user created');
         }
-    });    
+    });
 });
 
 /*
 * find user by ID
 * */
 //app.get
-app.post("/readUser", (req, res, next) => {
+router.post("/readUser", (req, res, next) => {
     userModel.findById(req.body.id, (err, user) => {
         if(err) {
             console.log(err);
-            res.send('ERROR');
-        } else {            
-            res.json({
-                "username": user.username,
-                "firstname": user.firstname,
-                "lastname": user.lastname,
-                "telnr": user.telnr,
-                "email": user.email
-            });
+            res.send(500, 'ERROR: read failed');
+        } else {
+            res.json(user);
         }
     });
 });
@@ -71,11 +72,11 @@ app.post("/readUser", (req, res, next) => {
 /*
 * get all users
 * */
-app.get("/readAllUsers", (req, res, next) => {
+router.get("/readAllUsers", (req, res, next) => {
     userModel.find({}, (err, user) => {
         if(err) {
             console.log(err);
-            res.send('ERROR');
+            res.send(500, 'ERROR: read failed');
         } else {
             var users = user.map((user) => {
                 return user;
@@ -88,28 +89,29 @@ app.get("/readAllUsers", (req, res, next) => {
 /*
 * update user
 * */
-app.post("/updateUser", (req, res, next) => {
-    userModel.findByIdAndUpdate(req.body.description, req.body, (err, user) => {
+router.post("/updateUser", (req, res, next) => {
+    userModel.update(req.body, req.body, (err, user) => {
         if(err) {
             console.log(err);
-            res.send('ERROR');
+            res.send(500, 'ERROR: update failed');
         }
     });
-    res.send('OK');
+    res.send(200, 'user updated');
 });
 
 /*
 * delete user
 * */
-//app.del
-app.post("/deleteUser", (req, res, next) => {
+router.post("/deleteUser", (req, res, next) => {
     userModel.findByIdAndRemove(req.body.id, (err) => {
         if (err) {
             console.log(err);
-            res.send('ERROR');
+            res.send(500, 'ERROR: delete failed');
         } else {
             console.log("user " + req.body.username + " removed");
         }
     });
-    res.send('OK');
+    res.send(200, 'user deleted');
 });
+
+module.exports = router;
