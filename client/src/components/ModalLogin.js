@@ -5,6 +5,11 @@ class ModalLogin extends Component {
     constructor(props){
         super(props);
         this.login = this.login.bind(this);
+        this.state = {loginsuccess:true}
+    }
+
+    toggleModal(){
+        document.getElementById('myModal').style.display = "none";
     }
 
     login(event){
@@ -22,9 +27,12 @@ class ModalLogin extends Component {
             } else {
                 throw new Error ('Something went wrong with your fetch');
             }
-        }).then((status) => {
-            if (status.status==200){
-            //    set props
+        }).then((json) => {
+            if (json.status==200){
+                sessionStorage.setItem('session', 'admin');
+                window.location.reload();
+            }else{
+                this.setState({'loginsuccess': false });
             }
         })
     };
@@ -35,6 +43,7 @@ class ModalLogin extends Component {
 
         return (
             <span>
+
                 <span className="mr-2" data-toggle="modal" data-target="#myModal">
                     <span className={"hov"}>
                      Sign in <i className="fas fa-sign-in-alt mr-4"></i>
@@ -55,17 +64,22 @@ class ModalLogin extends Component {
 
                                     <div className="form-group">
                                         <label htmlFor="username">Username</label>
-                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="username" placeholder="Username"/>
+                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="login_username" placeholder="Username"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="psw">Password</label>
-                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="username" placeholder="Password"/>
+                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="login_password" placeholder="Password"/>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="submit" className="btn btn-primary">Submit</button>
-                                    <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit"   className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.toggleModal}>Close</button>
                                 </div>
+                                {this.state.loginsuccess==false &&
+                                    <div className="alert alert-danger" role="alert">
+                                        An error has occurred. Please try it again or Sign Up
+                                    </div>
+                                }
                             </form>
                         </div>
                     </div>

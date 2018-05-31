@@ -18,7 +18,7 @@ class Navbar extends Component {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <Nav act={this.props.act}/>
+                    <Nav/>
                     <Register/>
                 </div>
             </nav>

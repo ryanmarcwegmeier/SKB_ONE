@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
-import NavItems from './NavItems'
+import {NavLink} from "react-router-dom";
+
 class Nav extends Component {
 
     static defaultProps = {act:['','','']};
 
     render() {
+        let active = (window.location.pathname=="/")?'active':'';
         return (
             <ul className="navbar-nav mr-auto ml-auto h5" >
-                <NavItems text={"Home"} url={'/index'} act={this.props.act[0]}/>
-                <NavItems text={"User"} url={'/user'} act={this.props.act[1]}/>
-                <NavItems text={"Hello world"} url={'/hello'} act={this.props.act[2]}/>
+                <li className={"nav-item "}>
+                    <NavLink exact to={"/index"}><span className={"nav-link " + active}>Home</span></NavLink>
+                </li>
+                <li className={"nav-item "}>
+                    <NavLink exact to="/courses"><span className="nav-link" >Courses</span></NavLink>
+                </li>
+                {sessionStorage.getItem("session") != null && sessionStorage.getItem("session") != "" &&
+                < li className={"nav-item "}>
+                    <NavLink exact to="/users"><span className="nav-link">Users</span></NavLink>
+                </li>
+                }
+
+
+
+
             </ul>
         );
     }

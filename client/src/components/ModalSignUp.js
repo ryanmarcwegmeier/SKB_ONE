@@ -7,9 +7,12 @@ class ModalSignUp extends Component {
         this.signup = this.signup.bind(this);
     }
 
+    toggleModal(){
+        document.getElementById('myModal').style.display = "none";
+    }
     signup(event){
         event.preventDefault();
-        fetch('/signup', {
+        fetch('users/createUser', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -22,12 +25,15 @@ class ModalSignUp extends Component {
             })
         }).then((res) => {
             if (res.ok){
+                console.log(res.headers)
                 return res.json();
             } else {
                 throw new Error ('Something went wrong with your fetch');
             }
         }).then((json) => {
-            console.log(json);
+            if(json.status==200)window.location.href="/index"
+            else alert("Registration Failed")
+
         })
     };
 
@@ -67,7 +73,7 @@ class ModalSignUp extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="Email">Email</label>
-                                        <input  ref={(ref) => {this.email = ref}} type="email" className="form-control" id="Email" placeholder="Email"/>
+                                        <input  ref={(ref) => {this.email = ref}} type="email" className="form-control" id="email" placeholder="Email"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="TelNummer">TelNummer</label>
@@ -75,11 +81,11 @@ class ModalSignUp extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="psw">Password</label>
-                                        <input  ref={(ref) => {this.password = ref}} type="password" className="form-control" id="username" placeholder="Password"/>
+                                        <input  ref={(ref) => {this.password = ref}} type="password" className="form-control" id="password" placeholder="Password"/>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button type="submit" className="btn btn-primary" onClick={this.toggleModal}>Submit</button>
                                     <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                             </form>

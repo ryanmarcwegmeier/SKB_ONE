@@ -6,7 +6,8 @@ body {
 
 .content{
   height:100vh;
-  overflow:auto
+  overflow:auto;
+  width: 100vw;
 }
 
 
@@ -15,7 +16,19 @@ body {
 }
 
 main {
+  padding-top: 10px;
   min-height: 50vh;
   z-index:100;
   position:relative;
+  width: 100vw;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.loggedBoxItem:hover{
+    background: #c41800
+;
+;
 }
