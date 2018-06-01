@@ -121,15 +121,19 @@ router.get("/", (req, res, next) => {
 /*
 * update user
 * */
-router.post("/updateUser", (req, res, next) => {
-    console.log(req.body.username)
-    userModel.update({username:req.body.username, password:req.body.password}, req.body,  (err, user) => {
+router.post("/updateUser/:id", (req, res, next) => {
+    userModel.findOneAndUpdate({_id:req.params.id}, {$set:{username:req.body.username, firstname:req.body.firstname, role:req.body.role, lastname:req.body.lastname, email:req.body.email, tel:req.body.tel, password:req.body.password}},  (err, user) => {
         if(err) {
             console.log(err);
-            res.send(500, 'ERROR: update failed');
+            res.json(500);
+        }else {
+            res.json(200);
         }
     });
-    res.send(200, 'user updated');
+
+
+
+
 });
 
 /*

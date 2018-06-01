@@ -28,10 +28,10 @@ class ModalLogin extends Component {
                 throw new Error ('Something went wrong with your fetch');
             }
         }).then((json) => {
-            if (json.status!=500){
+            if (json.status!=500 && json[1][0]!=undefined && json[1][0]!=null){
                 let userObject={session_id:json[0].session_id, user:json[1][0]}
-
                 sessionStorage.setItem('session', JSON.stringify(userObject));
+                sessionStorage.setItem('activateEdit','false')
                 window.location.reload();
             }else{
                 this.setState({'loginsuccess': false });

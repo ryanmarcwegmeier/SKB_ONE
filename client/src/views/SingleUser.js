@@ -19,33 +19,42 @@ class SingleUser extends Component {
 
     activateEdit(){
         sessionStorage.setItem("activateEdit",'true')
+
         window.location.reload()
     }
 
 
     sendEdit(event){
-        sessionStorage.removeItem("activateEdit")
-        if(this.password_old.value!=this.password_new.value){ return alert("Passwörter stimmen nicht überein") }
-        if(this.username.value=='')this.username.value=this.state.users[0].username
-        if(this.firstname.value=='')this.firstname.value=this.state.users[0].firstname
-        if(this.lastname.value=='')this.lastname.value=this.state.users[0].lastname
-        if(this.email.value=='')this.email.value=this.state.users[0].email
-        if(this.tel.value=='')this.tel.value=this.state.users[0].tel
-        if(this.password_new.value=='')this.password_new.value=this.state.users[0].password
+        let uname="";
+        let psw="";
+        let fname="";
+        let lname="";
+        let email="";
+        let phone="";
+        let role=this.role.value
 
+        if(this.password_old.value!=this.state.users[0].password){ return alert("Passwörter stimmen nicht überein") }
+        if(this.username.value==''){uname=this.state.users[0].username}else {uname=this.username.value}
+        if(this.firstname.value==''){fname=this.state.users[0].firstname}else {fname=this.firstname.value}
+        if(this.lastname.value==''){lname=this.state.users[0].lastname}else {lname=this.lastname.value}
+        if(this.email.value==''){email=this.state.users[0].email}else {email=this.email.value}
+        if(this.tel.value==''){phone=this.state.users[0].tel}else {phone=this.tel.value}
+        if(this.password_new.value==''){psw=this.state.users[0].password}
+        else {psw=this.password_new.value}
 
         event.preventDefault();
-        fetch('/users/updateUser', {
+        fetch('/users/updateUser/'+this.user_id, {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
-                "username":this.username.value,
-                "firstname":this.firstname.value,
-                "lastname":this.lastname.value,
-                "email":this.email.value,
-                "tel":this.tel.value,
-                "password":this.password_new.value,
-                "role":this.role.value,
+                "username_old":this.state.users[0].username,
+                "username":uname,
+                "firstname":fname,
+                "lastname":lname,
+                "email":email,
+                "tel":phone,
+                "password":psw,
+                "role":role
 
 
             })
@@ -55,7 +64,11 @@ class SingleUser extends Component {
             } else {
                 throw new Error ('Something went wrong with your fetch');
             }
-        }).then((json) => window.location.reload())}
+        }).then((json) => {
+            console.log(json)
+            sessionStorage.setItem("activateEdit", 'false');
+            window.location.reload()
+        })}
 
 
     componentDidMount() {
@@ -135,6 +148,10 @@ class SingleUser extends Component {
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">Role</th>
+                                                    {sessionStorage.getItem('activateEdit') == 'false'&&
+                                                        <td>{user.role}</td>
+                                                    }
+
                                                     {sessionStorage.getItem('activateEdit') == 'true' && JSON.parse(sessionStorage.getItem('session')).user.role=='admin' &&
                                                     <td>
                                                         <select ref={(ref) => {this.role = ref}} className="form-control" id="exampleFormControlSelect1" >
