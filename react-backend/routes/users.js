@@ -64,16 +64,42 @@ router.post('/createUser', (req, res) => {
 * find user by ID
 * */
 //app.get
-router.post("/readUser", (req, res, next) => {
-    userModel.findById(req.body.id, (err, user) => {
+router.post("/getUser", (req, res, next) => {
+    userModel.find({username:req.body.username, password:req.body.password} ,function (err, user) {
         if(err) {
             console.log(err);
-            res.send(500, 'ERROR: read failed');
+            res.json({status:500, msg:'ERROR: read failed'});
         } else {
-            res.json(user);
+            res.json([{session_id:42},user]);
         }
     });
 });
+
+router.get("/:id", (req, res, next) => {
+    userModel.find({_id:req.params.id} ,function (err, user) {
+        if(err) {
+            console.log(err);
+            res.json({status:500, msg:'ERROR: read failed'});
+        } else {
+            var users = user.map((user) => {
+                return user;
+            });
+            res.json(users);
+        }
+    });
+});
+
+// router.get("/:id", (req, res, next) => {
+//     userModel.find({_id:req.params.id} ,function (err, user) {
+//         if(err) {
+//             console.log(err);
+//             res.json({status:500, msg:'ERROR: read failed'});
+//         } else {
+//             console.log([user])
+//             res.json([user]);
+//         }
+//     });
+// });
 
 /*
 * get all users
@@ -96,7 +122,8 @@ router.get("/", (req, res, next) => {
 * update user
 * */
 router.post("/updateUser", (req, res, next) => {
-    userModel.update(req.body, req.body, (err, user) => {
+    console.log(req.body.username)
+    userModel.update({username:req.body.username, password:req.body.password}, req.body,  (err, user) => {
         if(err) {
             console.log(err);
             res.send(500, 'ERROR: update failed');
@@ -109,15 +136,21 @@ router.post("/updateUser", (req, res, next) => {
 * delete user
 * */
 router.post("/deleteUser", (req, res, next) => {
-    userModel.findByIdAndRemove(req.body.id, (err) => {
+    var obj={status:0}
+    userModel.findByIdAndRemove(req.body._id, (err) => {
         if (err) {
             console.log(err);
-            res.send(500, 'ERROR: delete failed');
+           obj.status=500;
+           res.json(obj);
         } else {
-            console.log("user " + req.body.username + " removed");
+            console.log("user " + req.body._id + " removed");
+            obj.status=200
+            res.json(obj);
+
+
+
         }
     });
-    res.send(200, 'user deleted');
 });
 
 module.exports = router;

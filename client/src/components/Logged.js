@@ -45,8 +45,15 @@ class Logged extends Component {
                         <i className="fas fa-user"></i>
                     </button>
                     <ul className="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
+
                         <li className="nav-item loggedBoxItem">
-                            <NavLink exact to={"/users?id="+sessionStorage.getItem("session").id}><span className={"nav-link text-muted"}>Profil</span></NavLink>
+
+                            <NavLink exact to={"/users?id="+sessionStorage.getItem("session").id}>
+                                <button type="button" className="btn btn-outline-secondary" style={{width:'100%'}}>
+                                Profil
+                                </button>
+
+                            </NavLink>
                         </li>
                         <div className="dropdown-divider"></div>
                         <li className="nav-item loggedBoxItem">

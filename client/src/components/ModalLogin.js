@@ -14,7 +14,7 @@ class ModalLogin extends Component {
 
     login(event){
         event.preventDefault();
-        fetch('/login', {
+        fetch('/users/getUser', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -28,8 +28,10 @@ class ModalLogin extends Component {
                 throw new Error ('Something went wrong with your fetch');
             }
         }).then((json) => {
-            if (json.status==200){
-                sessionStorage.setItem('session', 'admin');
+            if (json.status!=500){
+                let userObject={session_id:json[0].session_id, user:json[1][0]}
+
+                sessionStorage.setItem('session', JSON.stringify(userObject));
                 window.location.reload();
             }else{
                 this.setState({'loginsuccess': false });
@@ -40,7 +42,7 @@ class ModalLogin extends Component {
 
 
     render() {
-
+        console.log(JSON.parse(sessionStorage.getItem("session")))
         return (
             <span>
 
@@ -64,11 +66,11 @@ class ModalLogin extends Component {
 
                                     <div className="form-group">
                                         <label htmlFor="username">Username</label>
-                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="login_username" placeholder="Username"/>
+                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="login_username" placeholder="Username" required={true}/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="psw">Password</label>
-                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="login_password" placeholder="Password"/>
+                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="login_password" placeholder="Password" required={true}/>
                                     </div>
                                 </div>
                                 <div className="modal-footer">

@@ -31,7 +31,7 @@ class ModalSignUp extends Component {
                 throw new Error ('Something went wrong with your fetch');
             }
         }).then((json) => {
-            if(json.status==200)window.location.href="/index"
+            if(json.status==200){alert("Registrierung erfolgreich");window.location.href="/index"}
             else alert("Registration Failed")
 
         })

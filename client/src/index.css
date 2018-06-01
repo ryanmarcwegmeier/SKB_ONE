@@ -28,7 +28,13 @@ a{
 }
 
 .loggedBoxItem:hover{
-    background: #c41800
-;
-;
+    background: #c1c1c1;
+}
+
+@media screen and (max-width:719px) {
+  .dropdown-menu-right{
+    left: 0 !important;
+    right: auto !important;
+  }
+  
 }

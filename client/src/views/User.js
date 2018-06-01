@@ -3,15 +3,48 @@ import Header from '../components/Header'
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import user from '../components/Navbar'
+import {NavLink} from "react-router-dom";
 
 class User extends Component {
     state = {users: []}
 
-    componentDidMount() {
+
+    constructor(props){
+        super(props);
+        this.deleteUser = this.deleteUser.bind(this);
+
+    }
+
+
+    componentWillMount() {
         fetch('/users')
             .then(res => res.json())
             .then(users => this.setState({ users }));
     }
+
+    deleteUser(user_id){
+        return event => {
+            event.preventDefault();
+            fetch('/users/deleteUser', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    "_id": user_id,
+                })
+            }).then((res) => {
+                if (res.ok) {
+                    return res.json();
+                } else {
+                    throw new Error('Something went wrong with your fetch');
+                }
+            }).then((json) => {
+                console.log(json)
+                if(json.status==200)
+                window.location.reload(false);
+                else ""
+            })
+        }
+    };
 
     render() {
         return (
@@ -53,7 +86,15 @@ class User extends Component {
                                         <td>{user.email}</td>
                                         <td>{user.tel}</td>
                                         <td>{user.role}</td>
+                                        <td><NavLink exact to={"/users/"+user._id}> <button type={'button'} className="btn btn-light border rounded-circle text-center">
+                                            <i className="fas fa-id-card"></i>
+
+                                        </button></NavLink></td>
+                                        <td><form onSubmit={this.deleteUser(user._id)}>
+                                            <button type={'submit'} className="btn btn-light border rounded-circle text-center"><i className="fas fa-user-times"></i></button>
+                                        </form></td>
                                     </tr>
+
                                 )}
 
                                 </tbody>

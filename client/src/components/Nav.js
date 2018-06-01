@@ -15,7 +15,7 @@ class Nav extends Component {
                 <li className={"nav-item "}>
                     <NavLink exact to="/courses"><span className="nav-link" >Courses</span></NavLink>
                 </li>
-                {sessionStorage.getItem("session") != null && sessionStorage.getItem("session") != "" &&
+                {sessionStorage.getItem("session") != null && sessionStorage.getItem("session") != "" && JSON.parse(sessionStorage.getItem('session')).user.role == 'admin' &&
                 < li className={"nav-item "}>
                     <NavLink exact to="/users"><span className="nav-link">Users</span></NavLink>
                 </li>
