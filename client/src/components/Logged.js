@@ -7,6 +7,10 @@ class Logged extends Component {
         this.logout = this.logout.bind(this);
     }
 
+    profileSide(){
+        window.location.href='/users/'+JSON.parse(sessionStorage.getItem('session')).user._id
+    }
+
     logout(event){
         event.preventDefault();
         sessionStorage.clear();
@@ -48,12 +52,11 @@ class Logged extends Component {
 
                         <li className="nav-item loggedBoxItem">
 
-                            <NavLink exact to={"/users?id="+sessionStorage.getItem("session").id}>
-                                <button type="button" className="btn btn-outline-secondary" style={{width:'100%'}}>
+
+                                <button type="button" onClick={this.profileSide} className="btn btn-outline-secondary" style={{width:'100%'}}>
                                 Profil
                                 </button>
 
-                            </NavLink>
                         </li>
                         <div className="dropdown-divider"></div>
                         <li className="nav-item loggedBoxItem">
