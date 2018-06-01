@@ -20,6 +20,9 @@ class Nav extends Component {
                     <NavLink exact to="/users"><span className="nav-link">Users</span></NavLink>
                 </li>
                 }
+                <li className={"nav-item "}>
+                    <NavLink exact to="/contact"><span className="nav-link" >Contact</span></NavLink>
+                </li>
 
 
 
