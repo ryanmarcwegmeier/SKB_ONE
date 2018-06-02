@@ -14,7 +14,8 @@ class ModalLogin extends Component {
 
     login(event){
         event.preventDefault();
-        fetch('/users/getUser', {
+        fetch('/users/login', {
+            credentials: 'include',
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
@@ -25,24 +26,20 @@ class ModalLogin extends Component {
             if (res.ok){
                 return res.json();
             } else {
+                this.setState({'loginsuccess': false });
                 throw new Error ('Something went wrong with your fetch');
             }
         }).then((json) => {
-            if (json.status!=500 && json[1][0]!=undefined && json[1][0]!=null){
-                let userObject={session_id:json[0].session_id, user:json[1][0]}
-                sessionStorage.setItem('session', JSON.stringify(userObject));
-                sessionStorage.setItem('activateEdit','false')
-                window.location.reload();
-            }else{
-                this.setState({'loginsuccess': false });
-            }
+            console.log(json)
+            alert()
+            sessionStorage.setItem("sessionID",(json))
+            window.location.reload()
         })
     };
 
 
 
     render() {
-        console.log(JSON.parse(sessionStorage.getItem("session")))
         return (
             <span>
 
@@ -62,15 +59,16 @@ class ModalLogin extends Component {
                             </div>
 
                             <form onSubmit={this.login}>
+                            {/*<form action={"/users/login"} method={"POST"}>*/}
                                 <div className="modal-body">
 
                                     <div className="form-group">
                                         <label htmlFor="username">Username</label>
-                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="login_username" placeholder="Username" required={true}/>
+                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="login_username" placeholder="Username" name={'username'} required={true}/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="psw">Password</label>
-                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="login_password" placeholder="Password" required={true}/>
+                                        <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="login_password" placeholder="Password" name={'password'} required={true}/>
                                     </div>
                                 </div>
                                 <div className="modal-footer">

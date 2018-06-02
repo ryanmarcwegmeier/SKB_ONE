@@ -52,8 +52,8 @@ class SingleUser extends Component {
 
         event.preventDefault();
 
-        fetch('/users/updateUser/'+this.user_id, {
-            method: 'post',
+        fetch('/users/'+this.user_id, {
+            method: 'put',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({
                 "username_old":this.state.users[0].username,
@@ -71,8 +71,8 @@ class SingleUser extends Component {
             if (res.ok){
                 return res.json();
             } else {
-                throw new Error ('Something went wrong with your fetch');
-            }
+            throw new Error ('Something went wrong with your fetch');
+        }
         }).then((json) => {
             console.log(json)
             sessionStorage.setItem("activateEdit", 'false');

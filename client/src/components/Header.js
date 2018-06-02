@@ -6,7 +6,7 @@ class Header extends Component {
     render() {
 
         return (
-            <header className={'bg-danger rounded'} style={{margin:0}}>
+            <header className={'bg-danger rounded-bottom'} style={{margin:0}}>
                 <div id={"headContent"} className={""}>
                     <h1 className={'text-center text-white pt-4 pb-5 m-0'} >Sprach - Kulturbörse Berlin</h1>
                 </div>

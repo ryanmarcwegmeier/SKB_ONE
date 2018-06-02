@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from '../components/Header'
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import user from '../components/Navbar'
 import {NavLink} from "react-router-dom";
 
 class User extends Component {
@@ -25,8 +24,8 @@ class User extends Component {
     deleteUser(user_id){
         return event => {
             event.preventDefault();
-            fetch('/users/deleteUser', {
-                method: 'post',
+            fetch(('/users/'+user_id), {
+                method: 'delete',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     "_id": user_id,

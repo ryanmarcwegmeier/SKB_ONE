@@ -8,8 +8,6 @@ class Home extends Component {
 
 
     render() {
-        console.log(sessionStorage.getItem('session'));
-        console.log(JSON.parse(sessionStorage.getItem('session')))
         return (
             <div className="App">
                 <Navbar act={['active', '', '']}/>
@@ -21,7 +19,7 @@ class Home extends Component {
                             {sessionStorage.getItem('session')!=null && sessionStorage.getItem('session')!="" && sessionStorage.getItem('session')!=undefined
                             &&
                             <div className={'row'}>
-                                <h2>Willkommen {JSON.parse(sessionStorage.getItem('session')).user.username}</h2>
+                                <h2>Willkommen</h2>
                             </div>
 
                             }

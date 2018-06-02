@@ -12,7 +12,7 @@ class ModalSignUp extends Component {
     }
     signup(event){
         event.preventDefault();
-        fetch('users/createUser', {
+        fetch('/users', {
             method: 'post',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify({

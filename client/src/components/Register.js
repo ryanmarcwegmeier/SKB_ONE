@@ -9,7 +9,7 @@ class Register extends Component {
 
         return (
             <div className={'text-white'}>
-                {(sessionStorage.getItem("session") == null || sessionStorage.getItem("session") == "")
+                {(sessionStorage.getItem("sessionID") == null || sessionStorage.getItem("sessionID") == "")
                     ?
                     <span>
                 <ModalLogin/>
