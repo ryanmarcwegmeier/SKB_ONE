@@ -1,26 +1,34 @@
 var express = require("express");
 var router = express.Router();
 var sessionModel = require("../models/sessionModel");
+var userModel = require('../models/userModel');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
-});
+router.get('/', getUserBySession);
 
-router.post('/',(req,res,next)=>{
-    let session = new sessionModel({'sessionID':'123456','userID':'21321451' ,'date_start':Date.now(), 'date_end':null});
-    try {
-        session.save((err) => {
-            if (err) {
-                console.log(err)
-                res.send(400)
-            }else{
-                res.send(200)
-            }
-        });
-    } catch(err){
-        console.log(err.message);
-    }
-})
 
 module.exports = router;
+
+function getUserBySession(req,res,next){
+    console.log('nav')
+    console.log(req.session.user)
+    if(!req.session.user){
+
+        res.end(401)
+    }else{
+        sessionModel.findOne({ 'sessionID': req.sessionID }, function (err, session) {
+            if(err || session == null) {
+                console.log(err);
+                res.status(404);
+            } else {
+                userModel.findOne({_id:session.userID}, function (err,user) {
+                    if(err || session == null) {
+                        console.log(err);
+                        res.end(404);
+                    }else{
+                        res.json(user);
+                    }
+                })
+            }
+        })}
+    }

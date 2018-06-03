@@ -1,3 +1,6 @@
+/** @module User-route */
+
+/** will be module:express */
 var express = require("express");
 var router = express.Router();
 
@@ -5,18 +8,29 @@ var router = express.Router();
 var userModel = require('../models/userModel');
 var sessionModel = require('../models/sessionModel');
 
-/*
-* Create new user
-* POST .../users/
-*/
-router.post("/", (req, res) => {
+router.post("/", insertUser);
+router.get("/:username", getSingleUser);
+router.get("/", getAllUsers);
+router.put("/:username", updateUser);
+router.delete("/:username", deleteUser);
+router.post("/login", login)
+
+
+/**
+ * Insert new User in mongoDB.
+ * Sends status code 200 if successed else 400
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function insertUser(req,res,next){
     var user = new userModel(req.body);
     user.role="student";
-    let code={status:"default"};
     try {
         user.save((err) => {
             if (err) {
                 if(err.code === 11000 || err.errors != null) {
+                    console.log(err)
                     res.send(400);
                 }
             } else {
@@ -26,46 +40,55 @@ router.post("/", (req, res) => {
     } catch(err){
         console.log(err.message);
     }
-});
 
-/*
-* Get user
-* GET .../users/{username}
-*/
-router.get("/:username", (req, res, next) => {
-    userModel.findOne({ 'username': req.params.username }, function (err, user) {
-        if(err || user == null) {
-            console.log(err);
-            res.status(404);
-            res.json({ errorMessage: "Requested user is not found, or the user does not have permission to view it." });
-        } else {
-            res.json(user);
-        }
-    });
-});
+}
 
-/*
-* Get all users
-* GET .../users/
-*/
-router.get("/", (req, res, next) => {
-    userModel.find({}, (err, user) => {
-        if(err) {
-            res.statusSend(500);
-        } else {
-            var users = user.map((user) => {
-                return user;
-            });
-            res.json(users);
-        }
-    });
-});
+/**
+ * Get User by requested username.
+ * Sends User as JSON if user is in DB else status 404
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function getSingleUser(req,res,next){
+        userModel.findOne({ 'username': req.params.username }, function (err, user) {
+            if(err || user == null) {
+                console.log(err);
+                res.status(404);
+                res.json({ errorMessage: "Requested user is not found, or the user does not have permission to view it." });
+            } else {
+                res.json(user);
+            }
+        });
+}
 
-/*
-* Replace user
-* PUT .../users/{username}
-*/
-router.put("/:username", (req, res, next) => {
+/**
+ * Sends an array of users if successed else status code 500
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function getAllUsers(req,res,next){
+        userModel.find({}, (err, user) => {
+            if(err) {
+                res.statusSend(500);
+            } else {
+                var users = user.map((user) => {
+                    return user;
+                });
+                res.json(users);
+            }
+        });
+}
+
+/**
+ * Update user in mongoDB.
+ * Sends status 204 if successed else 400
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function updateUser(req, res, next){
     let error400Message = { errorMessage: "Requested user update failed (user not found or invalid field data)." };
 
     // Query existing user from database
@@ -93,13 +116,15 @@ router.put("/:username", (req, res, next) => {
             });
         }
     });
-});
+}
 
-/*
-* Delete user
-* DELETE .../users/{username}
-*/
-router.delete("/:username", (req, res, next) => {
+/**
+ * Deletes specific user by username. Sends status 204 if successed else 400
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function deleteUser(req, res, next) {
     userModel.findOneAndRemove({username:req.params.username}, (err) => {
         if (err) {
             res.status(400);
@@ -110,9 +135,19 @@ router.delete("/:username", (req, res, next) => {
             res.send();
         }
     });
-});
+}
 
-router.post("/login", (req,res,next) => {
+/**
+ * Checks if user already logged in.
+ * If true then it sends status 200.
+ * If not check if user exists.
+ * If user exists create and send session
+ * else sends status 401 (user doesn't exist) or 400 (can't create session)
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function login (req,res,next){
     console.log(req.sessionID)
     if(!req.session.user){
         userModel.findOne({ 'username': req.body.username, 'password':req.body.password }, function (err, user) {
@@ -136,36 +171,11 @@ router.post("/login", (req,res,next) => {
                 console.log(req.sessionID)
                 res.json(req.sessionID)
             }
-
-
         });
     }else{
         console.log("logged")
         res.send(200)
     }
-
-
-
-
-})
-
-
-router.post('/session', (req,res,next)=>{
-    let session = new sessionModel({'sessionID':'123456','userID':'21321451'});
-    try {
-        session.save((err) => {
-            if (err) {
-                console.log("hier")
-                res.send(400)
-            }else{
-                res.send(200)
-            }
-        });
-    } catch(err){
-        console.log(err.message);
-    }
-b
-})
-
+}
 
 module.exports = router;

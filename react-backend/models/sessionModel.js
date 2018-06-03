@@ -1,7 +1,21 @@
+/**
+ * @module SessionModel
+ */
+
 // DB MODEL
 // a schema represents a collection and defines the shape of a document in that collection
 var mongoose = require('../bin/config/mongo')
 var Schema = mongoose.Schema;
+
+/**
+ * sessionSchema={
+ * username:String,
+ * firstname:String,
+ * lastname:String,
+ * tel:String, email,
+ * String, password:String,
+ * role:String}
+ * */
 var sessionSchema = new Schema({
     sessionID:  {
         type: String,

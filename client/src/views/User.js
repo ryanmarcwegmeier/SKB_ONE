@@ -4,23 +4,33 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import {NavLink} from "react-router-dom";
 
+/** Class representing User View. */
 class User extends Component {
     state = {users: []}
 
-
+    /**
+     *constructor
+     * @param props
+     */
     constructor(props){
         super(props);
         this.deleteUser = this.deleteUser.bind(this);
 
     }
 
-
+    /**
+     * fetch all users from DB
+     */
     componentWillMount() {
         fetch('/users')
             .then(res => res.json())
             .then(users => this.setState({ users }));
     }
 
+    /**
+     * Deletes User by user_id. If successed refresh Window else throw excception
+     * @param {string} user_id - UserId
+     */
     deleteUser(user_id){
         return event => {
             event.preventDefault();

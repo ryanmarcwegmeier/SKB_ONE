@@ -1,7 +1,14 @@
+/** @module UserModel*/
+
+
 var mongoose = require("../bin/config/mongo");
 // DB MODEL
 // a schema represents a collection and defines the shape of a document in that collection
 var Schema = mongoose.Schema;
+
+/**
+ * userSchema={username:String, firstname:String, lastname:String, tel:String, email, String, password:String, role:String}
+ * */
 var userSchema = new Schema({
     username:  {
         type: String,
@@ -21,7 +28,7 @@ var userSchema = new Schema({
         required: true,
         validate: {
             validator: function(v) {
-                var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+                var re = /^[0-9]+$/im;
                 return re.test(v);
             }
         }

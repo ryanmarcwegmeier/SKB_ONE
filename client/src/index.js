@@ -1,3 +1,7 @@
+/**
+ * @module react-router
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -7,9 +11,11 @@ import User from './views/User';
 import SingleUser from './views/SingleUser';
 import Contact from './views/Contact';
 import { BrowserRouter, Route } from 'react-router-dom';
-
 import registerServiceWorker from './registerServiceWorker';
 
+/**
+ * Routing and inserting content in <div ir='root'>content</div>
+ */
 ReactDOM.render((
     <BrowserRouter>
         <div>

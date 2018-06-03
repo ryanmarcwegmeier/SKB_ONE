@@ -5,6 +5,31 @@ import Register from './Register'
 
 class Navbar extends Component {
 
+    constructor(props){
+        super(props)
+        this.state={
+            user:{}
+        }
+    }
+
+    componentWillMount() {
+        fetch('/sessions', {
+            credentials: 'include',
+            method: 'get',
+            headers: {'Content-Type':'application/json'}
+        }).then((res) => {
+            if (res.ok){
+                return res.json();
+            } else {
+                throw new Error ('Something went wrong with your fetch');
+            }
+        }).then((json) => {
+            console.log(json);alert()
+        }).catch((err)=>{
+          console.log(err)
+        })
+    }
+
     render() {
         return (
             <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-md navbar-dark bg-danger container-fluid ">
