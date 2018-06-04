@@ -17,20 +17,16 @@ var Schema = mongoose.Schema;
  * role:String}
  * */
 var sessionSchema = new Schema({
+
     sessionID:  {
         type: String,
-        unique: true,
-        required: true
     },
-    userID: {
+    user: {
         type: String,
-        unique: true,
-        required: true,
 
     },
     date_start: {
         type: String,
-        required: true,
         default:new Date()
     },
 

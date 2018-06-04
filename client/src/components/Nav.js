@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 class Nav extends Component {
 
 
+
     render() {
         let active = (window.location.pathname=="/")?'active':'';
         return (
@@ -14,7 +15,7 @@ class Nav extends Component {
                 <li className={"nav-item "}>
                     <NavLink exact to="/courses"><span className="nav-link" >Courses</span></NavLink>
                 </li>
-                {(true)&&
+                {(this.props.role=='admin')&&
                 <li className={"nav-item "}>
                     <NavLink exact to="/users"><span className="nav-link">Users</span></NavLink>
                 </li>

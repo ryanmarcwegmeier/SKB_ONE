@@ -24,16 +24,10 @@ class ModalLogin extends Component {
             })
         }).then((res) => {
             if (res.ok){
-                return res.json();
+                return window.location.reload()
             } else {
                 this.setState({'loginsuccess': false });
-                throw new Error ('Something went wrong with your fetch');
             }
-        }).then((json) => {
-            console.log(json)
-            alert()
-            sessionStorage.setItem("sessionID",(json))
-            window.location.reload()
         })
     };
 

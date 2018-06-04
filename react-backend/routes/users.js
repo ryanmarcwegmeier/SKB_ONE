@@ -29,6 +29,7 @@ function insertUser(req,res,next){
     try {
         user.save((err) => {
             if (err) {
+                console.log("error saving usuer")
                 if(err.code === 11000 || err.errors != null) {
                     console.log(err)
                     res.send(400);
@@ -148,28 +149,39 @@ function deleteUser(req, res, next) {
  * @param {object} next - Handler
  */
 function login (req,res,next){
+    console.log("router-users:")
     console.log(req.sessionID)
     if(!req.session.user){
         userModel.findOne({ 'username': req.body.username, 'password':req.body.password }, function (err, user) {
             if(err || user == null) {
+                console.log("find user error")
                 console.log(err);
                 res.send(401);
             } else {
                 req.session.user=user;
-                let sessionMod = new sessionModel({sessionID:req.sessionID,userID:user._id});
+                console.log("ich bin user:")
+                console.log(user._id)
+                console.log("session")
+                console.log(req.sessionID)
+                let sessionMod = new sessionModel({'sessionID':req.sessionID,'user':user._id});
+                sessionMod.isNew=true;
                 try {
                     sessionMod.save((err) => {
                         if (err) {
-                            console.log("hier")
-                            res.end(400)
+                            console.log("error saving session")
+                            if(err.code === 11000 || err.errors != null) {
+                                console.log(err)
+                                res.send(400);
+                            }
+                        } else {
+                            res.send(200);
                         }
                     });
                 } catch(err){
                     console.log(err.message);
                 }
                 req.session.save();
-                console.log(req.sessionID)
-                res.json(req.sessionID)
+                console.log()
             }
         });
     }else{
