@@ -6,17 +6,16 @@ import Logged from './Logged'
 class Register extends Component {
 
     render() {
-
         return (
             <div className={'text-white'}>
-                {(sessionStorage.getItem("sessionID") == null || sessionStorage.getItem("sessionID") == "")
+                {(!this.props.isLogged)
                     ?
                     <span>
                 <ModalLogin/>
                 < ModalSignUp/>
                     </span>
                     :
-                    <Logged/>
+                    <Logged userID={this.props.userID}/>
                 }
                 </div>
 

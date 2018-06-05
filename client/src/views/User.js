@@ -59,7 +59,6 @@ class User extends Component {
         return (
 
             <div className="App">
-                <Navbar act={['','active','']}/>
                 <div className={"content"}>
                 <Header />
 

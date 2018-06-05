@@ -1,46 +1,35 @@
 import React, { Component } from 'react';
-import {NavLink, Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 
 class Logged extends Component {
-    constructor(props){
-        super(props);
-        this.logout = this.logout.bind(this);
-    }
 
-    profileSide(){
-        window.location.href='/users/'+JSON.parse(sessionStorage.getItem('session')).user._id
+    profileSide(user_id){
+
+        // window.location.href='/users/'
+
+        return <Redirect to='/users'/>
+
     }
 
     logout(event){
+
         event.preventDefault();
-        sessionStorage.clear();
-        window.location.replace('/index')
-        // fetch('/login', {
-        //     method: 'post',
-        //     headers: {'Content-Type':'application/json'},
-        //     body: JSON.stringify({
-        //         "user_id": sessionStorage.getItem("session").user_id,
-        //         "session_id":sessionStorage.getItem("session").user_id
-        //     })
-        // }).then((res) => {
-        //     if (res.ok){
-        //         return res.json();
-        //     } else {
-        //         throw new Error ('Something went wrong with your fetch');
-        //     }
-        // }).then((json) => {
-        //     if (json.status==200){
-        //         window.location.replace('/index')
-        //     }else{
-        //         this.setState({'loginsuccess': false });
-        //     }
-        // })
+        fetch('/users/logout', {
+            credentials: 'include',
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+        }).then((res) => {
+            if (res.ok){
+                return window.location.href="/index"
+            } else {
+                console.log(res.status)
+            }
+        })
     };
 
 
 
     render() {
-
         return (
             <div >
                 <div className="dropdown">
@@ -52,10 +41,13 @@ class Logged extends Component {
 
                         <li className="nav-item loggedBoxItem">
 
-
-                                <button type="button" onClick={this.profileSide} className="btn btn-outline-secondary" style={{width:'100%'}}>
-                                Profil
+                            <Link to={"/users/"+this.props.userID}>
+                                <button type="button" className="btn btn-outline-secondary" style={{width:'100%'}}>
+                                    Profil
                                 </button>
+
+                            </Link>
+
 
                         </li>
                         <div className="dropdown-divider"></div>

@@ -14,7 +14,7 @@ router.get("/", getAllUsers);
 router.put("/:username", updateUser);
 router.delete("/:username", deleteUser);
 router.post("/login", login)
-
+router.post("/logout", logout)
 
 /**
  * Insert new User in mongoDB.
@@ -188,6 +188,24 @@ function login (req,res,next){
         console.log("logged")
         res.send(200)
     }
+}
+
+
+/**
+ * Clear the session
+ * @param {object} req - Requestobject
+ * @param {object} res - Respondsobject
+ * @param {object} next - Handler
+ */
+function logout (req,res,next){
+console.log("login out")
+    if(!req.session.user){
+        res.send(400)
+    }else{
+        req.session.destroy();
+        res.send(200)
+    }
+
 }
 
 module.exports = router;
