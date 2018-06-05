@@ -11,6 +11,7 @@ import Contact from "../views/ContactTest";
 import Register from "./Register";
 import Courses from "../views/Courses";
 import User from "../views/User";
+import SingleUser from "../views/SingleUser";
 class Main extends Component {
 
 
@@ -93,17 +94,19 @@ class Main extends Component {
                                     </NavLink>
                                 </li>
                             </ul>
-                            <Register isLogged={(this.state.user!=false)?true:false} userID={(this.state.user!=false)?this.state.user._id:null}/>
+                            <Register isLogged={(this.state.user!=false)?true:false} username={(this.state.user!=false)?this.state.user.username:null}/>
                         </div>
 
 
                     </nav>
                     <div className="content">
-                        <Route exact path="/"><Redirect to='/index'/></Route>
                         <Route exact path="/index" component={Home}/>
                         <Route exact path="/courses" component={Courses}/>
                         <Route exact path="/contact" component={Contact}/>
-                        <Route exact path="/users" component={User}/>
+                        <Route exact path="/users" render={()=><User isAdmin={(this.state.user.role=='admin')?true:false}/>} />
+                        <Route exact path="/users/:username" render={(props)=><SingleUser loggedUser={(!this.state.user)?null:this.state.user} {...props}/>}/>
+                        {/*<Route exact path="/users/:username" render={()=><SingleUser loggedUser={(!this.state.user)?null:this.state.user}/>}/>*/}
+
                     </div>
                 </div>
             </BrowserRouter>

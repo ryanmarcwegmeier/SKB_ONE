@@ -57,11 +57,11 @@ class ModalLogin extends Component {
                                 <div className="modal-body">
 
                                     <div className="form-group">
-                                        <label htmlFor="username">Username</label>
+                                        <label htmlFor="login_username"><span className={'text-muted'}><b>Username</b></span></label>
                                         <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="login_username" placeholder="Username" name={'username'} required={true}/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="psw">Password</label>
+                                        <label htmlFor="login_password"><span className={'text-muted'}><b>Password</b></span></label>
                                         <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="login_password" placeholder="Password" name={'password'} required={true}/>
                                     </div>
                                 </div>

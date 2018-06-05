@@ -26,21 +26,16 @@ router.post("/logout", logout)
 function insertUser(req,res,next){
     var user = new userModel(req.body);
     user.role="student";
-    try {
         user.save((err) => {
             if (err) {
                 console.log("error saving usuer")
-                if(err.code === 11000 || err.errors != null) {
                     console.log(err)
                     res.send(400);
-                }
+
             } else {
                 res.send(200);
             }
         });
-    } catch(err){
-        console.log(err.message);
-    }
 
 }
 
@@ -55,9 +50,9 @@ function getSingleUser(req,res,next){
         userModel.findOne({ 'username': req.params.username }, function (err, user) {
             if(err || user == null) {
                 console.log(err);
-                res.status(404);
-                res.json({ errorMessage: "Requested user is not found, or the user does not have permission to view it." });
+                res.send(404);
             } else {
+                console.log("hier the single user:")
                 res.json(user);
             }
         });
@@ -99,6 +94,7 @@ function updateUser(req, res, next){
             res.json(error400Message);
         } else {
             //Make sure payload is valid
+            if (req.body.username != null) { user.username = req.body.username; }
             if (req.body.firstname != null) { user.firstname = req.body.firstname; }
             if (req.body.lastname != null) { user.lastname = req.body.lastname; }
             if (req.body.tel != null) { user.tel = req.body.tel; }

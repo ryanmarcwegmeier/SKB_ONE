@@ -20,6 +20,7 @@ class Logged extends Component {
             headers: {'Content-Type':'application/json'},
         }).then((res) => {
             if (res.ok){
+                sessionStorage.clear()
                 return window.location.href="/index"
             } else {
                 console.log(res.status)
@@ -41,7 +42,7 @@ class Logged extends Component {
 
                         <li className="nav-item loggedBoxItem">
 
-                            <Link to={"/users/"+this.props.userID}>
+                            <Link to={"/users/"+this.props.username}>
                                 <button type="button" className="btn btn-outline-secondary" style={{width:'100%'}}>
                                     Profil
                                 </button>

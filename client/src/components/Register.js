@@ -15,7 +15,7 @@ class Register extends Component {
                 < ModalSignUp/>
                     </span>
                     :
-                    <Logged userID={this.props.userID}/>
+                    <Logged username={this.props.username}/>
                 }
                 </div>
 
