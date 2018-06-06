@@ -5,12 +5,16 @@ import Footer from '../components/Footer';
 
 class Home extends Component {
 
+    componentWillMount(){
+        sessionStorage.clear()
+    }
+
 
     render() {
         return (
             <div className="App">
                 <div className={"content"}>
-                <Header act={['active','','']}/>
+                <Header text={"Sprach- und Kulturbörse Berlin"}/>
                 <main className={'bg-light container-fluid'}>
                     <div className={'row'}>
                         <div className={'col-sm-11 ml-auto mr-auto'}>

@@ -1,0 +1,11 @@
+<h1>Registration</h1>
+<br>
+
+<article>
+    <div>Thank you very much for your registration at Sprach- und Kulturbörse Berlin (SKB).</div>
+    <div>Follow this link for redirection to your dashboard.</div>
+    <p>
+        This is the link for our homepage: <a href="http://localhost:3000/index">homepage</a>
+    </p>
+
+</article>

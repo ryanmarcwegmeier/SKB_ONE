@@ -100,12 +100,12 @@ class Main extends Component {
 
                     </nav>
                     <div className="content">
+                        {/*<Route exact path="/" render={(props)=><Redirect to='/index' />}/>*/}
                         <Route exact path="/index" component={Home}/>
                         <Route exact path="/courses" component={Courses}/>
                         <Route exact path="/contact" component={Contact}/>
                         <Route exact path="/users" render={()=><User isAdmin={(this.state.user.role=='admin')?true:false}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser loggedUser={(!this.state.user)?null:this.state.user} {...props}/>}/>
-                        {/*<Route exact path="/users/:username" render={()=><SingleUser loggedUser={(!this.state.user)?null:this.state.user}/>}/>*/}
 
                     </div>
                 </div>

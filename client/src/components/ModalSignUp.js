@@ -26,15 +26,10 @@ class ModalSignUp extends Component {
             })
         }).then((res) => {
             if (res.ok){
-                console.log(res.headers)
-                return res.json();
+                window.location.reload()
             } else {
-                throw new Error ('Something went wrong with your fetch');
+                alert('Registration Failed')
             }
-        }).then((json) => {
-            if(json.status==200){alert("Registrierung erfolgreich");window.location.href="/index"}
-            else alert("Registration Failed")
-
         })
     };
 

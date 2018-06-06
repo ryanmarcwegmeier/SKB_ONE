@@ -22,6 +22,7 @@ class User extends Component {
      * fetch all users from DB
      */
     componentWillMount() {
+        sessionStorage.clear()
         fetch('/users')
             .then(res => res.json())
             .then(users => this.setState({ users }));
@@ -55,7 +56,7 @@ class User extends Component {
 
             <div className="App">
                 <div className={"content"}>
-                <Header />
+                <Header text={"Users"} />
 
                 <main className={'bg-light container-fluid'}>
                     {(this.props.isAdmin)?
@@ -64,10 +65,9 @@ class User extends Component {
                         <div className={'col-sm-11 ml-auto mr-auto'}>
 
                             <div>
-                                <h1> Users </h1>
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-striped">
-                                        <thead className={""}>
+                                        <thead>
                                         <tr>
                                             <th scope="col">#id</th>
                                             <th scope="col">username</th>
