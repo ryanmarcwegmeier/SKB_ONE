@@ -15,6 +15,7 @@ var app = express();
 //
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var coursesRouter = require('./routes/courses');
 var sessionuser = require('./routes/sessions');
 
 app.set('views', path.join(__dirname, 'views'));
@@ -40,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/courses', coursesRouter);
 app.use('/sessions', sessionuser);
 
 // catch 404 and forward to error handler
