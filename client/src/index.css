@@ -36,5 +36,14 @@ a{
     left: 0 !important;
     right: auto !important;
   }
-  
+
+}
+
+@media screen and (min-width:768px) {
+  .registerTop{
+    position: absolute;
+    right: 0;
+    margin-right: 10px;
+  }
+
 }

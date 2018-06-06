@@ -38,9 +38,9 @@ class ModalLogin extends Component {
             <span>
 
                 <span className="mr-2" data-toggle="modal" data-target="#myModal">
-                    <span className={"hov"}>
-                     Sign in <i className="fas fa-sign-in-alt mr-4"></i>
-                    </span>
+                    <button type={"button"} className={"btn btn-outline-light"}>
+                     Sign in <i className="fas fa-sign-in-alt"></i>
+                    </button>
                 </span>
 
                 <div className="modal fade" id="myModal">

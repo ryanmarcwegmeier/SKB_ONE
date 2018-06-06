@@ -37,10 +37,10 @@ class ModalSignUp extends Component {
 
         return (
             <span>
-                <span className="mr-2" data-toggle="modal" data-target="#myModal2">
-                    <span className={"hov"}>
-                     Sign UP <i className="fas fa-user-plus mr-4"></i>
-                    </span>
+                <span className="" data-toggle="modal" data-target="#myModal2">
+                    <button type={"button"} className={"btn btn-outline-light"}>
+                     Sign UP <i className="fas fa-user-plus "></i>
+                    </button>
                 </span>
 
                 <div className="modal fade" id="myModal2">

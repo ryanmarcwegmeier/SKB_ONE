@@ -50,7 +50,7 @@ var userSchema = new Schema({
     },
     role: {
         type: String
-    }
+    },
 
     lang:{
         type:String,

@@ -5,8 +5,9 @@ class Footer extends Component {
     render() {
 
         return (
-            <footer className={'container-fluid mt-3 pt-4 mb-5 pb-5 fixed-bottom bg-dark text-muted row' } style={{zIndex:1, position:'relative'}}>
-                    <div className={"col-md-4"}>
+            <footer className={'container-fluid mt-3 pt-4 mb-5 pb-5 fixed-bottom bg-dark text-muted' } style={{zIndex:1, position:'relative'}}>
+                <div className={'row'}>
+                <div className={"col-md-4"}>
                         <section>
                             <p>
                             <b>Unsere Adresse</b> <br/>
@@ -32,7 +33,6 @@ class Footer extends Component {
                     </div>
                     <div className={"col-md-4"}>
                         <section>
-                            <p>
                                 <b>Sprechstunden</b> <br/>
 
 
@@ -53,10 +53,9 @@ class Footer extends Component {
                                     </li>
                                 </ul>
                                 Eine Anmeldung für Kurse ist nicht vor Beginn des jeweiligen Einschreibezeitraums möglich.
-                            </p>
                         </section>
                     </div>
-
+                </div>
             </footer>
         );
     }

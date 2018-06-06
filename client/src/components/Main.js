@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import logo from '../img/logo3.jpg';
 import Home from "../views/Home";
-import Contact from "../views/ContactTest";
+import Contact from "../views/Contact";
 import Register from "./Register";
 import Courses from "../views/Courses";
 import User from "../views/User";
@@ -68,7 +68,7 @@ class Main extends Component {
                                 <li className={"nav-item "}>
                                     <NavLink exact to="/courses">
                                         <span className="nav-link" >
-                                            Stuff
+                                            Courses
                                         </span>
                                     </NavLink>
                                 </li>
@@ -94,7 +94,9 @@ class Main extends Component {
                                     </NavLink>
                                 </li>
                             </ul>
-                            <Register isLogged={(this.state.user!=false)?true:false} username={(this.state.user!=false)?this.state.user.username:null}/>
+                            <div className={"registerTop"}>
+                                <Register isLogged={(this.state.user!=false)?true:false} username={(this.state.user!=false)?this.state.user.username:null}/>
+                            </div>
                         </div>
 
 
