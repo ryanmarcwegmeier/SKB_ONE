@@ -1,0 +1,272 @@
+body {
+    background-color: #F5F7FA;
+}
+#course-intro {
+    background-color: rgb(47, 50, 60);
+    color: white;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#course-navigation {
+    margin-top: 0;
+    color: black;
+    font-weight: bold;
+}
+
+
+/*************** Overview *****************/
+
+main {
+    margin-top: 20px;
+}
+
+main h1 {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.course-detail {
+    margin-bottom: 50px;
+}
+
+.overview-list li:first-child {
+    font-weight: bold;
+}
+
+.overview-detail {
+    margin-bottom: 20px;
+}
+
+
+
+/*************** Content/Timeline *****************/
+#recent-button {
+    z-index: 5;
+}
+
+.hexa {
+    border: 0px;
+    float: left;
+    text-align: center;
+    font-size: 30px;
+    color:  #EF4836;
+    position: relative;
+    margin-top: 15px;
+}
+
+.hexa i {
+    background-color: #F5F7FA;
+}
+
+
+.timeline {
+    position: relative;
+    padding: 0;
+    width: 100%;
+    margin-top: 20px;
+    list-style-type: none;
+}
+
+.timeline:before {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    content: ' ';
+    display: block;
+    width: 2px;
+    height: 100%;
+    margin-left: -1px;
+    background: rgb(213, 213, 213);
+    z-index: -1 ;
+}
+
+.timeline li {
+    padding: 2em 0;
+}
+
+.timeline .hexa {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: -40px;
+    margin-top: 0;
+}
+
+
+.direction-l, .direction-r {
+    float: none;
+    width: 100%;
+    text-align: center;
+}
+
+.flag-wrapper {
+    text-align: center;
+    position: relative;
+}
+
+.flag {
+    position: relative;
+    display: inline;
+    background: rgb(255, 255, 255);
+    font-weight: 600;
+    z-index: 15;
+    padding: 6px 10px;
+    text-align: left;
+    border-radius: 5px;
+}
+
+.direction-l .flag:after, .direction-r .flag:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -15px;
+    height: 0;
+    width: 0;
+    margin-left: -8px;
+    border: solid transparent;
+    border-bottom-color: rgb(255, 255, 255);
+    border-width: 8px;
+    pointer-events: none;
+}
+
+.direction-l .flag {
+    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.direction-r .flag {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.direction-l .time-wrapper {
+    float: none;
+}
+
+.direction-r .time-wrapper {
+    float: none;
+}
+
+.time {
+    background: #EF4836;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+}
+
+.desc {
+    position: relative;
+    margin: 1em 0 0 0;
+    padding: 1em;
+    background: rgb(254, 254, 254);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.20);
+    z-index: 15;
+}
+
+.direction-l .desc, .direction-r .desc {
+    position: relative;
+    margin: 1em 1em 0 1em;
+    padding: 1em;
+    z-index: 15;
+}
+
+@media(min-width: 768px) {
+    .timeline {
+        width: 85%;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+    .timeline li:after {
+        content: "";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+    .timeline .hexa {
+        left: -28px;
+        right: auto;
+        top: -10px;
+    }
+    .timeline .direction-l .hexa {
+        left: auto;
+        right: -45px;
+    }
+
+    .timeline .direction-r .hexa {
+        right: auto;
+        left: -45px;
+    }
+
+    .direction-l {
+        position: relative;
+        width: 60%;
+        float: left;
+        text-align: right;
+        margin-left: -125px;
+    }
+    .direction-r {
+        position: relative;
+        width: 60%;
+        float: right;
+        text-align: left;
+        margin-right: -125px;
+    }
+    .flag-wrapper {
+        display: inline-block;
+    }
+    .flag {
+        font-size: 18px;
+    }
+    .direction-l .flag:after {
+        left: auto;
+        right: -16px;
+        top: 50%;
+        margin-top: -8px;
+        border: solid transparent;
+        border-left-color: rgb(254, 254, 254);
+        border-width: 8px;
+    }
+    .direction-r .flag:after {
+        top: 50%;
+        margin-top: -8px;
+        border: solid transparent;
+        border-right-color: rgb(254, 254, 254);
+        border-width: 8px;
+        left: -8px;
+    }
+
+
+    .time-wrapper {
+        display: inline;
+        vertical-align: middle;
+        margin: 0;
+    }
+    .direction-l .time-wrapper {
+        float: left;
+    }
+    .direction-r .time-wrapper {
+        float: right;
+    }
+    .time {
+        padding: 5px 10px;
+
+    }
+    .direction-r .desc {
+        margin: 1em 0 0 0.75em;
+    }
+
+    .sub-section-l {
+        clear: left;
+        margin-top: 30px;
+    }
+
+    .sub-section-r {
+        clear: right;
+        margin-top: 30px;
+    }
+}
