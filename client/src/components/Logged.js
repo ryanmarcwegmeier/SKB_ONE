@@ -33,18 +33,19 @@ class Logged extends Component {
     render() {
         return (
             <div >
-                <div className="dropdown">
-                    <button className="btn btn-light rounded-circle text-center" type="button" id="dropdownMenuButton"
+                <div className="dropdown ">
+                    <button className="btn btn-outline-light rounded-circle text-center" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i className="fas fa-user"></i>
                     </button>
-                    <ul className="dropdown-menu dropdown-menu-right bg-light" aria-labelledby="dropdownMenuButton">
+                    <ul className="dropdown-menu dropdown-menu-right bg-light shadow-lg p-3 mb-5 bg-white rounded" aria-labelledby="dropdownMenuButton">
 
                         <li className="nav-item loggedBoxItem">
 
                             <Link to={"/users/"+this.props.username}>
-                                <button type="button" className="btn btn-outline-secondary" style={{width:'100%'}}>
-                                    Profil
+                                <button type="button" className="btn btn-outline-danger" style={{width:'100%'}}>
+                                    <i className="fas fa-user-cog mr-1"></i>
+                                    {this.props.username}
                                 </button>
 
                             </Link>
@@ -53,7 +54,10 @@ class Logged extends Component {
                         </li>
                         <div className="dropdown-divider"></div>
                         <li className="nav-item loggedBoxItem">
-                            <button type="button" className="btn btn-outline-secondary" style={{width:'100%'}} onClick={this.logout}>Logout</button>
+                            <button type="button" className="btn btn-outline-danger" style={{width:'100%'}} onClick={this.logout}>
+                                <i className="fas fa-sign-out-alt mr-1"></i>
+                                Logout
+                            </button>
                         </li>
 
                     </ul>

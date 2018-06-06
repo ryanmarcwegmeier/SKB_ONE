@@ -51,6 +51,17 @@ var userSchema = new Schema({
     role: {
         type: String
     }
+
+    lang:{
+        type:String,
+        validate: {
+            validator: function(v) {
+                var re = /^('de'|'en')$/;
+                return re.test(v);
+            }
+        }
+    }
+
 });
 
 // convert schema to model. instances of models are documents

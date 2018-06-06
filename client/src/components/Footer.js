@@ -6,18 +6,57 @@ class Footer extends Component {
 
         return (
             <footer className={'container-fluid mt-3 pt-4 mb-5 pb-5 fixed-bottom bg-dark text-muted row' } style={{zIndex:1, position:'relative'}}>
-                    <div className={"col-md-3"}>
-                        is autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim v
+                    <div className={"col-md-4"}>
+                        <section>
+                            <p>
+                            <b>Unsere Adresse</b> <br/>
+                                Sprach- und Kulturbörse der TU Berlin<br/>
+
+                                Raum 024 <br/>
+
+                                Hardenbergstr. 36 <br/>
+
+                                10587 Berlin <br/>
+                            </p>
+                        </section>
+
                     </div>
-                    <div className={"col-md-3"}>
-                        is autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim v
+                    <div className={"col-md-4"}>
+                        <section>
+                            <p>
+                                <b>Kontakt</b><br/>
+                                Email: info@skb.tu-berlin.de <br/>
+                                Tel: (030) 314 73224 <br/>
+                            </p>
+                        </section>
                     </div>
-                    <div className={"col-md-3"}>
-                        is autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim v
+                    <div className={"col-md-4"}>
+                        <section>
+                            <p>
+                                <b>Sprechstunden</b> <br/>
+
+
+                                Sprechstunden ab 07.05.2018:
+                                <ul>
+                                    <li>
+                                        Montag - 9:30 - 11:30 telefonisch und im Büro
+                                    </li>
+                                    <li>
+                                        Dienstag     – 14:30 - 16:30 nur telefonisch
+                                    </li>
+                                    <li>
+                                        Donnerstag – 14:00 - 16:00 telefonisch und im Büro
+                                    </li>
+                                    <li>
+                                        Freitag       – 10:30 - 12:30 nur telefonisch
+
+                                    </li>
+                                </ul>
+                                Eine Anmeldung für Kurse ist nicht vor Beginn des jeweiligen Einschreibezeitraums möglich.
+                            </p>
+                        </section>
                     </div>
-                    <div className={"col-md-3"}>
-                        is autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim v
-                    </div>
+
             </footer>
         );
     }

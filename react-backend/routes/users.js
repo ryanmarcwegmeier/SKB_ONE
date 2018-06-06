@@ -4,9 +4,10 @@
 var express = require("express");
 var router = express.Router();
 
-
 var userModel = require('../models/userModel');
 var sessionModel = require('../models/sessionModel');
+
+
 
 router.post("/", insertUser);
 router.get("/:username", getSingleUser);
@@ -15,6 +16,8 @@ router.put("/:username", updateUser);
 router.delete("/:username", deleteUser);
 router.post("/login", login)
 router.post("/logout", logout)
+router.post('/email',mailing)
+
 
 /**
  * Insert new User in mongoDB.
@@ -33,7 +36,14 @@ function insertUser(req,res,next){
                     res.send(400);
 
             } else {
-                res.send(200);
+
+                let state=mailing(user, "de")
+                if(state==400){
+                    res.send(400)
+                }else{
+                    res.send(200);
+                }
+
             }
         });
 
@@ -94,7 +104,6 @@ function updateUser(req, res, next){
             res.json(error400Message);
         } else {
             //Make sure payload is valid
-            if (req.body.username != null) { user.username = req.body.username; }
             if (req.body.firstname != null) { user.firstname = req.body.firstname; }
             if (req.body.lastname != null) { user.lastname = req.body.lastname; }
             if (req.body.tel != null) { user.tel = req.body.tel; }
@@ -203,5 +212,44 @@ console.log("login out")
     }
 
 }
+
+function mailing(user, lang){
+    var fs = require('fs');
+    let htmlText=""
+
+    if(lang=="de"){
+        htmlText = fs.readFileSync('../react-backend/messages/mail/mailMessageDE.txt').toString()
+    }
+    if (lang=="en"){
+        htmlText = fs.readFileSync('../react-backend/messages/mail/mailMessageEN.txt').toString()
+    }
+    let transporter = require("../bin/config/mail")
+
+    let HelperOptions = {
+        from: '"no-reply" <snetskbone@gmail.com',
+        to: user.email,
+        subject: 'Registration',
+        html:htmlText,
+    };
+
+    if(htmlText!=""){
+
+        transporter.sendMail(HelperOptions, (error, info) => {
+            if (error) {
+                console.log(error)
+                return 400
+            }else{
+                return 200
+            }
+
+        });
+    }else {
+        return 400
+    }
+
+
+}
+
+
 
 module.exports = router;
