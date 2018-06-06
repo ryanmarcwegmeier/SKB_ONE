@@ -23,7 +23,7 @@ class Footer extends Component {
 
                     </div>
                     <div className={"col-md-4"}>
-                        <section>
+                        <section>K
                             <p>
                                 <b>Kontakt</b><br/>
                                 Email: info@skb.tu-berlin.de <br/>
