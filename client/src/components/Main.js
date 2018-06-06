@@ -100,7 +100,7 @@ class Main extends Component {
 
                     </nav>
                     <div className="content">
-                        {/*<Route exact path="/" render={(props)=><Redirect to='/index' />}/>*/}
+                        <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
                         <Route exact path="/index" component={Home}/>
                         <Route exact path="/courses" component={Courses}/>
                         <Route exact path="/contact" component={Contact}/>
