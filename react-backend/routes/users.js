@@ -5,7 +5,6 @@ var express = require("express");
 var router = express.Router();
 
 var userModel = require('../models/userModel');
-var sessionModel = require('../models/sessionModel');
 
 
 
@@ -15,7 +14,7 @@ router.get("/", getAllUsers);
 router.put("/:username", updateUser);
 router.delete("/:username", deleteUser);
 router.post("/login", login)
-router.post("/logout", logout)
+//router.post("/logout", logout)
 router.post('/email',mailing)
 
 
@@ -26,27 +25,29 @@ router.post('/email',mailing)
  * @param {object} res - Respondsobject
  * @param {object} next - Handler
  */
+ 
+ //Create random Hex String
+ function createSecretKey(){
+	let key="";
+	for(let i=0; i<4;i++){
+		key +=Math.floor(Math.random()*Math.pow(16,12)).toString(16);
+	}
+	return key;
+}
+
 function insertUser(req,res,next){
-    var user = new userModel(req.body);
+	console.log("create User")
+	let data = req.body;
+	data.apikey = createSecretKey();
+    var user = new userModel(data);
     user.role="student";
         user.save((err) => {
             if (err) {
-                console.log("error saving usuer")
-                    console.log(err)
-                    res.send(400);
-
+                res.send(400);
             } else {
-
-                let state=mailing(user, "de")
-                if(state==400){
-                    res.send(400)
-                }else{
-                    res.send(200);
-                }
-
+                res.send(200);
             }
         });
-
 }
 
 /**
@@ -156,52 +157,25 @@ function deleteUser(req, res, next) {
 function login (req,res,next){
     console.log("router-users:")
     console.log(req.sessionID)
-    if(!req.session.user){
+
         userModel.findOne({ 'username': req.body.username, 'password':req.body.password }, function (err, user) {
             if(err || user == null) {
                 console.log("find user error")
                 console.log(err);
                 res.send(401);
             } else {
-                req.session.user=user;
-                console.log("ich bin user:")
-                console.log(user._id)
-                console.log("session")
-                console.log(req.sessionID)
-                let sessionMod = new sessionModel({'sessionID':req.sessionID,'user':user._id});
-                sessionMod.isNew=true;
-                try {
-                    sessionMod.save((err) => {
-                        if (err) {
-                            console.log("error saving session")
-                            if(err.code === 11000 || err.errors != null) {
-                                console.log(err)
-                                res.send(400);
-                            }
-                        } else {
-                            res.send(200);
-                        }
-                    });
-                } catch(err){
-                    console.log(err.message);
-                }
-                req.session.save();
-                console.log()
+                res.send(user.apikey);
             }
-        });
-    }else{
-        console.log("logged")
-        res.send(200)
-    }
+		});
 }
 
-
+//wird nicht mehr gebruacht, beende deine Session indem du deinen lokalen API-key löschst
 /**
  * Clear the session
  * @param {object} req - Requestobject
  * @param {object} res - Respondsobject
  * @param {object} next - Handler
- */
+
 function logout (req,res,next){
 console.log("login out")
     if(!req.session.user){
@@ -210,9 +184,8 @@ console.log("login out")
         req.session.destroy();
         res.send(200)
     }
-
 }
-
+ */
 function mailing(user, lang){
     var fs = require('fs');
     let htmlText=""

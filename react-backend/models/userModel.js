@@ -50,8 +50,12 @@ var userSchema = new Schema({
     },
     role: {
         type: String
-    }
-
+    },
+	apikey:  {
+        type: String,
+        unique: true,
+        required: true
+    },
     lang:{
         type:String,
         validate: {
