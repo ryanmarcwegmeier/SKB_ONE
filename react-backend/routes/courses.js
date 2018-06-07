@@ -7,10 +7,11 @@ var router = express.Router();
 var courseModel = require('../models/courseModel');
 
 router.post("/", insertCourse);
-router.get("/:title", getSingleCourse);
+router.get("/:lang/view", getCoursesByLang)
+router.get("/:id", getSingleCourse);
 router.get("/", getAllCourses);
 router.put("/", updateCourse);
-router.delete("/:title", deleteCourse);
+router.delete("/:id", deleteCourse);
 
 /**
  * Insert new course in mongoDB.
@@ -64,7 +65,7 @@ function insertCourse(req, res, next){
  * @param {object} next - Handler
  */
 function getSingleCourse(req, res, next){
-    courseModel.findOne({title: req.params.title }, function (err, course) {
+    courseModel.findOne({id: req.params.id }, function (err, course) {
         // if error or course not exists
         if(err || course == null) {
             console.log(err);
@@ -88,8 +89,13 @@ function getAllCourses(req, res, next){
             res.statusSend(500);
         } else {
             var courses = course.map((course) => {
-                return course;
+                let teachers=course.teachers.map(teacher=>{
+                    return teacher
+                })
+                course.teachers=teachers;
+                return course
             });
+
             res.json(courses);
         }
     });
@@ -119,16 +125,35 @@ function updateCourse(req, res, next){
  * @param {object} next - Handler
  */
 function deleteCourse(req, res, next) {
-    courseModel.findOneAndDelete({title: req.params.title}, (err, course) => {
+    courseModel.findOneAndDelete({_id: req.params.id}, (err, course) => {
         if (err) {
-            res.status(400);
-            res.json({ errorMessage: "Error occured trying to remove the course." });
+            res.send(400);
+            // res.json({ errorMessage: "Error occured trying to remove the course." });
         } else {
-            console.log("course " + req.params.title + " removed");
-            //res.sendStatus(200);
-            res.json(course);
+            console.log("course " + req.params.id + " removed");
+            res.send(200);
+            // res.json(course);
         }
     });
 }
+
+function getCoursesByLang(req,res,next){
+    console.log("____________________________________________________dsvdsfsfdsaofdgfogfodgfoa________________________________________")
+    console.log(req.params.lang)
+    courseModel.find({'language':req.params.lang}, (err, course) => {
+        if(err) {
+            res.statusSend(500);
+        } else {
+            var courses = course.map((course) => {
+                let teachers=course.teachers.map(teacher=>{
+                    return teacher
+                })
+                course.teachers=teachers;
+                return course
+            });
+            console.log(courses)
+            res.json(courses);
+        }
+    });}
 
 module.exports = router;

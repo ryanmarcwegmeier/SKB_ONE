@@ -24,7 +24,7 @@ class ModalLogin extends Component {
             })
         }).then((res) => {
             if (res.ok){
-                return window.location.reload()
+                return window.location.replace('/index')
             } else {
                 this.setState({'loginsuccess': false });
             }

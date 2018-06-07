@@ -44,6 +44,11 @@ var courseSchema = new Schema({
         required:true,
     },
 
+    time:{
+        type:String,
+        require:true,
+    },
+
     room: {
         type: String,
         required: true

@@ -14,6 +14,7 @@ import User from "../views/User";
 import SingleUser from "../views/SingleUser";
 import Impressum from "../views/Impressum";
 import Dashboard from "../views/Dashboard";
+import CourseLang from "../views/CoursesLang";
 class Main extends Component {
 
 
@@ -68,7 +69,7 @@ class Main extends Component {
                                     </NavLink>
                                 </li>
                                 <li className={"nav-item "}>
-                                    <NavLink exact to="/courses">
+                                    <NavLink to="/courses">
                                         <span className="nav-link" >
                                             Courses
                                         </span>
@@ -111,13 +112,14 @@ class Main extends Component {
                     <div className="content">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
                         {(!this.state.user)?
-                            <Route exact path="/index" component={Home}/>
+                            <Route path="/index" component={Home}/>
                             :
-                            <Route exact path="/index" component={Dashboard}/>
+                            <Route path="/index" component={Dashboard}/>
                         }
-                        <Route exact path="/index" component={Home}/>
-                        <Route exact path="/courses" component={Courses}/>
+                        {/*<Route exact path="/index" component={Home}/>*/}
+                        <Route exact path="/courses" component={CourseLang}/>
                         <Route exact path="/contact" component={Contact}/>
+                        <Route exact path="/courses/:lang/view" render={(props)=><Courses loggedUser={(!this.state.user)?{role:'guest'}:this.state.user} {...props}/>}/>
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User isAdmin={(this.state.user.role=='admin')?true:false}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser loggedUser={(!this.state.user)?null:this.state.user} {...props}/>}/>
