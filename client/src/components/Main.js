@@ -12,6 +12,8 @@ import Register from "./Register";
 import Courses from "../views/Courses";
 import User from "../views/User";
 import SingleUser from "../views/SingleUser";
+import Impressum from "../views/Impressum";
+import Dashboard from "../views/Dashboard";
 class Main extends Component {
 
 
@@ -46,8 +48,8 @@ class Main extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-md navbar-dark bg-danger container-fluid ">
-                        <a href={"https://github.com/SNetMERN/SKB_ONE"}>
+                    <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-lg navbar-dark bg-danger container-fluid ">
+                        <a href={"https://github.com/SNetMERN/SKB_ONE"} className={'topImg'}>
                             <img src={logo} alt={"Logo"} style={{width:'8vh', borderRadius:'1000px'}}/>
                         </a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -83,13 +85,18 @@ class Main extends Component {
                                 </li>
                                 }
 
-
-
-
                                 <li className={"nav-item "}>
                                     <NavLink exact to="/contact">
                                         <span className="nav-link" >
                                             Contact
+                                        </span>
+                                    </NavLink>
+                                </li>
+
+                                <li className={"nav-item "}>
+                                    <NavLink exact to="/impressum">
+                                        <span className="nav-link" >
+                                            Impressum
                                         </span>
                                     </NavLink>
                                 </li>
@@ -103,9 +110,15 @@ class Main extends Component {
                     </nav>
                     <div className="content">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
+                        {(!this.state.user)?
+                            <Route exact path="/index" component={Home}/>
+                            :
+                            <Route exact path="/index" component={Dashboard}/>
+                        }
                         <Route exact path="/index" component={Home}/>
                         <Route exact path="/courses" component={Courses}/>
                         <Route exact path="/contact" component={Contact}/>
+                        <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User isAdmin={(this.state.user.role=='admin')?true:false}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser loggedUser={(!this.state.user)?null:this.state.user} {...props}/>}/>
 

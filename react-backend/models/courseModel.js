@@ -5,36 +5,59 @@ var mongoose = require("../bin/config/mongo");
 var Schema = mongoose.Schema;
 
 /**
- * courseSchema={title: String, teachers: Array, students: Array, date: Date, room: String, description: String, credits: Number}
  * */
 var courseSchema = new Schema({
-    title:  {
+
+    level:  {
         type: String,
-        unique: true,
         required: true
     },
-    teachers: [
-        {name: String}
-    ],
+
+    language:{
+        type:String,
+        required:true,
+    },
+
+    teachers:{
+      type:[
+          {name: String}
+      ],
+        required:true,
+    },
     students: [
         {name: String}
     ],
-    date: {
-        type: Date,
-        //required: true
+
+    day:{
+        type:String,
+        required:true,
+
     },
+
+    dateStart: {
+        type: Date,
+        default: new Date(),
+        required:true,
+    },
+    dateEnd: {
+        type: Date,
+        required:true,
+    },
+
     room: {
         type: String,
-        unique: true,
-        required: true             
+        required: true
     },
     description: {
         type: String
     },
-    credits: {
-        type: Number,
-        required: true
+    capacity:{
+        type:Number,
+        required:true,
     }
+
+
+
 });
 
 // convert schema to model. instances of models are documents

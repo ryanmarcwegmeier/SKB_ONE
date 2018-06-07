@@ -28,6 +28,7 @@ router.post('/email',mailing)
  */
 function insertUser(req,res,next){
     var user = new userModel(req.body);
+    // user.apikey = createSecretKey(); Session
     user.role="student";
         user.save((err) => {
             if (err) {
@@ -250,6 +251,17 @@ function mailing(user, lang){
 
 }
 
+/**
+ * creates Key for session
+ * @return {string}
+ */
+function createSecretKey(){
+    let key="";
+    for(let i=0; i<4;i++){
+        key +=Math.floor(Math.random()*Math.pow(16,12)).toString(16);
+    }
+    return key;
+}
 
 
 module.exports = router;

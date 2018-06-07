@@ -29,6 +29,27 @@ app.use(session({
     saveUninitialized:true,
 }))
 
+//SESSION
+
+// app.all('/*', function(req, res,next) {
+//     userModel.findOne({ 'apikey': req.get("apikey") }, function (err, user) {
+//         if(err || user == null) {
+//             req.role="guest"	//@Ryan: Ist das der Name der Rolle "Gast"?
+//         } else {
+//             req.role = user.role
+//             req.userID = user._id
+//         }
+//         console.log("****************************")
+//         console.log(req.userID)
+//         console.log(req.role)
+//         next();
+//
+//     });
+// });
+
+
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

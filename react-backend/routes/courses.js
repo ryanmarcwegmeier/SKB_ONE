@@ -21,8 +21,31 @@ router.delete("/:title", deleteCourse);
  */
 function insertCourse(req, res, next){
     console.log("insertCourse()");
-    console.log(JSON.stringify(req.body));
-    var course = new courseModel(req.body);
+    let teacher=[]
+    req.body.teachers.split(",").forEach(e=>{
+        teacher.push({name:e})
+    })
+    let student=[]
+    req.body.students.split(",").forEach(e=>{
+        student.push({name:e})
+    })
+
+
+    var course = new courseModel(
+        {
+            level:req.body.level,
+            language:req.body.language,
+            teachers:teacher,
+            students:student,
+            day:req.body.day,
+            dateStart:req.body.dateStart,
+            dateEnd:req.body.dateEnd,
+            room:req.body.room,
+            description: req.body.description,
+            capacity:req.body.capacity
+
+    });
+    console.log(course.nummer)
     course.save((err, course) => {
         if (err) {
             console.log(err);
@@ -30,7 +53,7 @@ function insertCourse(req, res, next){
         } else {
             res.sendStatus(201);
         }
-    });    
+    });
 }
 
 /**

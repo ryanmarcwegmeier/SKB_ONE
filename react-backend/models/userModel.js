@@ -10,6 +10,12 @@ var Schema = mongoose.Schema;
  * userSchema={username:String, firstname:String, lastname:String, tel:String, email, String, password:String, role:String}
  * */
 var userSchema = new Schema({
+    //SESSION
+    // apikey:  {
+    //     type: String,
+    //     unique: true,
+    //     required: true
+    // },
     username:  {
         type: String,
         unique: true,
