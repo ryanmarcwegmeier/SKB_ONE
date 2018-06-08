@@ -30,7 +30,7 @@ class Courses extends Component {
     deleteCourse(course_id){
         return event => {
             event.preventDefault();
-            fetch(('/course/'+course_id), {
+            fetch(('/courses/'+course_id), {
                 method: 'delete',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -99,7 +99,7 @@ class Courses extends Component {
                                                             </button>
                                                         </Link></td>
                                                         }
-                                                        {this.props.loggedUser.role!='guest' &&
+                                                        {this.props.loggedUser.role!='guest' && this.props.loggedUser.role != 'student' &&
                                                         <td>
 
                                                         <form onSubmit={this.deleteCourse(course._id)}>

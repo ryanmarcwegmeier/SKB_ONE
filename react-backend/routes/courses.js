@@ -65,7 +65,9 @@ function insertCourse(req, res, next){
  * @param {object} next - Handler
  */
 function getSingleCourse(req, res, next){
-    courseModel.findOne({id: req.params.id }, function (err, course) {
+    console.log("Get single Kurs")
+    console.log(req.params.id)
+    courseModel.findOne({_id: req.params.id }, function (err, course) {
         // if error or course not exists
         if(err || course == null) {
             console.log(err);
@@ -125,6 +127,8 @@ function updateCourse(req, res, next){
  * @param {object} next - Handler
  */
 function deleteCourse(req, res, next) {
+    console.log("DELETE")
+    console.log(req.params.id);
     courseModel.findOneAndDelete({_id: req.params.id}, (err, course) => {
         if (err) {
             res.send(400);

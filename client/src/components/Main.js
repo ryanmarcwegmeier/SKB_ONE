@@ -15,6 +15,7 @@ import SingleUser from "../views/SingleUser";
 import Impressum from "../views/Impressum";
 import Dashboard from "../views/Dashboard";
 import CourseLang from "../views/CoursesLang";
+import CoursesDetail from "./CourseDetail";
 class Main extends Component {
 
 
@@ -118,6 +119,7 @@ class Main extends Component {
                         }
                         {/*<Route exact path="/index" component={Home}/>*/}
                         <Route exact path="/courses" component={CourseLang}/>
+                        <Route exact path="/courses/:id" component={CoursesDetail}/>
                         <Route exact path="/contact" component={Contact}/>
                         <Route exact path="/courses/:lang/view" render={(props)=><Courses loggedUser={(!this.state.user)?{role:'guest'}:this.state.user} {...props}/>}/>
                         <Route exact path="/impressum" component={Impressum}/>
