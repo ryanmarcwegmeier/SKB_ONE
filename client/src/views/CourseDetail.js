@@ -25,8 +25,8 @@ class CoursesDetail extends Component {
                     <main class="container">
                         <div class="row">
                             <Overview/>
-                            <CourseContent/>
                             <Forum/>
+                            <CourseContent/>
                             <FAQ/>
                             <Instructor/>
 
