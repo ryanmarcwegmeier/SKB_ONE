@@ -2,93 +2,110 @@ import React, {Component} from 'react';
 
 class CourseContent extends Component {
     render() {
-        return (<div id="course-content" class="col-md-12 course-detail">
-
-            <h1>Course Content and Documents</h1>
-
-            <ul class="timeline">
-                <div class="text-center">
-                    <a href="#" class="btn btn-info">
-                        Recent Upload
+        return (
+               <section class="timeline">
+            <div class="timeline-container">
+                <div class="timeline-box">
+                    <div class="timeline-icon ">
                         <span>
-                            <i class="far fa-calendar"></i>
+                            <i class="fas fa-star"></i>
                         </span>
-                    </a>
+                    </div>
+
+                    <div class="timeline-content">
+
+                        <h2>Title of section 1</h2>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+                        <a href="#0" class="timeline-read-more">Read more</a>
+                        <span class="timeline-date">Jan 14</span>
+                    </div>
 
                 </div>
 
-
-                <li>
-                    <div class="direction-l">
-                        <div class="flag-wrapper">
-                            <span class="hexa">
-                                <i class="far fa-dot-circle"></i>
-                            </span>
-                            <span class="flag">Lorem ipsum.</span>
-                            <span class="time-wrapper">
-                                <span class="time">Feb 2015</span>
-                            </span>
-                        </div>
-                        <div class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
-                        </div>
+                <div class="timeline-box">
+                    <div class="timeline-icon">
+                        <span>
+                            <i class="fas fa-star"></i>
+                        </span>
                     </div>
 
-                    <div class="direction-l sub-section-l">
-                        <div class="flag-wrapper">
-                            <span class="hexa">
-                                <i class="fas fa-file-alt"></i>
-                            </span>
-                            <span class="flag">Lorem ipsum.</span>
-                            <span class="time-wrapper">
-                                <span class="time">Feb 2015</span>
-                            </span>
-                        </div>
-                        <div class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.
-                        </div>
+                    <div class="timeline-content">
+
+                        <h2>Title of section 2</h2>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>
+                        <a href="#0" class="timeline-read-more">Read more</a>
+                        <span class="timeline-date">Jan 18</span>
                     </div>
 
-                </li>
+                </div>
 
-                <li>
-                    <div class="direction-r">
-                        <div class="flag-wrapper">
-                            <span class="hexa">
-                                <i class="far fa-dot-circle"></i>
-                            </span>
-                            <span class="flag">Bacon ipsum anim.</span>
-                            <span class="time-wrapper">
-                                <span class="time">Dec 2014</span>
-                            </span>
-                        </div>
-
-                        <div class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </div>
-
+                <div class="timeline-box">
+                    <div class="timeline-icon ">
+                        <span>
+                            <i class="fas fa-star"></i>
+                        </span>
                     </div>
 
-                    <div class="direction-r sub-section-r">
-                        <div class="flag-wrapper">
-                            <span class="hexa">
-                                <i class="fas fa-book-open"></i>
-                            </span>
-                            <span class="flag">Bacon ipsum anim.</span>
-                            <span class="time-wrapper">
-                                <span class="time">Dec 2014</span>
-                            </span>
-                        </div>
-
-                        <div class="desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </div>
-
+                    <div class="timeline-content">
+                        <h2>Title of section 3</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.</p>
+                        <a href="#0" class="timeline-read-more">Read more</a>
+                        <span class="timeline-date">Jan 24</span>
                     </div>
 
-                </li>
-            </ul>
-        </div>
+                </div>
+
+                <div class="timeline-box">
+                    <div class="timeline-icon">
+                        <span>
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
+
+                    <div class="timeline-content">
+                        <h2>Title of section 4</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+                        <a href="#0" class="timeline-read-more">Read more</a>
+                        <span class="timeline-date">Feb 14</span>
+                    </div>
+
+                </div>
+
+                <div class="timeline-box">
+                    <div class="timeline-icon">
+                        <span>
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
+
+                    <div class="timeline-content">
+                        <h2>Title of section 5</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.</p>
+                        <a href="#0" class="timeline-read-more">Read more</a>
+                        <span class="timeline-date">Feb 18</span>
+                    </div>
+
+                </div>
+
+                <div class="timeline-box">
+                    <div class="timeline-icon">
+                        <span>
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
+
+                    <div class="timeline-content">
+                        <h2>Final Section</h2>
+                        <p>This is the content of the last section</p>
+                        <span class="timeline-date">Feb 26</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
 
         );
     }
