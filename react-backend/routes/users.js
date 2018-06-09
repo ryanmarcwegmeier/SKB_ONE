@@ -58,6 +58,7 @@ function insertUser(req,res,next){
  * @param {object} next - Handler
  */
 function getSingleUser(req,res,next){
+    // if req.user.username==req.params.username || req.user.role=='admin'
         userModel.findOne({ 'username': req.params.username }, function (err, user) {
             if(err || user == null) {
                 console.log(err);

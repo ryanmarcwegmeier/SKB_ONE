@@ -6,31 +6,39 @@ class ModalSignUp extends Component {
     constructor(props){
         super(props);
         this.signup = this.signup.bind(this);
+        this.state={
+            isRegisterFailed:false
+        }
     }
 
     toggleModal(){
         document.getElementById('myModal').style.display = "none";
     }
     signup(event){
-        event.preventDefault();
-        fetch('/users', {
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "username": this.username.value,
-                "firstname":this.firstname.value,
-                "lastname":this.lastname.value,
-                "email":this.email.value,
-                "tel":this.tel.value,
-                "password":this.password.value
+
+        if(this.password.value!=this.confirmpassword.value || this.password.value==""){
+            this.setState({'isRegisterFailed': true });
+            return;
+        }else{
+            event.preventDefault();
+            fetch('/users', {
+                method: 'post',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({
+                    "username": this.username.value,
+                    "email":this.email.value,
+                    "password":this.password.value
+                })
+            }).then((res) => {
+                if (res.ok){
+                    window.location.reload()
+                } else {
+                    alert('Registration Failed')
+                }
             })
-        }).then((res) => {
-            if (res.ok){
-                window.location.reload()
-            } else {
-                alert('Registration Failed')
-            }
-        })
+        }
+
+
     };
 
     render() {
@@ -59,29 +67,23 @@ class ModalSignUp extends Component {
                                         <label htmlFor="username"><span className={'text-muted'}><b>Username</b></span></label>
                                         <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="username" placeholder="Username"/>
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="FirstName"><span className={'text-muted'}><b>Firstname</b></span></label>
-                                        <input  ref={(ref) => {this.firstname = ref}} type="text" className="form-control" id="FirstName" placeholder="FirstName"/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="LastName"><span className={'text-muted'}><b>Lastname</b></span></label>
-                                        <input  ref={(ref) => {this.lastname = ref}} type="text" className="form-control" id="LastName" placeholder="LastName"/>
-                                    </div>
+
                                     <div className="form-group">
                                         <label htmlFor="Email"><span className={'text-muted'}><b>Email</b></span></label>
                                         <input  ref={(ref) => {this.email = ref}} type="email" className="form-control" id="email" placeholder="Email"/>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="TelNummer"><span className={'text-muted'}><b>Phone</b></span></label>
-                                        <input  ref={(ref) => {this.tel = ref}} type="tel" className="form-control" id="TelNummer" placeholder="TelNummer"/>
-                                    </div>
-                                    <div className="form-group">
                                         <label htmlFor="psw"><span className={'text-muted'}><b>Password</b></span></label>
                                         <input  ref={(ref) => {this.password = ref}} type="password" className="form-control" id="psw" placeholder="Password"/>
                                      <label htmlFor="pswcomfirm"><span className={'text-muted'}><b>Confirm Password</b></span></label>
-                                        <input type="password" className="form-control" id="pswconfirm" placeholder="Password"/>
+                                        <input ref={(ref) => {this.confirmpassword = ref}} type="password" className="form-control" id="pswconfirm" placeholder="Password"/>
                                     </div>
                                 </div>
+                                {this.state.isRegisterFailed&&
+                                <div className="alert alert-danger">
+                                    <strong>Failure!</strong>Passwords are not identical
+                                </div>
+                                }
                                 <div className="modal-footer">
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                     <button type="button" className="btn btn-danger" data-dismiss="modal">Close</button>

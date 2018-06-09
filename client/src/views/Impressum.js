@@ -15,9 +15,9 @@ class Impressum extends Component {
             <div className="App">
                 <div className={"content"}>
                     <Header text={'Impressum'}/>
-                    <main className={'bg-light container-fluid'}>
+                    <main className={'container-fluid'}>
                         <div className={'row'}>
-                            <div className={'col-md-9 ml-auto mr-auto border rounded'}>
+                            <div className={'col-md-9 ml-auto mr-auto border rounded bg-light rounded shadow m-3'}>
                                 <article>
                                     <p>
                                         Die Sprach- und Kulturbörse ist eine Einrichtung an der TU Berlin.

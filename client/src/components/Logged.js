@@ -43,7 +43,7 @@ class Logged extends Component {
                         <li className="nav-item loggedBoxItem">
 
                             <Link to={"/users/"+this.props.username}>
-                                <button type="button" className="btn btn-outline-danger" style={{width:'100%'}}>
+                                <button type="button" className="btn btn-outline-info" style={{width:'100%'}}>
                                     <i className="fas fa-user-cog mr-1"></i>
                                     {this.props.username}
                                 </button>
@@ -54,7 +54,7 @@ class Logged extends Component {
                         </li>
                         <div className="dropdown-divider"></div>
                         <li className="nav-item loggedBoxItem">
-                            <button type="button" className="btn btn-outline-danger" style={{width:'100%'}} onClick={this.logout}>
+                            <button type="button" className="btn btn-outline-info" style={{width:'100%'}} onClick={this.logout}>
                                 <i className="fas fa-sign-out-alt mr-1"></i>
                                 Logout
                             </button>

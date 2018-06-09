@@ -21,7 +21,7 @@ class User extends Component {
     /**
      * fetch all users from DB
      */
-    componentWillMount() {
+    componentDidMount() {
         sessionStorage.clear()
         fetch('/users')
             .then(res => res.json())
@@ -58,24 +58,24 @@ class User extends Component {
                 <div className={"content"}>
                 <Header text={"Users"} />
 
-                <main className={'bg-light container-fluid'}>
+                <main className={'container-fluid'}>
                     {(this.props.isAdmin)?
 
                     <div className={'row'}>
-                        <div className={'col-sm-11 ml-auto mr-auto'}>
+                        <div className={'col-sm-11 ml-auto mr-auto bg-light shadow rounded m-3'}>
 
                             <div>
                                 <div className="table-responsive">
-                                    <table className="table table-bordered table-striped">
+                                    <table className="table table-striped">
                                         <thead>
                                         <tr>
                                             <th scope="col">#id</th>
                                             <th scope="col">username</th>
-                                            <th scope="col">firstname</th>
-                                            <th scope="col">lastname</th>
                                             <th scope="col">email</th>
-                                            <th scope="col">phone</th>
                                             <th scope="col">role</th>
+                                            <th scope="col"/>
+                                            <th scope="col"/>
+
                                         </tr>
                                         </thead>
 
@@ -86,22 +86,19 @@ class User extends Component {
                                             <tr>
                                                 <th scope="row">{user._id}</th>
                                                 <td>{user.username}</td>
-                                                <td>{user.firstname}</td>
-                                                <td>{user.lastname}</td>
                                                 <td>{user.email}</td>
-                                                <td>{user.tel}</td>
                                                 <td>{user.role}</td>
                                                 <td><Link to={"/users/" + user.username}>
                                                     <button type={'button'}
-                                                            className="btn btn-light border rounded-circle text-center">
+                                                            className="border-0 btn btn-outline-dark border rounded-circle text-center">
                                                         <i className="fas fa-id-card"></i>
 
                                                     </button>
                                                 </Link></td>
                                                 <td>
-                                                    <form onSubmit={this.deleteUser(user.username)}>
+                                                    <form onSubmit={()=>{ if (window.confirm('Are you sure you wish to delete this item?')) this.deleteUser(user.username) } }>
                                                         <button type={'submit'}
-                                                                className="btn btn-light border rounded-circle text-center">
+                                                                className="border-0 btn btn-outline-dark border rounded-circle text-center">
                                                             <i className="fas fa-user-times"></i></button>
                                                     </form>
                                                 </td>

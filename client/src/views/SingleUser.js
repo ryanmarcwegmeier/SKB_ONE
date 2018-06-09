@@ -51,12 +51,6 @@ class SingleUser extends Component {
         if(this.password_new.value==''){psw=this.state.user.password}
         else {psw=this.password_new.value}
 
-        alert("fname "+fname)
-        alert("lname "+lname)
-        alert("email "+email)
-        alert("phone "+phone)
-        alert("role "+role)
-        alert("psw "+psw)
 
         event.preventDefault();
         fetch('/users/'+this.user_name, {

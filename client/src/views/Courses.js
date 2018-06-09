@@ -51,12 +51,20 @@ class Courses extends Component {
             <div className="App">
                 <div className={"content"}>
                     <Header text={"Courses - "+this.props.match.params.lang}/>
-                    <main className={'bg-light container-fluid'}>
+                    <main className={'container-fluid'}>
                         <div className={'row'}>
-                            <div className={'col-sm-11 ml-auto mr-auto'}>
-                                <div>
+                            <div className={'col-sm-11 ml-auto mr-auto '}>
+                                <div className={'bg-light shadow'}>
+                                    {(this.props.loggedUser.role=='admin' || this.props.loggedUser.role=='teacher') &&
+                                    <span className="d-inline-block" tabIndex="0" data-toggle="tooltip"
+                                          title="Disabled tooltip">
+                                    <Link to="/courses/german/add">
+                                        <button style={{pointerEvents:'none'}}  type="button" className="btn btn-outline-dark" ><i className="fas fa-plus"></i></button></Link>
+                                    </span>
+                                        }
+
                                     <div className="table-responsive">
-                                        <table className="table table-bordered">
+                                        <table className="table ">
                                             <thead className={""}>
                                                 <tr>
                                                     <th scope="col">Level</th>
@@ -66,6 +74,8 @@ class Courses extends Component {
                                                     <th scope="col">Time</th>
                                                     <th scope="col">Teacher</th>
                                                     <th scope="col">Room</th>
+                                                    <th scope="col"/>
+                                                    <th scope="col"/>
                                                 </tr>
                                             </thead>
 

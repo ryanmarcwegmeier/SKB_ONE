@@ -8,6 +8,11 @@ var Schema = mongoose.Schema;
  * */
 var courseSchema = new Schema({
 
+    isPrivate:{
+        type:Boolean,
+        required:true,
+    },
+
     level:  {
         type: String,
         required: true
@@ -25,7 +30,7 @@ var courseSchema = new Schema({
         required:true,
     },
     students: [
-        {name: String}
+        {email: String}
     ],
 
     day:{

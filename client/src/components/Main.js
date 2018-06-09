@@ -15,6 +15,7 @@ import SingleUser from "../views/SingleUser";
 import Impressum from "../views/Impressum";
 import Dashboard from "../views/Dashboard";
 import CourseLang from "../views/CoursesLang";
+import CoursesAdd from "../views/CoursesAdd";
 import CoursesDetail from "./CourseDetail";
 class Main extends Component {
 
@@ -50,9 +51,9 @@ class Main extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-lg navbar-dark bg-danger container-fluid ">
-                        <a href={"https://github.com/SNetMERN/SKB_ONE"} className={'topImg'}>
-                            <img src={logo} alt={"Logo"} style={{width:'8vh', borderRadius:'1000px'}}/>
+                    <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid " style={{background:'#1B566F'}}>
+                        <a href={"/index"} >
+                            <i className={'navbar-brand'}>SKB</i>
                         </a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -110,17 +111,17 @@ class Main extends Component {
 
 
                     </nav>
-                    <div className="content">
+                    <div className="">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
                         {(!this.state.user)?
                             <Route path="/index" component={Home}/>
                             :
                             <Route path="/index" component={Dashboard}/>
                         }
-                        {/*<Route exact path="/index" component={Home}/>*/}
                         <Route exact path="/courses" component={CourseLang}/>
                         <Route exact path="/courses/:id" component={CoursesDetail}/>
                         <Route exact path="/contact" component={Contact}/>
+                        <Route exact path="/courses/:lang/add" component={CoursesAdd}/>
                         <Route exact path="/courses/:lang/view" render={(props)=><Courses loggedUser={(!this.state.user)?{role:'guest'}:this.state.user} {...props}/>}/>
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User isAdmin={(this.state.user.role=='admin')?true:false}/>} />

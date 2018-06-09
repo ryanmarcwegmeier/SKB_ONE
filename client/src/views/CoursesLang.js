@@ -32,21 +32,21 @@ class CourseLang extends Component {
 
             <div className="App">
                 <div className={"content"}>
-                <Header text={"Users"} />
+                <Header text={"Choose language"} />
 
-                <main className={'bg-light container-fluid'}>
+                <main className={'container-fluid'}>
                     {(true)?
 
                     <div className={'row'}>
-                        <div className={'col-sm-5 ml-auto mr-auto'}>
+                        <div className={'col-sm-5 ml-auto mr-auto m-3'}>
 
                             <div>
-                                <div className="table-responsive">
-                                    <ul className="list-group">
+                                <div className="table-responsive bg-light shadow rounded">
+                                    <ul className="list-group" style={{textAlign:'center'}}>
                                         {this.state.langs.map(lang =>
-                                            <li className={'list-group-item'}>
+                                            <li className={'list-group-item language'} style={{padding:0}}>
                                                 <NavLink exact to={"courses/"+lang.toLowerCase()+'/view' }>
-                                                    <span className="nav-link" >
+                                                    <span className="nav-link p-3" >
                                                         {lang}
                                                     </span>
                                                 </NavLink>

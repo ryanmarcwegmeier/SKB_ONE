@@ -10,7 +10,7 @@ router.post("/", insertCourse);
 router.get("/:lang/view", getCoursesByLang)
 router.get("/:id", getSingleCourse);
 router.get("/", getAllCourses);
-router.put("/", updateCourse);
+router.put("/:id", updateCourse);
 router.delete("/:id", deleteCourse);
 
 /**
@@ -43,7 +43,9 @@ function insertCourse(req, res, next){
             dateEnd:req.body.dateEnd,
             room:req.body.room,
             description: req.body.description,
-            capacity:req.body.capacity
+            capacity:req.body.capacity,
+            isPrivate:false,
+            time:req.body.time
 
     });
     console.log(course.nummer)
@@ -111,7 +113,7 @@ function getAllCourses(req, res, next){
  * @param {object} next - Handler
  */
 function updateCourse(req, res, next){
-    courseModel.updateOne({title: req.body.title}, req.body, (err) => {
+    courseModel.updateOne({_id: req.params.id}, req.body, (err) => {
         if(err) {
             res.status(400).json({ errorMessage: "Requested course update failed (course not found or invalid field data)." });
         } else {

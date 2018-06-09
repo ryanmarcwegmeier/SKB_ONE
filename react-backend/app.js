@@ -38,7 +38,7 @@ app.use(session({
 //             req.role="guest"	//@Ryan: Ist das der Name der Rolle "Gast"?
 //         } else {
 //             req.role = user.role
-//             req.userID = user._id
+//             req.userID = user
 //         }
 //         console.log("****************************")
 //         console.log(req.userID)

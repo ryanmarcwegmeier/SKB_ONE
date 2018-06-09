@@ -23,15 +23,12 @@ var userSchema = new Schema({
     },
     firstname: {
         type: String,
-        required: true
     },
     lastname: {
         type: String,
-        required: true
     },
     tel: {
         type: String,
-        required: true,
         validate: {
             validator: function(v) {
                 var re = /^[0-9]+$/im;
