@@ -3,6 +3,7 @@ import sprache1 from '../img/learning.png'
 import sprache2 from '../img/learning2.png'
 import sprache3 from '../img/sprache3.png'
 import Background from '../img/bgCarousel.jpg'
+import Zoom from 'react-reveal/Zoom';
 
 class Carousel extends Component {
 
@@ -20,25 +21,31 @@ class Carousel extends Component {
                         <div className="carousel-item active">
                             <img className="d-block img-fluid" src={sprache1} alt="First slide"/>
                             <div className="carousel-caption d-none d-md-block">
+                                <Zoom>
                                 <section className={'ml-auto text-light  rounded shadow-md'} style={{fontSize:'1.2em', width:'50%'}}>
                                 <p>Die SKB versteht sich als einen Raum, in dem Menschen mit ganz verschiedenen persönlichen und kulturellen Hintergründen miteinander lernen und arbeiten.</p>
                                 </section>
+                                </Zoom>
                             </div>
                         </div>
                         <div className="carousel-item">
                             <img className="ml-auto d-block img-fluid pr-5" src={sprache2} alt="Second slide" />
                             <div className="carousel-caption d-none d-md-block">
+                                <Zoom>
                                 <section className={'mr-auto text-light  rounded shadow-md'} style={{fontSize:'1.2em', width:'50%'}}>
                                     <p>Sprache besteht aus schriftlichen oder mündlichen Zeichenelementen und dient dem Ausdrücken von Gefühlen, Gedanken und Absichten sowie der Verständigung.</p>
                                 </section>
+                                </Zoom>
                             </div>
                         </div>
                         <div className="carousel-item">
                             <img className="d-block img-fluid" src={sprache3} alt="Third slide" />
                             <div className=" carousel-caption d-none d-md-block">
+                                <Zoom>
                                 <section className={' ml-auto text-light  rounded shadow-md'} style={{fontSize:'1.2em', width:'50%'}}>
                                     <p>Die SKB versteht sich als einen Raum, in dem Menschen mit ganz verschiedenen persönlichen und kulturellen Hintergründen miteinander lernen und arbeiten.</p>
                                 </section>
+                                </Zoom>
                             </div>
                         </div>
                     </div>

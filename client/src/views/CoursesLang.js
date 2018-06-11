@@ -3,10 +3,11 @@ import Header from '../components/Header'
 import Footer from '../components/Footer';
 import {NavLink} from "react-router-dom";
 import NotAllow from "./NotAllow";
+import Zoom from 'react-reveal/Zoom';
+
 
 /** Class representing User View. */
 class CourseLang extends Component {
-    state = {langs: []}
 
     /**
      *constructor
@@ -14,6 +15,10 @@ class CourseLang extends Component {
      */
     constructor(props){
         super(props);
+        this.state={
+            langs:[],
+            isFetching:true,
+        }
     }
 
     /**
@@ -23,7 +28,7 @@ class CourseLang extends Component {
         sessionStorage.clear()
         fetch('/lang')
             .then(res => res.json())
-            .then(langs => this.setState({ langs }));
+            .then(langs => {this.setState({ langs });{this.setState({isFetching:false})}});
     }
 
 
@@ -38,22 +43,29 @@ class CourseLang extends Component {
                     {(true)?
 
                     <div className={'row'}>
-                        <div className={'col-sm-5 ml-auto mr-auto m-3'}>
+                        <div className={'col-sm-5 ml-auto mr-auto p-0 m-3 bg-light shadow rounded'}>
 
                             <div>
-                                <div className="table-responsive bg-light shadow rounded">
-                                    <ul className="list-group" style={{textAlign:'center'}}>
-                                        {this.state.langs.map(lang =>
-                                            <li className={'list-group-item language'} style={{padding:0}}>
-                                                <NavLink exact to={"courses/"+lang.toLowerCase()+'/view' }>
-                                                    <span className="nav-link p-3" >
+                                {(this.state.isFetching) ?
+                                    <div className={'text-center p-4'}>
+                                        <i className="fa fa-spinner fa-spin" style={{fontSize: "5vw"}}></i>
+                                    </div> :
+                                    <div className="table-responsive">
+                                        <ul className="list-group" style={{textAlign: 'center'}}>
+                                            {this.state.langs.map(lang =>
+                                                <Zoom>
+                                                <li className={'list-group-item language'} style={{padding: 0}}>
+                                                    <NavLink exact to={"courses/" + lang.toLowerCase() + '/view'}>
+                                                    <span className="nav-link p-3">
                                                         {lang}
                                                     </span>
-                                                </NavLink>
-                                            </li>
-                                        )}
-                                    </ul>
-                                </div>
+                                                    </NavLink>
+                                                </li>
+                                                </Zoom>
+                                            )}
+                                        </ul>
+                                    </div>
+                                }
                             </div>
 
 

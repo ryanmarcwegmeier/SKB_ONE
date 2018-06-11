@@ -32,7 +32,7 @@ class Logged extends Component {
 
     render() {
         return (
-            <div >
+            <div>
                 <div className="dropdown ">
                     <button className="btn btn-outline-light rounded-circle text-center" type="button" id="dropdownMenuButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,8 +49,6 @@ class Logged extends Component {
                                 </button>
 
                             </Link>
-
-
                         </li>
                         <div className="dropdown-divider"></div>
                         <li className="nav-item loggedBoxItem">
@@ -59,7 +57,6 @@ class Logged extends Component {
                                 Logout
                             </button>
                         </li>
-
                     </ul>
                 </div>
             </div>

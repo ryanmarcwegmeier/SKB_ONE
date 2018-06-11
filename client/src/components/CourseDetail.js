@@ -47,6 +47,7 @@ class CoursesDetail extends Component {
                     <main className="container">
                         <div className="row">
 
+
                             <ScrollableAnchor id={'course-overview'}>
                                 <Overview/>
                             </ScrollableAnchor>
