@@ -73,7 +73,6 @@ class Courses extends Component {
                                         <button type="button" className="btn btn-outline-dark m-2" ><i className="fas fa-plus"></i>Add Course</button></Link>
                                     </span>
                                         }
-
                                         <Zoom>
                                         <div className="table-responsive">
                                             <table className="table ">
