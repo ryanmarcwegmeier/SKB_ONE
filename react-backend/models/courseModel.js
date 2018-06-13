@@ -8,6 +8,10 @@ var Schema = mongoose.Schema;
  * */
 var courseSchema = new Schema({
 
+    headerStyle:{
+        type:String
+    },
+
     isPrivate:{
         type:Boolean,
         required:true,
@@ -23,20 +27,9 @@ var courseSchema = new Schema({
         required:true,
     },
 
-    teachers:{
-      type:[
-          {name: String}
-      ],
-        required:true,
-    },
-    students: [
-        {email: String}
-    ],
-
     day:{
         type:String,
         required:true,
-
     },
 
     dateStart: {
@@ -47,6 +40,16 @@ var courseSchema = new Schema({
     dateEnd: {
         type: Date,
         required:true,
+    },
+
+    registrationStart:{
+        type: Date,
+        required:true
+    },
+
+    registrationEnd:{
+        type: Date,
+        required:true
     },
 
     time:{

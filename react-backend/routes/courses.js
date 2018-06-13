@@ -22,10 +22,6 @@ router.delete("/:id", deleteCourse);
  */
 function insertCourse(req, res, next){
     console.log("insertCourse()");
-    let teacher=[]
-    req.body.teachers.split(",").forEach(e=>{
-        teacher.push({name:e})
-    })
     let student=[]
     req.body.students.split(",").forEach(e=>{
         student.push({name:e})
@@ -34,10 +30,9 @@ function insertCourse(req, res, next){
 
     var course = new courseModel(
         {
+            headerStyle:req.body.headerStyle,
             level:req.body.level,
             language:req.body.language,
-            teachers:teacher,
-            students:student,
             day:req.body.day,
             dateStart:req.body.dateStart,
             dateEnd:req.body.dateEnd,
@@ -45,10 +40,10 @@ function insertCourse(req, res, next){
             description: req.body.description,
             capacity:req.body.capacity,
             isPrivate:false,
-            time:req.body.time
-
+            time:req.body.time,
+            registrationStart:req.body.registrationStart,
+            registrationEnd:req.body.registrationEnd,
     });
-    console.log(course.nummer)
     course.save((err, course) => {
         if (err) {
             console.log(err);
@@ -144,8 +139,6 @@ function deleteCourse(req, res, next) {
 }
 
 function getCoursesByLang(req,res,next){
-    console.log("____________________________________________________dsvdsfsfdsaofdgfogfodgfoa________________________________________")
-    console.log(req.params.lang)
     courseModel.find({'language':req.params.lang}, (err, course) => {
         if(err) {
             res.statusSend(500);

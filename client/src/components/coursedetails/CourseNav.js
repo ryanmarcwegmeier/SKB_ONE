@@ -23,23 +23,23 @@ class CourseNav extends Component {
 
     render() {
         return (
-                <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
-                    <div class="collapse navbar-collapse" id="course-navigation">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#course-overview">Overview</a>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+                    <div className="collapse navbar-collapse" id="course-navigation">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item">
+                                <a className="nav-link" href="#course-overview">Overview</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#course-content">Course Content</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#course-content">Course Content</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#course-forum">Announcements</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#course-forum">Announcements</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#course-faqs">FAQs</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#course-faqs">FAQs</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#course-instructors">Instructors</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#course-instructors">Instructors</a>
                             </li>
                         </ul>
                     </div>

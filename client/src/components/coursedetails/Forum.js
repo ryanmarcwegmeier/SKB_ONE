@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class Forum extends Component {
     render () {
         return (
-            <div id="course-forum" class="col-md-12 course-detail">
+            <div id="course-forum" className="col-md-12 course-detail">
                 <h1>Announcement</h1>
 
                 <p>Insert forum here ...</p>

@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 class FAQ extends Component {
     render () {
         return (
-            <div id="course-faqs" class="col-md-12 course-detail">
+            <div id="course-faqs" className="col-md-12 course-detail">
                 <h1>FAQs</h1>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
 

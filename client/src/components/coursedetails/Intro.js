@@ -57,13 +57,13 @@ class Intro extends Component {
 
     render() {
         return (
-            <div id="course-intro" class="jumbotron jumbotron-fluid">
-                <div class="container">
+            <div id="course-intro" className={"jumbotron jumbotron-fluid "+this.props.kurs.headerStyle}>
+                <div className="container-fluid">
                     <h1>{(!this.props.kurs)?null:(this.props.kurs.level+'-'+this.props.kurs.language)}</h1>
-                    <a href="#course-content" class="btn btn-danger">
+                    <a href="#course-content" className="btn btn-info">
                         See current feed</a>
 
-                    <button type="button" type={'button'} className={'btn btn-outline-danger float-md-right'} data-toggle="modal" data-target="#exampleModal"><i className="fas fa-user-edit"></i></button>
+                    <button type="button" type={'button'} className={'btn btn-info float-md-right'} data-toggle="modal" data-target="#exampleModal"><i className="fas fa-user-edit"></i></button>
 
 
                     <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog"
