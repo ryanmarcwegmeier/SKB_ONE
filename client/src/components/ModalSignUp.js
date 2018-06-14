@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 import axios from 'axios'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 class ModalSignUp extends Component {
 
     constructor(props){
@@ -12,7 +12,10 @@ class ModalSignUp extends Component {
             redirected:false,
         }
         axios.defaults.headers.common['apikey'] = this.props.user.apikey;
+        this.props.changeUser(this.props.user)
     }
+
+
 
 
     signup(event){
@@ -28,6 +31,9 @@ class ModalSignUp extends Component {
                 password: this.password.value,
             })
                 .then((res) => {
+                    document.getElementById('close').click()
+
+
                     this.setState({
                         redirected:true,
                     })
@@ -40,11 +46,14 @@ class ModalSignUp extends Component {
     };
 
     render() {
-
         return (
-            (this.state.redirected)?
-                <Redirect to={'/index'}/>
-                :
+            <span>
+
+                {(this.state.redirected)&&
+                    <Redirect to={'/'}>fdsafasd</Redirect>
+
+                }
+
             <span>
                 <span className="" data-toggle="modal" data-target="#myModal2">
                     <button type={"button"} className={"btn btn-outline-light"}>
@@ -58,7 +67,7 @@ class ModalSignUp extends Component {
 
                             <div className="modal-header">
                                 <h4 className="modal-title text-dark">Sign UP</h4>
-                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                <button id={'close'} type="button" className="close" data-dismiss="modal">&times;</button>
                             </div>
 
                             <form onSubmit={this.signup}>
@@ -66,18 +75,18 @@ class ModalSignUp extends Component {
 
                                     <div className="form-group">
                                         <label htmlFor="username"><span className={'text-muted'}><b>Username</b></span></label>
-                                        <input ref={(ref) => {this.username = ref}} type="text" className="form-control" id="username" placeholder="Username"/>
+                                        <input required={true} ref={(ref) => {this.username = ref}} type="text" className="form-control" id="username" placeholder="Username"/>
                                     </div>
 
                                     <div className="form-group">
                                         <label htmlFor="Email"><span className={'text-muted'}><b>Email</b></span></label>
-                                        <input  ref={(ref) => {this.email = ref}} type="email" className="form-control" id="email" placeholder="Email"/>
+                                        <input required={true}  ref={(ref) => {this.email = ref}} type="email" className="form-control" id="email" placeholder="Email"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="psw"><span className={'text-muted'}><b>Password</b></span></label>
                                         <input  ref={(ref) => {this.password = ref}} type="password" className="form-control" id="psw" placeholder="Password"/>
                                      <label htmlFor="pswcomfirm"><span className={'text-muted'}><b>Confirm Password</b></span></label>
-                                        <input ref={(ref) => {this.confirmpassword = ref}} type="password" className="form-control" id="pswconfirm" placeholder="Password"/>
+                                        <input required={true} ref={(ref) => {this.confirmpassword = ref}} type="password" className="form-control" id="pswconfirm" placeholder="Password"/>
                                     </div>
                                 </div>
                                 {this.state.isRegisterFailed&&
@@ -93,10 +102,14 @@ class ModalSignUp extends Component {
                         </div>
                     </div>
                 </div>
+        </span>
 
             </span>
-        );
+            )
+
+
     }
+
 }
 
 export default ModalSignUp;

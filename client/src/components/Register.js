@@ -16,7 +16,7 @@ class Register extends Component {
                     ?
                     <span>
                 <ModalLogin changeUser={this.props.changeUser} user={this.props.user}/>
-                < ModalSignUp user={this.props.user}/>
+                < ModalSignUp changeUser={this.props.changeUser} user={this.props.user}/>
                     </span>
                     :
                     <Logged changeUser={this.props.changeUser} user={this.props.user}/>
