@@ -13,11 +13,8 @@ class NotAllow extends Component {
         return (
             <div className="App">
 
-                        <div className="alert alert-danger">
-                            <strong>Failure: </strong>You are not allowed to access this part!
-
-
-
+                <div className="alert alert-danger">
+                    <strong>Failure: </strong>You are not allowed to access this part!
                 </div>
 
             </div>

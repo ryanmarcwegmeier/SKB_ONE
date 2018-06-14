@@ -48,7 +48,7 @@ class CourseLang extends Component {
                 <Header text={"Choose language"} />
 
                 <main className={'container-fluid'}>
-                    {(true)?
+                    {(this.props.user.role!='guest')?
 
                     <div className={'row'}>
                         <div className={'col-sm-5 ml-auto mr-auto p-0 m-3 bg-light shadow rounded'}>
@@ -95,7 +95,12 @@ class CourseLang extends Component {
                         </div>
 
                     </div>
-                    :<NotAllow/>}
+                    :
+                        <div className="alert alert-danger">
+                            <strong>Denied access: </strong>You are not allowed to access this part!.<br/>
+                            Please sign up oder sign in
+                        </div>
+                    }
 
                 </main>
 
