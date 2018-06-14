@@ -11,7 +11,7 @@ var sessionModel = require('../models/sessionModel');
 
 router.post("/", insertUser);
 router.get("/:username", getSingleUser);
-router.get("/api/:apikey", getUserByApikey);
+router.get("/api/apikey", getUserByApikey);
 
 router.get("/", getAllUsers);
 router.put("/:username", updateUser);
@@ -75,7 +75,9 @@ function getSingleUser(req,res,next){
 
 function getUserByApikey(req,res,next){
     // if req.user.username==req.params.username || req.user.role=='admin'
-    userModel.findOne({ 'apikey': req.params.apikey }, function (err, user) {
+    console.log("GET USER")
+    console.log(req.get('apikey'))
+    userModel.findOne({ 'apikey': req.get('apikey') }, function (err, user) {
         if(err || user == null) {
             console.log(err);
             res.send(404);

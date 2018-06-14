@@ -28,6 +28,9 @@ class Main extends Component {
         }
         this.changeUser=this.changeUser.bind(this)
         axios.defaults.headers.common['apikey'] = this.state.user.apikey;
+        if(this.getCookie('apikey')!='' && this.getCookie('apikey')!=undefined&& this.getCookie('apikey')!=null){
+            axios.defaults.headers.common['apikey'] =  this.getCookie('apikey')
+        }
 
     }
 
@@ -57,7 +60,7 @@ class Main extends Component {
         if((this.getCookie('apikey')==null || this.getCookie('apikey')=='' || this.getCookie('apikey')== undefined)){
             this.setState({isFetching:false})
         }else{
-            axios.get('/users/api/'+this.getCookie('apikey'))
+            axios.get('/users/api/apikey')
                 .then((res)=>{
                     const user = res.data;
                     this.setState({ user });
