@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+import axios from 'axios'
+import {Redirect} from 'react-router-dom'
 class ModalSignUp extends Component {
 
     constructor(props){
         super(props);
         this.signup = this.signup.bind(this);
         this.state={
-            isRegisterFailed:false
+            isRegisterFailed:false,
+            redirected:false,
         }
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
     }
 
-    toggleModal(){
-        document.getElementById('myModal').style.display = "none";
-    }
+
     signup(event){
 
         if(this.password.value!=this.confirmpassword.value || this.password.value==""){
@@ -21,21 +22,18 @@ class ModalSignUp extends Component {
             return;
         }else{
             event.preventDefault();
-            fetch('/users', {
-                method: 'post',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({
-                    "username": this.username.value,
-                    "email":this.email.value,
-                    "password":this.password.value
-                })
-            }).then((res) => {
-                if (res.ok){
-                    window.location.reload()
-                } else {
-                    alert('Registration Failed')
-                }
+            axios.post('users',{
+                username: this.username.value,
+                email: this.email.value,
+                password: this.password.value,
             })
+                .then((res) => {
+                    this.setState({
+                        redirected:true,
+                    })
+                }).catch(function (error) {
+                console.log(error);
+            });
         }
 
 
@@ -44,6 +42,9 @@ class ModalSignUp extends Component {
     render() {
 
         return (
+            (this.state.redirected)?
+                <Redirect to={'/index'}/>
+                :
             <span>
                 <span className="" data-toggle="modal" data-target="#myModal2">
                     <button type={"button"} className={"btn btn-outline-light"}>

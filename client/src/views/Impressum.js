@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import Footer from '../components/Footer'
 import Header from "../components/Header";
 
+/**
+ * represents Impressum view
+ */
 class Impressum extends Component {
+    /**
+     * constructor
+     * @param props
+     */
     constructor(props){
+        sessionStorage.clear()
         super(props);
     }
 

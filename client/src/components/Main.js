@@ -5,7 +5,6 @@ import {
     Redirect,
     BrowserRouter
 } from "react-router-dom";
-import logo from '../img/logo3.jpg';
 import Home from "../views/Home";
 import Contact from "../views/Contact";
 import Register from "./Register";
@@ -17,39 +16,63 @@ import Dashboard from "../views/Dashboard";
 import CourseLang from "../views/CoursesLang";
 import CoursesAdd from "../views/CoursesAdd";
 import CoursesDetail from "./CourseDetail";
+import axios from 'axios';
 class Main extends Component {
 
 
     constructor(props){
         super(props)
         this.state={
-            user:{}
+            isFetching:true,
+            user:{role:'guest', apikey:''},
         }
+        this.changeUser=this.changeUser.bind(this)
+        axios.defaults.headers.common['apikey'] = this.state.user.apikey;
+
+    }
+
+    getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
+    changeUser(user){
+        this.setState({user:user})
     }
 
     componentWillMount() {
-        fetch('/sessions', {
-            credentials: 'include',
-            method: 'get',
-            headers: {'Content-Type':'application/json'}
-        }).then((res) => {
-            if (res.ok){
-                return res.json();
-            } else {
-                return false;
-            }
-        }).then((json) => {
-            this.setState((state) => ({user:json}))
-
-
-
-        })
-    }
+        if(this.state.user.role=='guest'){
+        if((this.getCookie('apikey')==null || this.getCookie('apikey')=='' || this.getCookie('apikey')== undefined)){
+            this.setState({isFetching:false})
+        }else{
+            axios.get('/users/api/'+this.getCookie('apikey'))
+                .then((res)=>{
+                    const user = res.data;
+                    this.setState({ user });
+                    this.setState({isFetching:false})
+                })
+        }
+    }}
 
     render() {
 
         return (
             <BrowserRouter>
+                {(!this.state.isFetching)
+                &&
+
                 <div>
                     <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid " style={{background:'#1B566F'}}>
                         <a href={"/index"} >
@@ -78,7 +101,7 @@ class Main extends Component {
                                     </NavLink>
                                 </li>
 
-                                {this.state.user!=false && this.state.user.role =='admin' &&
+                                {this.state.user.role =='admin' &&
                                 <li className={"nav-item "}>
                                     <NavLink exact to="/users">
                                         <span className="nav-link" >
@@ -105,7 +128,7 @@ class Main extends Component {
                                 </li>
                             </ul>
                             <div className={"registerTop"}>
-                                <Register isLogged={(this.state.user!=false)?true:false} username={(this.state.user!=false)?this.state.user.username:null}/>
+                                <Register changeUser={this.changeUser} isLogged={(this.state.user.role!='guest')?true:false} user={this.state.user}/>
                             </div>
                         </div>
 
@@ -113,22 +136,23 @@ class Main extends Component {
                     </nav>
                     <div className="">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
-                        {(!this.state.user)?
+                        {(this.state.user.role=='guest')?
                             <Route path="/index" component={Home}/>
                             :
-                            <Route path="/index" component={Dashboard}/>
+                            <Route path="/index" render={(props)=><Dashboard user={this.state.user} {...props}/>}/>
                         }
-                        <Route exact path="/courses" component={CourseLang}/>
-                        <Route exact path="/courses/:id" component={CoursesDetail}/>
-                        <Route exact path="/contact" component={Contact}/>
-                        <Route exact path="/courses/:lang/add" component={CoursesAdd}/>
-                        <Route exact path="/courses/:lang/view" render={(props)=><Courses loggedUser={(!this.state.user)?{role:'guest'}:this.state.user} {...props}/>}/>
+                        <Route exact path="/courses"  render={(props)=><CourseLang user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/:id"  render={(props)=><CoursesDetail user={this.state.user} {...props}/>}/>
+                        <Route exact path="/contact" render={(props)=><Contact user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/add/form" render={(props)=><CoursesAdd user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/:lang/view" render={(props)=><Courses user={this.state.user} {...props}/>}/>
                         <Route exact path="/impressum" component={Impressum}/>
-                        <Route exact path="/users" render={()=><User isAdmin={(this.state.user.role=='admin')?true:false}/>} />
-                        <Route exact path="/users/:username" render={(props)=><SingleUser loggedUser={(!this.state.user)?null:this.state.user} {...props}/>}/>
+                        <Route exact path="/users" render={()=><User user={this.state.user}/>} />
+                        <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
 
                     </div>
                 </div>
+                }
             </BrowserRouter>
         );
     }

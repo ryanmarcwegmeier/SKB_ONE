@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var session = require('express-session');
+// var session = require('express-session');
 
 
 
@@ -18,36 +18,37 @@ var usersRouter = require('./routes/users');
 var coursesRouter = require('./routes/courses');
 var contactRouter = require('./routes/contact');
 var langRouter = require('./routes/language');
-var sessionuser = require('./routes/sessions');
+// var sessionuser = require('./routes/sessions');
 var messageRouter = require('./routes/messages');
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+var userModel = require('./models/userModel');
 
 
-app.use(session({
-    secret:'sessionTesting',
-    resave:true,
-    saveUninitialized:true,
-}))
+
+// app.use(session({
+//     secret:'sessionTesting',
+//     resave:true,
+//     saveUninitialized:true,
+// }))
 
 //SESSION
 
-// app.all('/*', function(req, res,next) {
-//     userModel.findOne({ 'apikey': req.get("apikey") }, function (err, user) {
-//         if(err || user == null) {
-//             req.role="guest"	//@Ryan: Ist das der Name der Rolle "Gast"?
-//         } else {
-//             req.role = user.role
-//             req.userID = user
-//         }
-//         console.log("****************************")
-//         console.log(req.userID)
-//         console.log(req.role)
-//         next();
-//
-//     });
-// });
+app.all('/*', function(req, res,next) {
+    console.log(req.get("apikey"))
+    userModel.findOne({ 'apikey': req.get("apikey") }, function (err, user) {
+        if(err || user == null) {
+            console.log("false")
+            req.user={role:"guest"}
+        } else {
+            console.log("true")
+
+            req.user = user
+        }
+        next();
+
+    });
+});
 
 
 
@@ -66,7 +67,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/courses', coursesRouter);
-app.use('/sessions', sessionuser);
+// app.use('/sessions', sessionuser);
 app.use('/contact', contactRouter);
 app.use('/lang', langRouter);
 app.use('/messages', messageRouter);

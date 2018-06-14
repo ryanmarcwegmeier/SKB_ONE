@@ -11,11 +11,12 @@ var sessionModel = require('../models/sessionModel');
 
 router.post("/", insertUser);
 router.get("/:username", getSingleUser);
+router.get("/api/:apikey", getUserByApikey);
+
 router.get("/", getAllUsers);
 router.put("/:username", updateUser);
 router.delete("/:username", deleteUser);
 router.post("/login", login)
-router.post("/logout", logout)
 router.post('/email',mailing)
 
 
@@ -27,9 +28,11 @@ router.post('/email',mailing)
  * @param {object} next - Handler
  */
 function insertUser(req,res,next){
+    console.log("hier im insert")
     var user = new userModel(req.body);
     // user.apikey = createSecretKey(); Session
     user.role="student";
+    user.apikey=createSecretKey();
         user.save((err) => {
             if (err) {
                 console.log("error saving usuer")
@@ -70,6 +73,19 @@ function getSingleUser(req,res,next){
         });
 }
 
+function getUserByApikey(req,res,next){
+    // if req.user.username==req.params.username || req.user.role=='admin'
+    userModel.findOne({ 'apikey': req.params.apikey }, function (err, user) {
+        if(err || user == null) {
+            console.log(err);
+            res.send(404);
+        } else {
+            console.log("hier the single user:")
+            res.json(user);
+        }
+    });
+}
+
 /**
  * Sends an array of users if successed else status code 500
  * @param {object} req - Requestobject
@@ -77,16 +93,36 @@ function getSingleUser(req,res,next){
  * @param {object} next - Handler
  */
 function getAllUsers(req,res,next){
-        userModel.find({}, (err, user) => {
-            if(err) {
-                res.statusSend(500);
-            } else {
-                var users = user.map((user) => {
-                    return user;
-                });
-                res.json(users);
-            }
-        });
+    // console.log(req.session.user)
+    // if(!req.session.user || req.session.user.role!='admin') {
+    //     res.send(401)
+    // }else{
+    //     userModel.find({}, (err, user) => {
+    //         if(err) {
+    //             res.statusSend(500);
+    //         } else {
+    //             var users = user.map((user) => {
+    //                 return user;
+    //             });
+    //             res.json(users);
+    //         }
+    //     });
+    // }
+
+    //Kontrolle
+    console.log("hier alle User")
+    console.log(req.get('apikey'))
+    userModel.find({}, (err, user) => {
+                if(err) {
+                    res.send(500);
+                } else {
+                    var users = user.map((user) => {
+                        return user;
+                    });
+                    res.json(users);
+                }
+            });
+
 }
 
 /**
@@ -156,64 +192,38 @@ function deleteUser(req, res, next) {
  * @param {object} next - Handler
  */
 function login (req,res,next){
-    console.log("router-users:")
-    console.log(req.sessionID)
-    if(!req.session.user){
+
+    // if(!req.session.user){
         userModel.findOne({ 'username': req.body.username, 'password':req.body.password }, function (err, user) {
             if(err || user == null) {
-                console.log("find user error")
-                console.log(err);
                 res.send(401);
             } else {
-                req.session.user=user;
-                console.log("ich bin user:")
-                console.log(user._id)
-                console.log("session")
-                console.log(req.sessionID)
-                let sessionMod = new sessionModel({'sessionID':req.sessionID,'user':user._id});
-                sessionMod.isNew=true;
-                try {
-                    sessionMod.save((err) => {
-                        if (err) {
-                            console.log("error saving session")
-                            if(err.code === 11000 || err.errors != null) {
-                                console.log(err)
-                                res.send(400);
-                            }
-                        } else {
-                            res.send(200);
-                        }
-                    });
-                } catch(err){
-                    console.log(err.message);
-                }
-                req.session.save();
-                console.log()
+                res.json(user)
             }
         });
-    }else{
-        console.log("logged")
-        res.send(200)
-    }
+    // }else{
+    //     console.log("logged")
+    //     res.send(200)
+    // }
 }
-
-
-/**
- * Clear the session
- * @param {object} req - Requestobject
- * @param {object} res - Respondsobject
- * @param {object} next - Handler
- */
-function logout (req,res,next){
-console.log("login out")
-    if(!req.session.user){
-        res.send(400)
-    }else{
-        req.session.destroy();
-        res.send(200)
-    }
-
-}
+//
+//
+// /**
+//  * Clear the session
+//  * @param {object} req - Requestobject
+//  * @param {object} res - Respondsobject
+//  * @param {object} next - Handler
+//  */
+// function logout (req,res,next){
+// console.log("login out")
+//     if(!req.session.user){
+//         res.send(400)
+//     }else{
+//         req.session.destroy();
+//         res.send(200)
+//     }
+//
+// }
 
 function mailing(user, lang){
     var fs = require('fs');

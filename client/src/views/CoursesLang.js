@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Header from '../components/Header'
 import Footer from '../components/Footer';
-import {NavLink} from "react-router-dom";
+import {NavLink, Link} from "react-router-dom";
 import NotAllow from "./NotAllow";
 import Zoom from 'react-reveal/Zoom';
+import axios from "axios/index";
 
 
 /** Class representing User View. */
@@ -19,19 +20,26 @@ class CourseLang extends Component {
             langs:[],
             isFetching:true,
         }
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
+
     }
 
     /**
-     * fetch all users from DB
+     * fetch all langs from DB
      */
     componentWillMount() {
-        sessionStorage.clear()
-        fetch('/lang')
-            .then(res => res.json())
-            .then(langs => {this.setState({ langs });{this.setState({isFetching:false})}});
+
+        axios.get('/lang')
+            .then((res)=>{
+                this.setState({langs:res.data})
+                this.setState({isFetching:false})
+            })
     }
 
-
+    /**
+     * Renders a list of languages from
+     * @return {*}
+     */
     render() {
         return (
 
@@ -44,32 +52,46 @@ class CourseLang extends Component {
 
                     <div className={'row'}>
                         <div className={'col-sm-5 ml-auto mr-auto p-0 m-3 bg-light shadow rounded'}>
+                            {(this.props.user.role=='admin' || this.props.user.role=='teacher') &&
+                            <span className="d-inline-block" tabIndex="0" data-toggle="tooltip"
+                                  title="Add Course">
+                                    <Link to="/courses/add/form">
+                                        <button type="button" className="btn btn-outline-dark m-2" ><i className="fas fa-plus"></i>Add Course</button></Link>
+                                    </span>
+                            }
+                            {this.state.isFetching ?
+                                <div className={'text-center p-4'}>
+                                    <i className="fa fa-spinner fa-spin" style={{fontSize: "5vw"}}></i>
+                                </div>
+                                :
 
-                            <div>
-                                {(this.state.isFetching) ?
-                                    <div className={'text-center p-4'}>
-                                        <i className="fa fa-spinner fa-spin" style={{fontSize: "5vw"}}></i>
-                                    </div> :
-                                    <div className="table-responsive">
-                                        <ul className="list-group" style={{textAlign: 'center'}}>
-                                            {this.state.langs.map(lang =>
-                                                <Zoom>
-                                                <li className={'list-group-item language'} style={{padding: 0}}>
-                                                    <NavLink exact to={"courses/" + lang.toLowerCase() + '/view'}>
+
+                                <div>
+                                    {(!this.state.langs.length) ?
+                                        <div className="alert alert-info  m-0 shadow">
+                                            <strong>Info!</strong> No courses available
+                                        </div> :
+                                        <div className="table-responsive">
+                                            <ul className="list-group" style={{textAlign: 'center'}}>
+                                                {this.state.langs.map(lang =>
+                                                    <Zoom>
+                                                        <li className={'list-group-item language'} style={{padding: 0}}>
+                                                            <NavLink exact
+                                                                     to={"courses/" + lang.toLowerCase() + '/view'}>
                                                     <span className="nav-link p-3">
                                                         {lang}
                                                     </span>
-                                                    </NavLink>
-                                                </li>
-                                                </Zoom>
-                                            )}
-                                        </ul>
-                                    </div>
-                                }
-                            </div>
+                                                            </NavLink>
+                                                        </li>
+                                                    </Zoom>
+                                                )}
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
 
 
-
+                            }
                         </div>
 
                     </div>

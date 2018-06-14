@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import {Link} from "react-router-dom";
 import NotAllow from "./NotAllow";
 import Zoom from 'react-reveal/Zoom';
+import axios from 'axios';
+
 
 
 /** Class representing User View. */
@@ -16,21 +18,34 @@ class User extends Component {
     constructor(props){
         super(props);
         this.deleteUser = this.deleteUser.bind(this);
+        this.getAllUser= this.getAllUser.bind(this)
         this.state = {
             isFetching:true,
-            users: []
+            users: [],
+            res:true,
         }
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
+    }
 
+    getAllUser(){
+        axios.get('/users')
+            .then(res => {
+                const users = res.data;
+                this.setState({ users });
+                this.setState({isFetching:false})
+            }).catch(function (error) {
+            console.log(error);
+        });
     }
 
     /**
      * fetch all users from DB
      */
     componentDidMount() {
-        sessionStorage.clear()
-        fetch('/users')
-            .then(res => res.json())
-            .then(users => {this.setState({ users });this.setState({isFetching:false})});
+        this.getAllUser()
+        // fetch('/users')
+        //     .then(res => res.json())
+        //     .then(users => {this.setState({ users });this.setState({isFetching:false})});
     }
 
     /**
@@ -40,19 +55,12 @@ class User extends Component {
     deleteUser(user_name){
         return event => {
             event.preventDefault();
-            fetch(('/users/'+user_name), {
-                method: 'delete',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    "username": user_name,
-                })
-            }).then((res) => {
-                if (res.ok) {
-                    window.location.reload(false);
-                } else {
-                    throw new Error('Something went wrong with your fetch');
-                }
-            })
+
+            if(window.confirm('Are you sure to delete this item?')){
+                axios.delete('/users/'+user_name);
+            }
+
+
         }
     };
 
@@ -64,7 +72,7 @@ class User extends Component {
                 <Header text={"Users"} />
 
                 <main className={'container-fluid'}>
-                    {(this.props.isAdmin)?
+                    {(this.props.user.role=='admin')?
 
                     <div className={'row'}>
                         <div className={'col-sm-11 ml-auto mr-auto bg-light shadow rounded m-3'}>
@@ -91,8 +99,8 @@ class User extends Component {
 
                                             <tbody>
                                             {this.state.users.map(user =>
-                                                <Zoom>
-                                                <tr>
+                                                <Zoom key={user.username}>
+                                                <tr key={user.username}>
                                                     <th scope="row">{user._id}</th>
                                                     <td>{user.username}</td>
                                                     <td>{user.email}</td>
@@ -105,7 +113,7 @@ class User extends Component {
                                                         </button>
                                                     </Link></td>
                                                     <td>
-                                                        <form onSubmit={()=>{ if (window.confirm('Are you sure you wish to delete this item?')) this.deleteUser(user.username) } }>
+                                                        <form onSubmit={this.deleteUser(user.username) }>
                                                             <button type={'submit'}
                                                                     className="border-0 btn btn-outline-dark border rounded-circle text-center">
                                                                 <i className="fas fa-user-times"></i></button>

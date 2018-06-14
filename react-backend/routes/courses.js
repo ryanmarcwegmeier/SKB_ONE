@@ -139,19 +139,13 @@ function deleteCourse(req, res, next) {
 }
 
 function getCoursesByLang(req,res,next){
+    console.log("hieristwas")
+    console.log(req.params.lang)
     courseModel.find({'language':req.params.lang}, (err, course) => {
         if(err) {
-            res.statusSend(500);
+            res.send(500);
         } else {
-            var courses = course.map((course) => {
-                let teachers=course.teachers.map(teacher=>{
-                    return teacher
-                })
-                course.teachers=teachers;
-                return course
-            });
-            console.log(courses)
-            res.json(courses);
+            res.json(course);
         }
     });}
 

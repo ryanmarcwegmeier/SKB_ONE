@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import Header from '../components/Header'
-import Footer from '../components/Footer';
 
-
+/**
+ * represents Access denied view
+ */
 class NotAllow extends Component {
 
-
+    /**
+     * render error message
+     * @return {*}
+     */
     render() {
         return (
             <div className="App">

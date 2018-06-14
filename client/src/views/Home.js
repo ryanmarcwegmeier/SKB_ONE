@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import Footer from '../components/Footer';
 import Carousel from "../components/Carousel";
 
-
+/**
+ * represents Home view (default)
+ */
 class Home extends Component {
 
+    /**
+     * deletes all session
+     */
     componentWillMount(){
         sessionStorage.clear()
     }
 
-
+    /**
+     * renders Home site
+     * @return {*}
+     */
     render() {
         return (
             <div className="App">

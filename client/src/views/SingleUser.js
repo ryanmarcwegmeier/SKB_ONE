@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer';
 import NotAllow from './NotAllow';
 import NoUser from './NoUser';
+import axios from 'axios';
 
 class SingleUser extends Component {
 
@@ -10,16 +11,28 @@ class SingleUser extends Component {
     constructor(props){
         super(props);
         this.user_name=this.props.match.params.username
+        this.getUser=this.getUser.bind(this)
+        this.exitEdit=this.exitEdit.bind(this)
         this.state={
-            user:{}
+            user:{},
+            error:''
 
         }
         this.sendEdit=this.sendEdit.bind(this);
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
+    }
+
+    getUser(){
+        axios.get('/users/'+this.user_name)
+            .then((res)=>this.setState({user:res.data}))
+            .catch((error)=>this.setState({failed:true}))
+
+
     }
 
     exitEdit(){
         sessionStorage.clear()
-        window.location.reload()
+        this.getUser()
     }
 
     activateEdit(){
@@ -28,59 +41,71 @@ class SingleUser extends Component {
     }
 
 
-    sendEdit(event){
-        let psw="";
-        let fname="";
-        let lname="";
-        let email="";
-        let phone="";
+    sendEdit(event) {
+        let psw = "";
+        let fname = "";
+        let lname = "";
+        let email = "";
+        let phone = "";
 
-        let role="";
-        if(this.props.loggedUser.role=='admin') {
-            role=this.role.value
-        }else{
-            role=this.state.user.role
+        let role = "";
+        if (this.props.user.role == 'admin') {
+            role = this.role.value
+        } else {
+            role = this.state.user.role
         }
 
 
-        if(this.password_old.value!=this.state.user.password && (this.password_old.value!='')){ return (alert("Fehler bei den Passwörtern")) }
-        if(this.firstname.value==''){fname=this.state.user.firstname}else {fname=this.firstname.value}
-        if(this.lastname.value==''){lname=this.state.user.lastname}else {lname=this.lastname.value}
-        if(this.email.value==''){email=this.state.user.email}else {email=this.email.value}
-        if(this.tel.value==''){phone=this.state.user.tel}else {phone=this.tel.value}
-        if(this.password_new.value==''){psw=this.state.user.password}
-        else {psw=this.password_new.value}
+        if (this.password_old.value != this.state.user.password && (this.password_old.value != '')) {
+            return (alert("Fehler bei den Passwörtern"))
+        }
+        if (this.firstname.value == '') {
+            fname = this.state.user.firstname
+        } else {
+            fname = this.firstname.value
+        }
+        if (this.lastname.value == '') {
+            lname = this.state.user.lastname
+        } else {
+            lname = this.lastname.value
+        }
+        if (this.email.value == '') {
+            email = this.state.user.email
+        } else {
+            email = this.email.value
+        }
+        if (this.tel.value == '') {
+            phone = this.state.user.tel
+        } else {
+            phone = this.tel.value
+        }
+        if (this.password_new.value == '') {
+            psw = this.state.user.password
+        }
+        else {
+            psw = this.password_new.value
+        }
 
 
         event.preventDefault();
-        fetch('/users/'+this.user_name, {
-            method: 'put',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "firstname":fname,
-                "lastname":lname,
-                "email":email,
-                "tel":phone,
-                "password":psw,
-                "role":role
-            })
-        }).then((res) => {
-            if (res.ok){
-                alert("success");
-                sessionStorage.clear()
-                window.location.reload()
-            } else {
-                throw new Error ('Something went wrong with your fetch');
-            }
-        })}
+
+        axios.put('/users/' + this.user_name, {
+            firstname: fname,
+            lastname: lname,
+            email: email,
+            tel: phone,
+            password: psw,
+            role: role
+        })
+            .then(()=>this.getUser())
+            .catch((err)=>this.setState({error:err}))
+
+    }
 
 
 
     componentWillMount() {
-        fetch('/users/'+this.user_name)
-            .then(res => res.json())
-            .then(json => this.setState({user:json}))
-            .catch((error)=>this.setState({failed:true}))
+        this.getUser()
 
     }
 
@@ -101,7 +126,7 @@ class SingleUser extends Component {
 
                             <div className={'col-sm-11 ml-auto mr-auto'}>
 
-                                {(this.state.failed!=true &&(this.props.loggedUser.role=='admin'||this.props.loggedUser.username==this.user_name))?
+                                {(this.state.failed!=true &&(this.props.user.role=='admin'||this.props.user.username==this.user_name))?
                                     <div>
                                         {(sessionStorage.getItem('activateEdit')==null)?
                                             <button onClick={this.activateEdit} type={'button'} className={'btn btn-outline-danger float-md-right'}><i className="fas fa-user-edit"></i></button>
@@ -111,8 +136,8 @@ class SingleUser extends Component {
                                             </button>
 
                                         }
-                                        <h3> User: {this.user_name}</h3>
-                                        {((this.props.loggedUser!=null || this.props.loggedUser!=undefined) && (this.props.loggedUser.id==this.state.user.id||this.props.loggedUser.role=='admin'))?
+                                        <h3> User: {this.state.user.username}</h3>
+                                        {((this.props.user!=null || this.props.user!=undefined) && (this.props.user.id==this.state.user.id||this.props.user.role=='admin'))?
 
                                             <div className="table-responsive">
                                                 <form className={'container-fluid'} onSubmit={this.sendEdit}>
@@ -175,7 +200,7 @@ class SingleUser extends Component {
                                                                     <td>{this.state.user.role}</td>
 
                                                                     :
-                                                                    (this.props.loggedUser.role!= 'admin')?
+                                                                    (this.props.user.role!= 'admin')?
                                                                         <td>{this.state.user.role}</td>
                                                                         :
                                                                         <td>

@@ -1,49 +1,75 @@
 import React, { Component } from 'react';
 import Footer from '../components/Footer'
 import Header from "../components/Header";
+import axios from 'axios';
+import map from '../img/map.JPG'
 
+/** Class representing Contact View. */
 class Contact extends Component {
+
+    /**
+     * Constructor
+     * @param props
+     */
     constructor(props){
         super(props);
+        this.state={
+            emailsuccessed:'',
+        }
         this.sendContact = this.sendContact.bind(this);
-
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
     }
 
+    /**
+     * send from data to contact for sending email
+     * if successed user get successed message else error message
+     * @param event
+     */
     sendContact(event){
         event.preventDefault();
-        fetch('/contact', {
-            credentials: 'include',
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "re": this.re.value,
-                "message":this.message.value,
-                "email":this.email.value
-            })
-        }).then((res) => {
-            if (res.ok){
-                return window.location.reload()
-            } else {
-                this.render=()=><h1>failed</h1>
-            }
+        axios.post('/contact',{
+            re:this.re.value,
+            message:this.message.value,
+            email:this.email.value,
         })
+            .then(res=>{
+                this.setState({emailsuccessed:true})
+            }).catch((error)=>{
+                this.setState({emailsuccessed:false})
+        })
+
     };
 
 
-
+    /**
+     * Renders contact form and mini map
+     * @return {*}
+     */
     render () {
         return (
             <div className="App">
                 <div className={"content"}>
                     <Header text={'Contact'}/>
                     <main className={'container-fluid'}>
+                        {typeof this.state.emailsuccessed=="boolean"&&(
+                        (this.state.emailsuccessed==true)?
+                            <div className="alert alert-success">
+                                <strong>Success!</strong> Email was sent.
+                            </div>
+                            :
+                            <div className="alert alert-danger">
+                                <strong>Error!</strong> Email wasn't sent. Try it again.
+                            </div>
+
+                        )}
+
                         <div className={'row'}>
                             <div className={'col-md-7 '}>
                                 <form onSubmit={this.sendContact} className={'p-3  bg-light rounded shadow m-3'}>
                                     <div className="form-group row">
                                         <label htmlFor="re" className="col-sm-2 col-form-label">Re:</label>
                                         <div className="col-sm-10">
-                                            <input ref={(ref) => {this.re = ref}} type="text"  className="form-control"
+                                            <input required={true} ref={(ref) => {this.re = ref}} type="text"  className="form-control"
                                                    id="re" />
                                         </div>
                                     </div>
@@ -51,7 +77,7 @@ class Contact extends Component {
                                         <label htmlFor="message"
                                                className="col-sm-2 col-form-label">Message:</label>
                                         <div className="col-sm-10">
-                                            <textarea ref={(ref) => {this.message = ref}} className="form-control" id="message"
+                                            <textarea required={true} ref={(ref) => {this.message = ref}} className="form-control" id="message"
                                                       rows="5"></textarea>
 
                                         </div>
@@ -59,7 +85,7 @@ class Contact extends Component {
                                     <div className="form-group row">
                                         <label htmlFor="mail" className="col-sm-2 col-form-label">E-mail:</label>
                                         <div className="col-sm-10">
-                                            <input ref={(ref) => {this.email = ref}} type="email"  className="form-control"
+                                            <input required={true} ref={(ref) => {this.email = ref}} type="email"  className="form-control"
                                                    id="mail" />
                                         </div>
                                     </div>
@@ -80,7 +106,7 @@ class Contact extends Component {
                                             width="100%" height="300" frameBorder="0"
                                             allowFullScreen></iframe>
                                     </div> :
-                                    <img/>
+                                    <img src={map} className={'border-rounded shadow'} style={{width:'99%'}}/>
                                 }
 
 

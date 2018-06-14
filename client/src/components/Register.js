@@ -4,6 +4,10 @@ import ModalSignUp from './ModalSignUp';
 import Logged from './Logged'
 
 class Register extends Component {
+    constructor(){
+        super()
+
+    }
 
     render() {
         return (
@@ -11,11 +15,11 @@ class Register extends Component {
                 {(!this.props.isLogged)
                     ?
                     <span>
-                <ModalLogin/>
-                < ModalSignUp/>
+                <ModalLogin changeUser={this.props.changeUser} user={this.props.user}/>
+                < ModalSignUp user={this.props.user}/>
                     </span>
                     :
-                    <Logged username={this.props.username}/>
+                    <Logged changeUser={this.props.changeUser} user={this.props.user}/>
                 }
                 </div>
 

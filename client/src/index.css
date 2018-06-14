@@ -7,6 +7,10 @@ footer{
     margin:0 !important;
 }
 
+.dashItem{
+    background: linear-gradient(to bottom, #FDC830, #F37335)
+}
+
 .header-Top{
     background: #F5F7FA;
     position: relative;
@@ -24,6 +28,7 @@ footer{
   overflow:auto;
   width: 100vw;
 }
+
 
 
 .hov:hover {
@@ -51,11 +56,18 @@ a{
 }
 
 @media screen and (max-width:991px) {
-  .dropdown-menu-right{
-    left: 0 !important;
-    right: auto !important;
+  .dropdown-menu-right {
+      left: 0 !important;
+      right: auto !important;
+
   }
 
+}
+
+@media screen and (max-width: 767px) {
+    .recentMessage{
+        margin-left: 0 !important;
+    }
 }
 
 @media screen and (min-width:992px) {

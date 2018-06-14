@@ -1,41 +1,59 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
+import axios from "axios/index";
 
 class ModalLogin extends Component {
 
     constructor(props){
         super(props);
         this.login = this.login.bind(this);
-        this.state = {loginsuccess:true}
+        this.state = {
+            loginsuccess:true,
+            redirect: false,
+            user:{}
+        }
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
+
     }
 
-    toggleModal(){
-        document.getElementById('myModal').style.display = "none";
+
+    setCookie(cname, cvalue, exdays) {
+        // var d = new Date();
+        // d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        // var expires = "expires="+ d.toUTCString();
+        // document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        document.cookie=cname+"="+cvalue;
     }
 
     login(event){
         event.preventDefault();
-        fetch('/users/login', {
-            credentials: 'include',
-            method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "username": this.username.value,
-                "password":this.password.value
-            })
-        }).then((res) => {
-            if (res.ok){
-                return window.location.replace('/index')
-            } else {
-                this.setState({'loginsuccess': false });
-            }
+        axios.post('/users/login', {
+            username:this.username.value,
+            password:this.password.value
         })
+
+            .then((res) => {
+                document.getElementById('closeModal').click()
+                this.setState({redirect:true})
+
+                const user = res.data;
+                    this.setState({ user });
+                    this.props.changeUser(user)
+                    this.setCookie('apikey',user.apikey, 1)
+                }
+            ).catch((error)=> this.setState({'loginsuccess': false }))
+
     };
 
 
 
     render() {
         return (
-            <span>
+            (this.state.redirect)?
+
+                <Redirect to='/index'/>
+                :
+                <span>
 
                 <span className="mr-2" data-toggle="modal" data-target="#myModal">
                     <button type={"button"} className={"btn btn-outline-light"}>
@@ -66,13 +84,13 @@ class ModalLogin extends Component {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="submit"   className="btn btn-primary">Submit</button>
-                                    <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.toggleModal}>Close</button>
+                                    <button type="submit"  className="btn btn-primary">Submit</button>
+                                    <button type="button" className="btn btn-danger" data-dismiss="modal" id={'closeModal'}>Close</button>
                                 </div>
                                 {this.state.loginsuccess==false &&
-                                    <div className="alert alert-danger" role="alert">
-                                        An error has occurred. Please try it again or Sign Up
-                                    </div>
+                                <div className="alert alert-danger" role="alert">
+                                    An error has occurred. Please try it again or Sign Up
+                                </div>
                                 }
                             </form>
                         </div>

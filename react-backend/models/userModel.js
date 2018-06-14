@@ -11,11 +11,10 @@ var Schema = mongoose.Schema;
  * */
 var userSchema = new Schema({
     //SESSION
-    // apikey:  {
-    //     type: String,
-    //     unique: true,
-    //     required: true
-    // },
+    apikey:  {
+        type: String,
+        unique: true,
+    },
     username:  {
         type: String,
         unique: true,
