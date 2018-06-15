@@ -58,6 +58,7 @@ class User extends Component {
 
             if(window.confirm('Are you sure to delete this item?')){
                 axios.delete('/users/'+user_name);
+                this.getAllUser()
             }
 
 

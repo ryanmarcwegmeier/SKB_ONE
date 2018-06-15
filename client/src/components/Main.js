@@ -106,7 +106,7 @@ class Main extends Component {
 
                                 {this.state.user.role =='admin' &&
                                 <li className={"nav-item "}>
-                                    <NavLink exact to="/users">
+                                    <NavLink to="/users">
                                         <span className="nav-link" >
                                             Users
                                         </span>

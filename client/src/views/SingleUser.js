@@ -141,7 +141,7 @@ class SingleUser extends Component {
 
                                             <div className="table-responsive">
                                                 <form className={'container-fluid'} onSubmit={this.sendEdit}>
-                                                    <table className="table table-bordered">
+                                                    <table className="table">
 
                                                         <tbody>
 
