@@ -7,4 +7,9 @@
         Hier können Sie auf unsere Startseite gelangen: <a href="http://localhost:3000/index">unsere Startseite</a>
     </p>
 
+    <h4>FORM</h4>
+    <form action="http://localhost:3001/" method="GET">
+    <input type="submit"/>
+    </form
+
 </article>

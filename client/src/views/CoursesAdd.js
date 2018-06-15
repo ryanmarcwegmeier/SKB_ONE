@@ -135,7 +135,7 @@ class CourseAdd extends Component {
 
         event.preventDefault();
 
-        if (this.registrationStart<=this.registrationEnd<=this.dateStart<=this.dateEnd){
+        if (true || this.registrationStart<=this.registrationEnd<=this.dateStart<=this.dateEnd){
 
 
             axios.post('/courses',{

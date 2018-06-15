@@ -59,7 +59,6 @@ class CoursesDetail extends Component {
                             <main className="container-fluid">
                                 <div className="row">
 
-
                                     <ScrollableAnchor id={'course-overview'}>
                                         <Overview/>
                                     </ScrollableAnchor>

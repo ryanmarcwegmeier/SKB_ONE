@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
 import { configureAnchors } from 'react-scrollable-anchor'
-import { goToTop } from 'react-scrollable-anchor'
-import { goToAnchor } from 'react-scrollable-anchor'
+import { goToTop ,goToAnchor  } from 'react-scrollable-anchor'
 import { removeHash } from 'react-scrollable-anchor'
 
 // clear URL hash
-removeHash()
-
 // scroll to #section1 without saving that hash update in history
 // goToAnchor('section1')
 // goToAnchor('section1', false)
@@ -15,11 +12,18 @@ removeHash()
 // goToAnchor('section1', true)
 
 // scroll to top of the page
-goToTop()
-configureAnchors({offset: '-100%', scrollDuration: 200})
-
 
 class CourseNav extends Component {
+
+    constructor(){
+        super()
+        this.handleA1=this.handleA1.bind(this)
+        configureAnchors({offset: 1000000000000000000000, scrollDuration: 200})
+    }
+    handleA1(){
+        goToAnchor('course-instructors')
+}
+
 
     render() {
         return (
@@ -27,19 +31,19 @@ class CourseNav extends Component {
                     <div className="collapse navbar-collapse" id="course-navigation">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
-                                <a className="nav-link" href="#course-overview">Overview</a>
+                                <a className="nav-link" >Overview</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#course-content">Course Content</a>
+                                <a className="nav-link" >Course Content</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#course-forum">Announcements</a>
+                                <a className="nav-link" >Announcements</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#course-faqs">FAQs</a>
+                                <a className="nav-link" >FAQs</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#course-instructors">Instructors</a>
+                                <a className="nav-link" onClick={this.handleA1}>Instructors</a>
                             </li>
                         </ul>
                     </div>
