@@ -17,6 +17,7 @@ import CourseLang from "../views/CoursesLang";
 import CoursesAdd from "../views/CoursesAdd";
 import CoursesDetail from "./CourseDetail";
 import axios from 'axios';
+import Footer from './Footer';
 class Main extends Component {
 
 
@@ -77,7 +78,7 @@ class Main extends Component {
                 &&
 
                 <div>
-                    <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid " style={{background:'#1B566F'}}>
+                    <nav id={'navbar'} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid sticky-top" style={{background:'#1B566F'}}>
                         <a href={"/index"} >
                             <i className={'navbar-brand'}>SKB</i>
                         </a>
@@ -137,7 +138,7 @@ class Main extends Component {
 
 
                     </nav>
-                    <div className="">
+                    <div className="main">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
                         {(this.state.user.role=='guest')?
                             <Route path="/index" component={Home}/>
@@ -154,6 +155,8 @@ class Main extends Component {
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
 
                     </div>
+                    <Footer/>
+
                 </div>
                 }
             </BrowserRouter>

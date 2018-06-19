@@ -167,7 +167,6 @@ class Courses extends Component {
                             </div>
                         </div>
                     </main>
-                    <Footer/>
                 </div>
             </div>
         )

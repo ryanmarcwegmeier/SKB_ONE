@@ -134,7 +134,6 @@ fdsfdsafdsafasdfdsfdsafdsafasdfdsfdsafdsafasdfdsfdsafdsafasdfdsfdsafdsafasdfdsfd
                         </div>
 
                     </main>
-                    <Footer/>
                 </div>
 
             </div>

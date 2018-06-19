@@ -268,7 +268,6 @@ class SingleUser extends Component {
 
                     </main>
 
-                    <Footer/>
                 </div>
 
             </div>

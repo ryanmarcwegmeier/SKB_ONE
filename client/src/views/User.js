@@ -146,7 +146,6 @@ class User extends Component {
 
                 </main>
 
-                <Footer/>
                 </div>
 
             </div>

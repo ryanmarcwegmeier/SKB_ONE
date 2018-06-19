@@ -373,8 +373,6 @@ class CourseAdd extends Component {
                             </div>
 
                         </main>
-
-                        <Footer/>
                     </div>
 
                 </div>

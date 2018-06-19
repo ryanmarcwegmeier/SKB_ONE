@@ -5,7 +5,7 @@ class Footer extends Component {
     render() {
 
         return (
-            <footer className={'container-fluid rounded pt-4 mb-5 pb-5 fixed-bottom bg-dark text-muted' } style={{zIndex:1, position:'relative'}}>
+            <footer className={'container-fluid rounded pt-4 pb-5 fixed-bottom bg-dark text-muted' } style={{zIndex:1, position:'relative'}}>
                 <div className={'row'}>
                 <div className={"col-md-4"}>
                         <section>

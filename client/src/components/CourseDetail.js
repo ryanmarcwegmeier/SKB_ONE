@@ -82,9 +82,7 @@ class CoursesDetail extends Component {
                         </div>
 
                     }
-
-                    <Footer/>
-                </div>
+                    </div>
 
             </div>
         )

@@ -196,10 +196,12 @@ function deleteUser(req, res, next) {
 function login (req,res,next){
 
     // if(!req.session.user){
+    console.log("bin hier im userlogin")
         userModel.findOne({ 'username': req.body.username, 'password':req.body.password }, function (err, user) {
             if(err || user == null) {
                 res.send(401);
             } else {
+                console.log(user)
                 res.json(user)
             }
         });

@@ -104,7 +104,6 @@ class CourseLang extends Component {
 
                 </main>
 
-                <Footer/>
                 </div>
 
             </div>
