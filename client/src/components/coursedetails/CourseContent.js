@@ -5,6 +5,7 @@ class CourseContent extends Component {
         return (
             <section className="timeline">
                 <div className="timeline-container">
+
                     <div className="timeline-box">
                         <div className="timeline-icon ">
                         <span>

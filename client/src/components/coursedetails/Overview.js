@@ -4,7 +4,6 @@ class Overview extends Component {
     render () {
         return (
             <div className="col-md-12 course-detail">
-                <h1>Recent Activity</h1>
                 <div className="row">
                     <div className="col-md-6 overview-detail">
                         <ul className="list-group overview-list">

@@ -15,9 +15,8 @@ import Impressum from "../views/Impressum";
 import Dashboard from "../views/Dashboard";
 import CourseLang from "../views/CoursesLang";
 import CoursesAdd from "../views/CoursesAdd";
-import CoursesDetail from "./CourseDetail";
+import CoursesDetail from "../components/CourseDetail";
 import axios from 'axios';
-import Footer from './Footer';
 class Main extends Component {
 
 
@@ -148,14 +147,14 @@ class Main extends Component {
                         <Route exact path="/courses"  render={(props)=><CourseLang user={this.state.user} {...props}/>}/>
                         <Route exact path="/courses/:id"  render={(props)=><CoursesDetail user={this.state.user} {...props}/>}/>
                         <Route exact path="/contact" render={(props)=><Contact user={this.state.user} {...props}/>}/>
-                        <Route exact path="/courses/add/form" render={(props)=><CoursesAdd user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/create/form" render={(props)=><CoursesAdd user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/create/form/:course" render={(props)=><CoursesAdd user={this.state.user} {...props}/>}/>
                         <Route exact path="/courses/:lang/view" render={(props)=><Courses user={this.state.user} {...props}/>}/>
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User user={this.state.user}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
 
                     </div>
-                    <Footer/>
 
                 </div>
                 }

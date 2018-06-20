@@ -55,7 +55,7 @@ class CourseLang extends Component {
                             {(this.props.user.role=='admin' || this.props.user.role=='teacher') &&
                             <span className="d-inline-block" tabIndex="0" data-toggle="tooltip"
                                   title="Add Course">
-                                    <Link to="/courses/add/form">
+                                    <Link to="/courses/create/form">
                                         <button type="button" className="btn btn-outline-dark m-2" ><i className="fas fa-plus"></i>Add Course</button></Link>
                                     </span>
                             }

@@ -5,7 +5,6 @@ class Instructor extends Component {
         return (
 
             <div id="course-instructors" className="col-md-12 course-detail">
-                <h1>Meet the instructors</h1>
                 <div className="row">
                     Insert team details
                 </div>
