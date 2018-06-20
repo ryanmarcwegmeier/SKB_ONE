@@ -61,11 +61,11 @@ class Intro extends Component {
             <div id="course-intro" className={"jumbotron jumbotron-fluid "+this.props.kurs.headerStyle}>
                 <div className="container-fluid">
                     <h1>{(!this.props.kurs)?null:(this.props.kurs.level+'-'+this.props.kurs.language)}</h1>
-                    <a href="#course-content" className="btn btn-info">
+                    <a href="#course-content" className="btn btn-secondary">
                         See current feed</a>
 
                     <Link to={'/courses/create/form/'+this.props.kurs._id}>
-                    <button type="button" type={'button'} className={'btn btn-info float-md-right'} data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" type={'button'} className={'btn btn-secondary float-md-right'} data-toggle="modal" data-target="#exampleModal">
                         <i className="fas fa-edit"></i>
                     </button>
                     </Link>

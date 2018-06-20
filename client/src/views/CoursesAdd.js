@@ -32,7 +32,6 @@ class CourseAdd extends Component {
             lang:'',
             redirect:false,
             kurs:{},
-            failed:false,
 
 
         };
@@ -48,19 +47,6 @@ class CourseAdd extends Component {
         axios.defaults.headers.common['apikey'] = this.props.user.apikey;
 
     }
-
-
-    componentWillMount(){
-        if(this.props.match.params.course!=undefined){
-            axios.get('/courses/'+this.props.match.params.course)
-                .then(res => {
-                    this.setState({kurs:res.data})
-                })
-                .catch((error)=>this.setState({failed:true}))
-        }
-
-    }
-
 
     /**
      * set private state for courses (Checkbox)
@@ -195,268 +181,200 @@ class CourseAdd extends Component {
                 :
                 <div className="App">
                     <div className={"content"}>
-                        {(this.props.match.params.course==undefined)?
-                            <Header text={'Create Course'}/>
-                            :
-                            <Header text={'Update Course'}/>
-                        }
-                        {(this.state.failed) ?
-
+                        <Header text={'Add Course'}/>
+                        <main className={'container-fluid pb-3'}>
+                            {this.state.err!='' &&
                             <div className="alert alert-danger">
-                                <strong>Error!</strong> No Course
+                                <strong>Error!</strong> {this.state.err}
                             </div>
-                            :
+                            }
+                            <div className={'row'}>
 
+                                {/*Options*/}
+                                <div className={'col-md-4 border rounded shadow bg-light'}>
+                                    <div className={'row'}>
+                                        <form onSubmit={this.insertCourse}>
+                                            <div className={'row'}>
+                                                <div className={'col-md-6 bg-light'}>
 
-                            <main className={'container-fluid pb-3'}>
-                                {this.state.err != '' &&
-                                <div className="alert alert-danger">
-                                    <strong>Error!</strong> {this.state.err}
-                                </div>
-                                }
-                                <div className={'row'}>
-
-                                    {/*Options*/}
-                                    <div className={'col-md-4 border rounded shadow bg-light'}>
-                                        <div className={'row'}>
-                                            <form onSubmit={this.insertCourse}>
-                                                <div className={'row'}>
-                                                    <div className={'col-md-6 bg-light'}>
-                                                        <div className="form-group">
-                                                            <label>Header Style</label><br/>
-                                                            <div className={'mr-2'}>
-                                                                <input type={'radio'} name={'header'}
-                                                                       checked={this.state.header == 'bg-dark text-light'}
-                                                                       value={'bg-dark text-light'}
-                                                                       onChange={this.handleHeader}/>
-                                                                <label>Dark</label>
-                                                            </div>
-                                                            <div className={'mr-2'}>
-                                                                <input type={'radio'} name={'header'}
-                                                                       checked={this.state.header == 'bg-light text-dark'}
-                                                                       value={'bg-light text-dark'}
-                                                                       onChange={this.handleHeader}/>
-                                                                <label>Light</label>
-                                                            </div>
-                                                            <div className={'mr-2'}>
-                                                                <input type={'radio'} name={'header'}
-                                                                       checked={this.state.header == 'bg-success text-light'}
-                                                                       value={'bg-success text-light'}
-                                                                       onChange={this.handleHeader}/>
-                                                                <label>Green</label>
-                                                            </div>
-                                                            <span className={'mr-2'}>
-                                                    <input type={'radio'} name={'header'}
-                                                           checked={this.state.header == 'bg-danger text-light'}
-                                                           value={'bg-danger text-light'} onChange={this.handleHeader}/>
-                                                    <label>Red</label>
-                                                </span>
-                                                            <div className={'mr-2'}>
-                                                                <input type={'radio'} name={'header'}
-                                                                       checked={this.state.header == 'bg-primary text-light'}
-                                                                       value={'bg-primary text-light'}
-                                                                       onChange={this.handleHeader}/>
-                                                                <label>Blue</label>
-                                                            </div>
-                                                            <div className={'mr-2'}>
-                                                                <input type={'radio'} name={'header'}
-                                                                       checked={this.state.header == 'bg-warning text-dark'}
-                                                                       value={'bg-warning text-dark'}
-                                                                       onChange={this.handleHeader}/>
-                                                                <label>Yellow</label>
-                                                            </div>
-
+                                                    <div className="form-group">
+                                                        <label>Header Style</label><br/>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'} checked={this.state.header == 'bg-dark text-light'} value={'bg-dark text-light'} onChange={this.handleHeader}/>
+                                                            <label>Dark</label>
                                                         </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="level">Level</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.level = ref
-                                                            }} type="text" className="form-control" id="level"
-                                                                   placeholder="Level" onChange={this.changeHeader}/>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'} checked={this.state.header == 'bg-light text-dark'} value={'bg-light text-dark'} onChange={this.handleHeader}/>
+                                                            <label>Light</label>
                                                         </div>
-                                                        <div className="form-group">
-                                                            <label htmlFor="language">Level</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.lang = ref
-                                                            }} type="text" className="form-control" id="language"
-                                                                   placeholder="Language" onChange={this.handleLang}/>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'}  checked={this.state.header == 'bg-success text-light'} value={'bg-success text-light'} onChange={this.handleHeader}/>
+                                                            <label>Green</label>
                                                         </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="day">Weekday</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.day = ref
-                                                            }} onChange={this.handleWeekday} type="text"
-                                                                   className="form-control" id="day"
-                                                                   placeholder="Weekday"/>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'}  checked={this.state.header == 'bg-danger text-light'} value={'bg-danger text-light'} onChange={this.handleHeader}/>
+                                                            <label>Red</label>
                                                         </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="dateStart">Date-Start</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.dateStart = ref
-                                                            }} type="date" className="form-control" id="dateStart"
-                                                                   placeholder="YYYY-MM-DD"/>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'} checked={this.state.header == 'bg-primary text-light'} value={'bg-primary text-light'} onChange={this.handleHeader}/>
+                                                            <label>Blue</label>
                                                         </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="dateEnd">Date-End</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.dateEnd = ref
-                                                            }} type="date" className="form-control" id="dateEnd"
-                                                                   placeholder="YYYY-MM-DD"/>
-                                                        </div>
-
-                                                        <div className="form-group">
-                                                            <label
-                                                                htmlFor="registrationStart">Registration-Start</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.registrationStart = ref
-                                                            }} type="date" className="form-control"
-                                                                   id="registrationStart"
-                                                                   placeholder="YYYY-MM-DD"/>
-                                                        </div>
-
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="registrationEnd">Registration-End</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.registrationEnd = ref
-                                                            }} type="date" className="form-control" id="registrationEnd"
-                                                                   placeholder="YYYY-MM-DD"/>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'} checked={this.state.header == 'bg-warning text-dark'} value={'bg-warning text-dark'} onChange={this.handleHeader}/>
+                                                            <label>Yellow</label>
                                                         </div>
 
                                                     </div>
-                                                    <div className={'col-md-6 bg-light'}>
 
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="time">Time</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.time = ref
-                                                            }} onChange={this.handleTime} type="text"
-                                                                   className="form-control" id="time"
-                                                                   placeholder="10:00 - 12:00"/>
-                                                        </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="room">Room</label>
-                                                            <input required={'true'} ref={(ref) => {
-                                                                this.room = ref
-                                                            }} onChange={this.handleRoom} type="text"
-                                                                   className="form-control" id="room"
-                                                                   placeholder="room"/>
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label required={'true'} htmlFor="capacity">Capacity</label>
-                                                            <input ref={(ref) => {
-                                                                this.capacity = ref
-                                                            }} type="number" min={0} className="form-control"
-                                                                   id="capacity"
-                                                            />
-                                                        </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="desc">Description</label>
-                                                            <textarea ref={(ref) => {
-                                                                this.description = ref
-                                                            }} rows={'5'} className={'form-control'}/>
-                                                        </div>
-
-                                                        <div className="form-check mb-4">
-                                                            <input onChange={this.handlePrivate} type="checkbox"
-                                                                   checked={this.state.isPrivate == true}
-                                                                   className="form-check-input" id="checkbox"
-                                                            />
-                                                            <label className="form-check-label"
-                                                                   htmlFor="checkbox">Private</label>
-                                                        </div>
-
-                                                        <div className="form-group">
-                                                            <label htmlFor="students">Students-Mail</label>
-                                                            <i className={"ml-2 fas fa-info btn btn-outline-info rounded-circle"}
-                                                               onClick={this.handleInfo}>
-                                                            </i>
-                                                            {this.state.info &&
-                                                            <div className="alert alert-info">
-                                                                <strong>Info!</strong> Divide emails with
-                                                                simicolons <strong>;</strong>
-                                                            </div>
-                                                            }
-
-                                                            <textarea ref={(ref) => {
-                                                                this.students = ref
-                                                            }} className="form-control" id="students"
-                                                                      placeholder="studentA@Test.test;studentB@Test.test"/>
-                                                        </div>
-
+                                                    <div className="form-group">
+                                                        <label htmlFor="level">Level</label>
+                                                        <input required={'true'} ref={(ref) => {this.level = ref}} type="text" className="form-control" id="level"
+                                                               placeholder="Level" onChange={this.changeHeader}/>
                                                     </div>
-                                                    <div className={'col-sm-12 pr-0 bg-light'}>
-                                                        <button type="submit" className="btn btn-primary">Send</button>
+                                                    <div className="form-group">
+                                                        <label htmlFor="language">Level</label>
+                                                        <input required={'true'} ref={(ref) => {this.lang = ref}} type="text" className="form-control" id="language"
+                                                               placeholder="Language" onChange={this.handleLang}/>
                                                     </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="day">Weekday</label>
+                                                        <input required={'true'} ref={(ref) => {this.day = ref}} onChange={this.handleWeekday} type="text" className="form-control" id="day"
+                                                               placeholder="Weekday"/>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="dateStart">Date-Start</label>
+                                                        <input required={'true'} ref={(ref) => {this.dateStart = ref}}type="date" className="form-control" id="dateStart"
+                                                               placeholder="YYYY-MM-DD"/>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="dateEnd">Date-End</label>
+                                                        <input required={'true'} ref={(ref) => {this.dateEnd = ref}} type="date" className="form-control" id="dateEnd"
+                                                               placeholder="YYYY-MM-DD"/>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="registrationStart">Registration-Start</label>
+                                                        <input required={'true'} ref={(ref) => {this.registrationStart = ref}} type="date" className="form-control" id="registrationStart"
+                                                               placeholder="YYYY-MM-DD"/>
+                                                    </div>
+
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="registrationEnd">Registration-End</label>
+                                                        <input required={'true'} ref={(ref) => {this.registrationEnd = ref}} type="date" className="form-control" id="registrationEnd"
+                                                               placeholder="YYYY-MM-DD"/>
+                                                    </div>
+
                                                 </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                                                <div className={'col-md-6 bg-light'}>
 
 
-                                    {/*Preview of side*/}
-                                    <div className={'col-md-8'} style={{height: '100vh', overflow: 'auto'}}>
-                                        <div className={'border p-0 border rounded bg-light ml-3 shadow'}>
-                                            <header className={this.state.header}
-                                                    style={{height: '20%', background: this.state.headerColor}}>
-                                                <div className="container">
-                                                    <h3 className={'p-4'}>{this.state.previewHeader} - {this.state.lang}</h3>
+                                                    <div className="form-group">
+                                                        <label htmlFor="time">Time</label>
+                                                        <input required={'true'} ref={(ref) => {this.time = ref}} onChange={this.handleTime} type="text" className="form-control" id="time"
+                                                               placeholder="10:00 - 12:00"/>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="room">Room</label>
+                                                        <input required={'true'} ref={(ref) => {this.room = ref}} onChange={this.handleRoom} type="text" className="form-control" id="room"
+                                                               placeholder="room"/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label required={'true'} htmlFor="capacity">Capacity</label>
+                                                        <input ref={(ref) => {this.capacity = ref}} type="number" min={0} className="form-control" id="capacity"
+                                                        />
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="desc">Description</label>
+                                                        <textarea ref={(ref) => {this.description = ref}} rows={'5'} className={'form-control'}/>
+                                                    </div>
+
+                                                    <div className="form-check mb-4">
+                                                        <input onChange={this.handlePrivate} type="checkbox" checked={this.state.isPrivate == true} className="form-check-input" id="checkbox"
+                                                        />
+                                                        <label className="form-check-label" htmlFor="checkbox">Private</label>
+                                                    </div>
+
+                                                    <div className="form-group">
+                                                        <label htmlFor="students">Students-Mail</label>
+                                                        <i className={"ml-2 fas fa-info btn btn-outline-info rounded-circle"} onClick={this.handleInfo}>
+                                                        </i>
+                                                        {this.state.info &&
+                                                        <div className="alert alert-info">
+                                                            <strong>Info!</strong> Divide emails with simicolons <strong>;</strong>
+                                                        </div>
+                                                        }
+
+                                                        <textarea ref={(ref) => {this.students = ref}} className="form-control" id="students"
+                                                                  placeholder="studentA@Test.test;studentB@Test.test"/>
+                                                    </div>
+
                                                 </div>
-                                            </header>
-                                            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-                                                <div className="collapse navbar-collapse" id="course-navigation">
-                                                    <ul className="navbar-nav mr-auto">
-                                                        <li className="nav-item">
-                                                            <span className="nav-link"
-                                                                  href="#course-overview">Overview</span>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <span className="nav-link" href="#course-content">Course Content</span>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <span className="nav-link"
-                                                                  href="#course-forum">Announcements</span>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <span className="nav-link" href="#course-faqs">FAQs</span>
-                                                        </li>
-                                                        <li className="nav-item">
-                                                            <span className="nav-link"
-                                                                  href="#course-instructors">Instructors</span>
-                                                        </li>
-                                                    </ul>
+                                                <div className={'col-sm-12 pr-0 bg-light'}>
+                                                    <button type="submit" className="btn btn-primary">Send</button>
                                                 </div>
-                                            </nav>
-
-                                            <div className={'main pl-3'}>
-                                                <div>Weekday:{this.state.day}</div>
-                                                <div>Time:{this.state.time}</div>
-                                                <div>Room:{this.state.room}</div>
-
-
-                                                <Overview/>
-                                                <CourseContent/>
-                                                <Forum/>
-                                                <FAQ/>
-                                                <Instructor/>
-
                                             </div>
-                                        </div>
-
+                                        </form>
                                     </div>
                                 </div>
 
-                            </main>
-                        }
+
+
+                                {/*Preview of side*/}
+                                <div className={'col-md-8'} style={{height:'100vh', overflow:'auto'}}>
+                                    <div className={'border p-0 border rounded bg-light ml-3 shadow'}>
+                                        <header className={this.state.header} style={{height:'20%', background:this.state.headerColor}}>
+                                            <div className="container">
+                                                <h3 className={'p-4'}>{this.state.previewHeader} - {this.state.lang}</h3>
+                                            </div>
+                                        </header>
+                                        <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+                                            <div className="collapse navbar-collapse" id="course-navigation">
+                                                <ul className="navbar-nav mr-auto">
+                                                    <li className="nav-item">
+                                                        <span className="nav-link" href="#course-overview">Overview</span>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <span className="nav-link" href="#course-content">Course Content</span>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <span className="nav-link" href="#course-forum">Announcements</span>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <span className="nav-link" href="#course-faqs">FAQs</span>
+                                                    </li>
+                                                    <li className="nav-item">
+                                                        <span className="nav-link" href="#course-instructors">Instructors</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </nav>
+
+                                        <div className={'main pl-3'}>
+                                            <div>Weekday:{this.state.day}</div>
+                                            <div>Time:{this.state.time}</div>
+                                            <div>Room:{this.state.room}</div>
+
+
+                                            <Overview/>
+                                            <CourseContent/>
+                                            <Forum/>
+                                            <FAQ/>
+                                            <Instructor/>
+
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
 
+                        </main>
+                    </div>
 
                 </div>
         )

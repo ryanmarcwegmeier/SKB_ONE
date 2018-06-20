@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Intro from '../components/coursedetails/Intro'
-import CourseNav from '../components/coursedetails/CourseNav'
 import Overview from '../components/coursedetails/Overview'
 import CourseContent from '../components/coursedetails/CourseContent'
-import Forum from '../components/coursedetails/Forum'
 import FAQ from '../components/coursedetails/FAQ'
 import Instructor from '../components/coursedetails/Instructors'
 import { configureAnchors } from 'react-scrollable-anchor'
