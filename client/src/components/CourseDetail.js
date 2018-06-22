@@ -13,10 +13,6 @@ import '../coursedetails.css'
 import axios from "axios/index";
 import Footer from "./Footer";
 
-
-
-
-
 class CoursesDetail extends Component {
 
     constructor(props){

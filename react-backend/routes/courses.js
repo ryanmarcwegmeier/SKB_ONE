@@ -5,6 +5,8 @@ var express = require("express");
 var router = express.Router();
 
 var courseModel = require('../models/courseModel');
+var usercoursemappingModel = require('../models/usercoursemappingModel');
+
 
 router.post("/", insertCourse);
 router.get("/:lang/view", getCoursesByLang)
@@ -87,14 +89,6 @@ function getAllCourses(req, res, next){
         if(err) {
             res.statusSend(500);
         } else {
-            var courses = course.map((course) => {
-                let teachers=course.teachers.map(teacher=>{
-                    return teacher
-                })
-                course.teachers=teachers;
-                return course
-            });
-
             res.json(courses);
         }
     });
@@ -108,8 +102,6 @@ function getAllCourses(req, res, next){
  * @param {object} next - Handler
  */
 function updateCourse(req, res, next){
-
-    console.log('Update Course')
     courseModel.updateOne({_id: req.params.id}, req.body, (err) => {
         if(err) {
             res.status(400).json({ errorMessage: "Requested course update failed (course not found or invalid field data)." });
@@ -141,14 +133,54 @@ function deleteCourse(req, res, next) {
 }
 
 function getCoursesByLang(req,res,next){
-    console.log("hieristwas")
-    console.log(req.params.lang)
-    courseModel.find({'language':req.params.lang}, (err, course) => {
+    let courseNow=[]
+    let courseLater=[]
+    let courseOld=[]
+    let ownCourse=[]
+
+    usercoursemappingModel.find({user:req.user._id}, {course:1, _id:0}, (err, usercoursemapping) => {
         if(err) {
-            res.send(500);
+            res.statusSend(500);
         } else {
-            res.json(course);
+            ownCourse=usercoursemapping.map(e=>e.course);
+            console.log("my Courses")
+            console.log(ownCourse)
+            courseModel.find({_id: { $nin: ownCourse},'language':req.params.lang, registrationStart:{$lte:new Date()}, registrationEnd:{$gte:new Date()}}, (err, courseAv) => {
+                if(err) {
+                    res.send(400);
+                    return;
+                } else {
+                    courseNow=courseAv;
+                    console.log("other courses")
+                    console.log(courseAv)
+
+                    courseModel.find({'language':req.params.lang, registrationStart:{$gt:new Date()}}, (err, courseLa) => {
+                        if(err) {
+                            res.send(400);
+                            return;
+                        } else {
+                            courseLater=courseLa;
+                            courseModel.find({'language':req.params.lang, registrationEnd:{$lt:new Date()}}, (err, courseOl) => {
+                                    if (err) {
+                                        res.send(400);
+                                        return;
+                                    } else {
+                                        courseOld = courseOl;
+                                        res.json({now: courseNow, later: courseLater, old:courseOld})
+                                    }
+                                }
+                            )
+                        }
+
+                    });
+                }
+            });
         }
-    });}
+    });
+
+
+
+
+}
 
 module.exports = router;

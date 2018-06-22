@@ -20,6 +20,8 @@ var contactRouter = require('./routes/contact');
 var langRouter = require('./routes/language');
 // var sessionuser = require('./routes/sessions');
 var messageRouter = require('./routes/messages');
+var usercoursemappingRouter=require('./routes/usercoursemapping');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 var userModel = require('./models/userModel');
@@ -71,6 +73,7 @@ app.use('/courses', coursesRouter);
 app.use('/contact', contactRouter);
 app.use('/lang', langRouter);
 app.use('/messages', messageRouter);
+app.use('/usercoursemapping', usercoursemappingRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

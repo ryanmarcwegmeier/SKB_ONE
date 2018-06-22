@@ -48,6 +48,7 @@ class CourseAdd extends Component {
 
     }
 
+
     /**
      * set private state for courses (Checkbox)
      * @param event
@@ -85,9 +86,19 @@ class CourseAdd extends Component {
      * @param event
      */
     handleRoom(event){
-        this.setState({
-            room:event.target.value
-        })
+        if(this.room.value!='') {
+
+            if (this.state.room == '') {
+                this.setState({
+                    room: this.room.value
+                })
+            } else {
+                this.setState({
+                    room: this.state.room + ';' + this.room.value
+                })
+            }
+        }
+        this.room.value=''
     }
 
     /**
@@ -95,9 +106,20 @@ class CourseAdd extends Component {
      * @param event
      */
     handleWeekday(event){
-        this.setState({
-            day:event.target.value
-        })
+        if(this.day.value!=''){
+            if(this.state.day==''){
+                this.setState({
+                    day:this.day.value
+                })
+            }else{
+                this.setState({
+                    day:this.state.day+';'+this.day.value
+                })
+            }
+        }
+        this.day.value=''
+
+
     }
 
     /**
@@ -105,9 +127,21 @@ class CourseAdd extends Component {
      * @param event
      */
     handleTime(event){
-        this.setState({
-            time:event.target.value
-        })
+        if(this.time.value!='') {
+
+            if (this.state.time == '') {
+                this.setState({
+                    time: this.time.value
+                })
+            } else {
+                this.setState({
+                    time: this.state.time + ';' + this.time.value
+                })
+            }
+        }
+        this.time.value=''
+
+
     }
 
     /**
@@ -144,11 +178,11 @@ class CourseAdd extends Component {
                 isPrivate: this.state.isPrivate,
                 level: this.level.value,
                 language: this.lang.value,
-                day: this.day.value,
+                day: this.state.day,
                 dateStart: new Date(this.dateStart.value),
                 dateEnd: new Date(this.dateEnd.value),
-                time: this.time.value,
-                room: this.room.value,
+                time: this.state.time,
+                room: this.state.room,
                 capacity: this.capacity.value,
                 description: this.description.value,
                 students:this.students.value,
@@ -185,13 +219,13 @@ class CourseAdd extends Component {
                         <main className={'container-fluid pb-3'}>
                             {this.state.err!='' &&
                             <div className="alert alert-danger">
-                                <strong>Error!</strong> {this.state.err}
+                                <strong>Error!</strong> Error occure
                             </div>
                             }
                             <div className={'row'}>
 
                                 {/*Options*/}
-                                <div className={'col-md-4 border rounded shadow bg-light'}>
+                                <div className={'col-md-4 border rounded shadow bg-light pl-4'}>
                                     <div className={'row'}>
                                         <form onSubmit={this.insertCourse}>
                                             <div className={'row'}>
@@ -239,33 +273,48 @@ class CourseAdd extends Component {
 
                                                     <div className="form-group">
                                                         <label htmlFor="day">Weekday</label>
-                                                        <input required={'true'} ref={(ref) => {this.day = ref}} onChange={this.handleWeekday} type="text" className="form-control" id="day"
-                                                               placeholder="Weekday"/>
+                                                        <input type={'button'} className={'ml-2 btn btn-outline-dark'} onClick={this.handleWeekday} value={'+'}/>
+                                                        <input type={'button'} className={'ml-2 btn btn-outline-dark'} onClick={function () {
+                                                            this.setState({day:''})
+                                                        }.bind(this)} value={'x'}/>
+
+                                                        <select ref={(ref) => {this.day = ref}} className="form-control" id="day">
+                                                            <option value="Monday">Monday</option>
+                                                            <option value="Tuesday">Tuesday</option>
+                                                            <option value="Wednesday">Wednesday</option>
+                                                            <option value="Thurstday">Thurstday</option>
+                                                            <option value="Friday">Friday</option>
+                                                        </select>
+
                                                     </div>
 
                                                     <div className="form-group">
                                                         <label htmlFor="dateStart">Date-Start</label>
-                                                        <input required={'true'} ref={(ref) => {this.dateStart = ref}}type="date" className="form-control" id="dateStart"
-                                                               placeholder="YYYY-MM-DD"/>
-                                                    </div>
+                                                        <input  ref={(ref) => {this.dateStart = ref}} type="text" className="form-control datetimepicker-input"
+                                                               id="dateStart" data-toggle="datetimepicker"
+                                                               data-target="#dateStart"/>
 
+                                                    </div>
                                                     <div className="form-group">
                                                         <label htmlFor="dateEnd">Date-End</label>
-                                                        <input required={'true'} ref={(ref) => {this.dateEnd = ref}} type="date" className="form-control" id="dateEnd"
-                                                               placeholder="YYYY-MM-DD"/>
+                                                        <input  ref={(ref) => {this.dateEnd = ref}} type="text" className="form-control datetimepicker-input"
+                                                                id="dateEnd" data-toggle="datetimepicker"
+                                                                data-target="#dateEnd"/>
                                                     </div>
 
                                                     <div className="form-group">
                                                         <label htmlFor="registrationStart">Registration-Start</label>
-                                                        <input required={'true'} ref={(ref) => {this.registrationStart = ref}} type="date" className="form-control" id="registrationStart"
-                                                               placeholder="YYYY-MM-DD"/>
+                                                        <input  ref={(ref) => {this.registrationStart = ref}} type="text" className="form-control datetimepicker-input"
+                                                                id="registrationStart" data-toggle="datetimepicker"
+                                                                data-target="#registrationStart"/>
                                                     </div>
 
 
                                                     <div className="form-group">
                                                         <label htmlFor="registrationEnd">Registration-End</label>
-                                                        <input required={'true'} ref={(ref) => {this.registrationEnd = ref}} type="date" className="form-control" id="registrationEnd"
-                                                               placeholder="YYYY-MM-DD"/>
+                                                        <input  ref={(ref) => {this.registrationEnd = ref}} type="text" className="form-control datetimepicker-input"
+                                                                id="registrationEnd" data-toggle="datetimepicker"
+                                                                data-target="#registrationEnd"/>
                                                     </div>
 
                                                 </div>
@@ -274,13 +323,21 @@ class CourseAdd extends Component {
 
                                                     <div className="form-group">
                                                         <label htmlFor="time">Time</label>
-                                                        <input required={'true'} ref={(ref) => {this.time = ref}} onChange={this.handleTime} type="text" className="form-control" id="time"
+                                                        <input type={'button'} className={'ml-2 btn btn-outline-dark'} onClick={this.handleTime}value={'+'}/>
+                                                        <input type={'button'} className={'ml-2 btn btn-outline-dark'} onClick={function () {
+                                                            this.setState({time:''})
+                                                        }.bind(this)} value={'x'}/>
+                                                        <input  ref={(ref) => {this.time = ref}} type="text" className="form-control" id="time"
                                                                placeholder="10:00 - 12:00"/>
                                                     </div>
 
                                                     <div className="form-group">
                                                         <label htmlFor="room">Room</label>
-                                                        <input required={'true'} ref={(ref) => {this.room = ref}} onChange={this.handleRoom} type="text" className="form-control" id="room"
+                                                        <input type={'button'} className={'ml-2 btn btn-outline-dark'} onClick={this.handleRoom} value={'+'}/>
+                                                        <input type={'button'} className={'ml-2 btn btn-outline-dark'} onClick={function () {
+                                                            this.setState({room:''})
+                                                        }.bind(this)} value={'x'}/>
+                                                        <input ref={(ref) => {this.room = ref}}  type="text" className="form-control" id="room"
                                                                placeholder="room"/>
                                                     </div>
                                                     <div className="form-group">
