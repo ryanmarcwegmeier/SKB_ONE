@@ -15,8 +15,9 @@ import Impressum from "../views/Impressum";
 import Dashboard from "../views/Dashboard";
 import CourseLang from "../views/CoursesLang";
 import CoursesAdd from "../views/CoursesAdd";
-import CoursesDetail from "./CourseDetail";
+import CoursesDetail from "../components/CourseDetail";
 import axios from 'axios';
+import CourseEdit from "../views/CourseEdit";
 class Main extends Component {
 
 
@@ -77,7 +78,7 @@ class Main extends Component {
                 &&
 
                 <div>
-                    <nav id={"nav-top"} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid " style={{background:'#1B566F'}}>
+                    <nav id={'navbar'} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid sticky-top" style={{background:'#1B566F'}}>
                         <a href={"/index"} >
                             <i className={'navbar-brand'}>SKB</i>
                         </a>
@@ -137,7 +138,7 @@ class Main extends Component {
 
 
                     </nav>
-                    <div className="">
+                    <div className="main">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
                         {(this.state.user.role=='guest')?
                             <Route path="/index" component={Home}/>
@@ -147,13 +148,15 @@ class Main extends Component {
                         <Route exact path="/courses"  render={(props)=><CourseLang user={this.state.user} {...props}/>}/>
                         <Route exact path="/courses/:id"  render={(props)=><CoursesDetail user={this.state.user} {...props}/>}/>
                         <Route exact path="/contact" render={(props)=><Contact user={this.state.user} {...props}/>}/>
-                        <Route exact path="/courses/add/form" render={(props)=><CoursesAdd user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/create/form" render={(props)=><CoursesAdd user={this.state.user} {...props}/>}/>
+                        <Route exact path="/courses/create/form/:course" render={(props)=><CourseEdit user={this.state.user} {...props}/>}/>
                         <Route exact path="/courses/:lang/view" render={(props)=><Courses user={this.state.user} {...props}/>}/>
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User user={this.state.user}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
 
                     </div>
+
                 </div>
                 }
             </BrowserRouter>

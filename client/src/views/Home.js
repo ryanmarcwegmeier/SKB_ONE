@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Footer from '../components/Footer';
 import Carousel from "../components/Carousel";
 
 /**
@@ -7,10 +6,31 @@ import Carousel from "../components/Carousel";
  */
 class Home extends Component {
 
+    constructor(){
+        super()
+        this.state={
+            width:''
+        }
+        this.updateDimensions=this.updateDimensions.bind(this)
+    }
+
+    updateDimensions() {
+        this.setState({width: window.innerWidth});
+    }
+
+    componentDidMount() {
+        window.addEventListener("resize", this.updateDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+
     /**
      * deletes all session
      */
     componentWillMount(){
+        this.updateDimensions();
         sessionStorage.clear()
     }
 
@@ -20,9 +40,10 @@ class Home extends Component {
      */
     render() {
         return (
-            <div className="App">
-                <div className={"content"}>
+            <div className="home">
+                {this.state.width>=992 &&
                 <Carousel/>
+                }
                 <main className={'container-fluid'}>
                     <div className={'row'}>
                         <div className={'col-sm-11 ml-auto mr-auto'}>
@@ -57,11 +78,8 @@ class Home extends Component {
                     </div>
 
                 </main>
-
-                 <Footer/>
-                </div>
-
             </div>
+
 
 
         );

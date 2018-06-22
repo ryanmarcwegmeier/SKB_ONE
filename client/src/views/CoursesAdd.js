@@ -31,6 +31,7 @@ class CourseAdd extends Component {
             err:'',
             lang:'',
             redirect:false,
+            kurs:{},
 
 
         };
@@ -210,10 +211,10 @@ class CourseAdd extends Component {
                                                             <input type={'radio'} name={'header'}  checked={this.state.header == 'bg-success text-light'} value={'bg-success text-light'} onChange={this.handleHeader}/>
                                                             <label>Green</label>
                                                         </div>
-                                                        <span className={'mr-2'}>
-                                                    <input type={'radio'} name={'header'}  checked={this.state.header == 'bg-danger text-light'} value={'bg-danger text-light'} onChange={this.handleHeader}/>
-                                                    <label>Red</label>
-                                                </span>
+                                                        <div className={'mr-2'}>
+                                                            <input type={'radio'} name={'header'}  checked={this.state.header == 'bg-danger text-light'} value={'bg-danger text-light'} onChange={this.handleHeader}/>
+                                                            <label>Red</label>
+                                                        </div>
                                                         <div className={'mr-2'}>
                                                             <input type={'radio'} name={'header'} checked={this.state.header == 'bg-primary text-light'} value={'bg-primary text-light'} onChange={this.handleHeader}/>
                                                             <label>Blue</label>
@@ -373,8 +374,6 @@ class CourseAdd extends Component {
                             </div>
 
                         </main>
-
-                        <Footer/>
                     </div>
 
                 </div>

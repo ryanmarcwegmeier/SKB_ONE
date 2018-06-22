@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom'
 
 class Intro extends Component {
     constructor(props){
@@ -60,41 +61,14 @@ class Intro extends Component {
             <div id="course-intro" className={"jumbotron jumbotron-fluid "+this.props.kurs.headerStyle}>
                 <div className="container-fluid">
                     <h1>{(!this.props.kurs)?null:(this.props.kurs.level+'-'+this.props.kurs.language)}</h1>
-                    <a href="#course-content" className="btn btn-info">
+                    <a href="#course-content" className="btn btn-secondary">
                         See current feed</a>
 
-                    <button type="button" type={'button'} className={'btn btn-info float-md-right'} data-toggle="modal" data-target="#exampleModal"><i className="fas fa-user-edit"></i></button>
-
-
-                    <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <form onSubmit={this.updateCourse}>
-                                <div className="modal-body">
-                                    <label htmlFor="courseLevel"><span className={'text-muted'}><b>Level</b></span></label>
-                                    <input ref={(ref) => {this.level = ref}} id={"courseLevel"} type={'text'} className={'form-control'} placeholder={this.props.kurs.level}/>
-                                    <label htmlFor="language"><span className={'text-muted'}><b>Language</b></span></label>
-                                    <input ref={(ref) => {this.language = ref}} id={"language"} type={'text'} className={'form-control'} placeholder={this.props.kurs.language}/>
-                                    <label htmlFor="teacher"><span className={'text-muted'}><b>Teacher</b></span></label>
-                                    <input ref={(ref) => {this.teachers = ref}} id={"teacher"} type={'text'} className={'form-control'} />
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close
-                                    </button>
-                                    <button type="submit" className="btn btn-primary">Save changes</button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
+                    <Link to={'/courses/create/form/'+this.props.kurs._id}>
+                    <button type="button" type={'button'} className={'btn btn-secondary float-md-right'} data-toggle="modal" data-target="#exampleModal">
+                        <i className="fas fa-edit"></i>
+                    </button>
+                    </Link>
                 </div>
             </div>
         );

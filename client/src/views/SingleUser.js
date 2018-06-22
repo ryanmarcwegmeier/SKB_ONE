@@ -97,7 +97,7 @@ class SingleUser extends Component {
             password: psw,
             role: role
         })
-            .then(()=>this.getUser())
+            .then(()=>{this.getUser();sessionStorage.clear()})
             .catch((err)=>this.setState({error:err}))
 
     }
@@ -268,8 +268,8 @@ class SingleUser extends Component {
 
                     </main>
 
-                    <Footer/>
                 </div>
+                <Footer/>
 
             </div>
 

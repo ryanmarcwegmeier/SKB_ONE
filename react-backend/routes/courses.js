@@ -108,6 +108,8 @@ function getAllCourses(req, res, next){
  * @param {object} next - Handler
  */
 function updateCourse(req, res, next){
+
+    console.log('Update Course')
     courseModel.updateOne({_id: req.params.id}, req.body, (err) => {
         if(err) {
             res.status(400).json({ errorMessage: "Requested course update failed (course not found or invalid field data)." });
