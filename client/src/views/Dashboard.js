@@ -3,16 +3,39 @@ import Header from '../components/Header'
 import Footer from '../components/Footer';
 import Zoom from 'react-reveal/Zoom';
 import {Link} from 'react-router-dom'
+import axios from "axios/index";
 
 /**
  * represents Dashboard view
  */
 class Dashboard extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            courses:[],
+            error:false,
+        }
+        axios.defaults.headers.common['apikey'] = this.props.user.apikey;
+        this.getmycourses=this.getmycourses.bind(this)
+    }
+
+
+    getmycourses(){
+        axios.get('/usercoursemapping/courses/')
+            .then((res)=>{
+                const courses=res.data
+                this.setState({courses:courses})
+            }).catch((error)=>{
+            this.setState({error:true})
+        })
+    }
+
     /**
      * clear all sessions
      */
     componentWillMount(){
         sessionStorage.clear()
+        this.getmycourses()
     }
 
     /**
@@ -74,10 +97,16 @@ class Dashboard extends Component {
                                         </div>
                                         <div className="card-body">
                                             <nav id='nav_bar'>
-                                                <ul className='nav_links'>
-                                                    <li><a href="">CourseA</a></li>
-                                                    <li><a href="">CourseB</a></li>
-                                                    <li><a href="">CourseC</a></li>
+                                                <ul className='list-group'>
+                                                    {
+                                                        this.state.courses.map(course =>
+                                                            <li className={'list-group-item shadow'} key={course._id}>
+                                                                <Link to={'courses/'+course._id}>
+                                                                    {course.level + " - " + course.language}
+                                                                </Link>
+                                                            </li>
+                                                        )
+                                                    }
                                                 </ul>
                                             </nav>
                                         </div>

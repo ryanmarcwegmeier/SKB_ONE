@@ -8,8 +8,8 @@ import Header from "../components/Header";
  */
 class Home extends Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             width:''
         }
@@ -62,10 +62,12 @@ class Home extends Component {
 
                             <div className={'row'}>
                                 <div className={'col-md-6'}>
-                                    <p className={'border rounded p-3 bg-light shadow'} style={{textAlign:'justify'}}>
-                                        <i>Die SKB versteht sich als einen Raum, in dem Menschen mit ganz verschiedenen persönlichen und kulturellen Hintergründen miteinander lernen und arbeiten. Wir und unsere Teilnehmenden haben ganz unterschiedliche nationale, kulturelle, sexuelle, religiöse, … Identitäten. Die Akzeptanz dieser Vielfalt bildet den Kern unseres Selbstverständnisses. Solltest du dich einmal in einem unserer Kurse selbst diskriminiert fühlen oder Zeuge/in rassistischen, antisemitischen, homo- oder trans*phoben oder in sonst einer Weise diskriminierenden Handelns und Verhaltens sein, dann wende dich gern vertrauensvoll an eine*n unserer Dozierenden oder komme in unser Büro</i>
+                                    <span className={"card float-right shadow"}>
+                                        <div className="card-header bg-info">Über uns</div>
+                                        <div className="card-body text-justify">
+Die Sprach- und Kulturbörse ist eine Einrichtung der TU Berlin, in der Studierende aus aller Welt zusammen arbeiten. Wir sind ca. 100 Mitglieder aus mehr als 40 Ländern. Unser Anliegen ist die Förderung von kulturellem und sprachlichem Austausch in Berlin. Wir bieten für Studierende aus aller Welt, Mitarbeiter der Berliner Hochschulen sowie Alumni der TU Berlin Veranstaltungen und Bildungsmöglichkeiten im Bereich Kultur und Sprache an.                                        </div>
+                                    </span>
 
-                                    </p>
                                 </div>
                                 <div className={'col-md-6'}>
                                     <span className={"card float-right shadow"}>

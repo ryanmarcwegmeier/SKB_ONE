@@ -160,16 +160,20 @@ function getCoursesByLang(req,res,next){
                             return;
                         } else {
                             courseLater=courseLa;
-                            courseModel.find({'language':req.params.lang, registrationEnd:{$lt:new Date()}}, (err, courseOl) => {
+                            if(req.user.role=='admin'){
+                                courseModel.find({'language':req.params.lang, registrationEnd:{$lt:new Date()}}, (err, courseOl) => {
                                     if (err) {
                                         res.send(400);
                                         return;
                                     } else {
                                         courseOld = courseOl;
                                         res.json({now: courseNow, later: courseLater, old:courseOld})
+                                        return;
                                     }
-                                }
-                            )
+                                })
+                            }else{
+                                res.json({now: courseNow, later: courseLater, old:[]})
+                            }
                         }
 
                     });

@@ -22,6 +22,7 @@ class Courses extends Component {
         this.state = {
             courses: {},
             coursesLater:{},
+            coursesOld:{},
             isFetching:true,
             error:false,
             deleteErr:false,
@@ -40,6 +41,7 @@ class Courses extends Component {
                 const courses=res.data
                 this.setState({courses:courses.now})
                 this.setState({coursesLater:courses.later})
+                this.setState({coursesOld:courses.old})
                 this.setState({isFetching:false})
             }).catch((error)=>{
             this.setState({error:true})
@@ -159,7 +161,7 @@ class Courses extends Component {
                                                             {
                                                                 this.state.courses.sort((a,b)=>a.level>b.level).map(course =>
                                                                     <Zoom key={course._id}>
-                                                                        <tr style={(course.capacity==0)?{background:'#ff6666'}:{}}>
+                                                                        <tr style={(course.capacity==0)?{background:'#ff6666'}:{background:'#ccff99'}}>
                                                                             <td>{course.level}</td>
                                                                             <td>{course.description}</td>
                                                                             <td>{course.day}</td>
@@ -219,6 +221,55 @@ class Courses extends Component {
                                                             {
                                                                 this.state.coursesLater.map(course =>
                                                                     <Zoom key={course._id}>
+                                                                        <tr style={{background:'#99ccff'}}>
+                                                                            <td>{course.level}</td>
+                                                                            <td>{course.description}</td>
+                                                                            <td>{course.day}</td>
+                                                                            <td>
+                                                                                {course.dateStart.substr(0, 10) + " until " + course.dateEnd.substr(0, 10)}
+                                                                            </td>
+                                                                            <td>{course.time}</td>
+                                                                            <td>
+                                                                                {course.room}
+                                                                            </td>
+                                                                            {(this.props.user.role == 'admin')?
+                                                                            <td>
+
+                                                                                <Link to={"/courses/" + course._id}>
+                                                                                    <button type={'button'}
+                                                                                            className="btn btn-light border rounded-circle text-center">
+                                                                                        <i className="far fa-eye"></i>
+                                                                                    </button>
+                                                                                </Link>
+                                                                            </td>:
+                                                                                <td>
+                                                                                    <button type={'button'} className="btn btn-light border rounded-circle text-center">
+                                                                                        <i className="fas fa-clock"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                            }
+
+                                                                            {this.props.user.role != 'guest' && this.props.user.role != 'student' &&
+                                                                            <td>
+
+                                                                                <form
+                                                                                    onSubmit={this.deleteCourse(course._id)}>
+                                                                                    <button type={'submit'}
+                                                                                            className="btn btn-light border rounded-circle text-center">
+                                                                                        X
+                                                                                    </button>
+                                                                                </form>
+                                                                            </td>
+                                                                            }
+
+                                                                        </tr>
+                                                                    </Zoom>
+                                                                )
+                                                            }
+
+                                                            {
+                                                                this.state.coursesOld.map(course =>
+                                                                    <Zoom key={course._id}>
                                                                         <tr style={{background:'#b1b1b1'}}>
                                                                             <td>{course.level}</td>
                                                                             <td>{course.description}</td>
@@ -231,9 +282,15 @@ class Courses extends Component {
                                                                                 {course.room}
                                                                             </td>
                                                                             <td>
-                                                                                <button type={'button'} className="btn btn-light border rounded-circle text-center">
-                                                                                    <i className="fas fa-clock"></i>
-                                                                                </button>
+                                                                                {(this.props.user.role == 'admin') &&
+
+                                                                                    <Link to={"/courses/" + course._id}>
+                                                                                        <button type={'button'}
+                                                                                                className="btn btn-light border rounded-circle text-center">
+                                                                                            <i className="far fa-eye"></i>
+                                                                                        </button>
+                                                                                    </Link>
+                                                                                }
                                                                             </td>
                                                                             {this.props.user.role != 'guest' && this.props.user.role != 'student' &&
                                                                             <td>
@@ -252,6 +309,8 @@ class Courses extends Component {
                                                                     </Zoom>
                                                                 )
                                                             }
+
+
 
                                                             </tbody>
                                                         </table>

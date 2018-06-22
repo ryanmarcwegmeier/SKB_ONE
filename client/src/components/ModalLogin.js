@@ -46,7 +46,7 @@ class ModalLogin extends Component {
                     this.setState({ user });
                     this.props.changeUser(user)
                     this.setCookie('apikey',user.apikey, 1)
-                }
+                    document.getElementById('navbarSupportedContent').classList.remove('show')                }
             ).catch((error)=> this.setState({'loginsuccess': false }))
 
     };
@@ -67,7 +67,7 @@ class ModalLogin extends Component {
         }
 
         return (
-            (this.state.redirect)?
+            (this.state.redirect && window.location.pathname!='/index')?
 
                 <Redirect to='/index'/>
                 :

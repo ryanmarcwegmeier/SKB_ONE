@@ -37,7 +37,7 @@ class ModalSignUp extends Component {
             })
                 .then((res) => {
                     document.getElementById('close').click()
-
+                    document.getElementById('navbarSupportedContent').classList.remove('show')
 
                     this.setState({
                         redirected:true,

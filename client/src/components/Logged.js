@@ -3,12 +3,12 @@ import {Redirect, Link} from "react-router-dom";
 
 class Logged extends Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+        this.logout=this.logout.bind(this)
         this.state={
             redirect:false,
         }
-        this.logout=this.logout.bind(this)
     }
 
     setCookie(cname, cvalue, exdays) {
@@ -20,14 +20,13 @@ class Logged extends Component {
 
 
     logout(event){
+        event.preventDefault()
         this.setState({
             redirect:true,
         })
-        let user={role:'guest', apikey:''};
-        this.props.changeUser(user);
-        this.setCookie('apikey',null,0);
-
-
+        document.getElementById('navbarSupportedContent').classList.remove('show')
+        this.setCookie('apikey',null,0)
+        this.props.changeUser({role:'guest', apikey:''})
 
     };
 
@@ -37,8 +36,7 @@ class Logged extends Component {
         return (
             (this.state.redirect)?
                 <div>
-                    {alert()}
-                <Redirect to='/index'/>
+                    <Redirect to='/index'/>
                 </div>
                 :
             <div>
@@ -52,7 +50,7 @@ class Logged extends Component {
                         <li className="nav-item loggedBoxItem">
 
                             <Link to={"/users/"+this.props.user.username}>
-                                <button type="button" className="btn btn-outline-info" style={{width:'100%'}}>
+                                <button type="button" className="btn btn-outline-info" style={{width:'100%'}} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <i className="fas fa-user-cog mr-1"></i>
                                     {this.props.user.username}
                                 </button>

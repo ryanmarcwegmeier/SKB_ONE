@@ -20,27 +20,49 @@ class CoursesDetail extends Component {
         this.courseID=this.props.match.params.id
         this.state={
             kurs:{},
-            failed:false
+            isUser:false,
+            failed:false,
+            isFetching:true,
         }
         axios.defaults.headers.common['apikey'] = this.props.user.apikey;
         configureAnchors({offset:-110, scrollDuration: 200})
+        this.checkUser=this.checkUser.bind(this)
+        this.onchange=this.onchange.bind(this)
     }
 
     onchange() {
-        if (document.getElementById('courseNav').offsetTop > 271) {
-            document.getElementById('courseNav').style.top = '51px'
+        if(document.getElementById('navbarSupportedContent').classList.contains('show')) {
+            document.getElementById('courseNav').style.top = document.getElementById('navbar').clientHeight+"px"
         }
+        else if (!this.state.isFetching && document.getElementById('courseNav').offsetTop > 200) {
+                document.getElementById('courseNav').style.top = '51px'
+            }
+    }
+
+    checkUser(){
+        axios.get('/usercoursemapping/isuser/'+this.state.kurs._id)
+            .then(res=>{
+                const user=res.data
+                this.setState({isUser:user})
+                this.setState({isFetching:false})
+            })
+            .catch((error)=>{
+            this.setState({error:true})
+            })
     }
 
     componentDidMount(){
-        window.addEventListener("scroll", this.onchange);
-        this.onchange()
+           window.addEventListener("scroll", this.onchange);
+           this.onchange()
+
+
     }
     
     componentWillMount() {
         axios.get('/courses/'+this.courseID)
             .then(res => {
                 this.setState({kurs:res.data})
+                this.checkUser()
             })
             .catch((error)=>this.setState({failed:true}))
     }
@@ -52,85 +74,98 @@ class CoursesDetail extends Component {
 
     render () {
         return (
-            <div className="App">
-                <div className={"content"}>
-
-                    {(this.state.failed)?
-                        <main className="container-fluid">
+            (this.state.isFetching)?
+                    <div className={'text-center p-4'}>
+                        <i className="fa fa-spinner fa-spin" style={{fontSize: "5vw"}}></i>
+                    </div>:
+                <div className="App">
+                    {(!this.state.isUser)?
                         <div className="alert alert-danger">
-                            <strong>Failure!</strong> Course doenn't exists
+                            <strong>Access denied!</strong> You are not a member of this course
                         </div>
-                        </main>
                         :
-                        <div>
-                            <Intro kurs={this.state.kurs} />
-                            <nav id={'courseNav'} className="navbar navbar-expand-sm navbar-light bg-light sticky-top shadow-sm" >
 
-                                <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                        data-target="#course-navigation" aria-controls="navbarSupportedContent"
-                                        aria-expanded="false" aria-label="Toggle navigation">
-                                    <span className="navbar-toggler-icon"></span>
-                                </button>
+                        <div className={"content"}>
 
-                                <div className="collapse navbar-collapse" id="course-navigation">
-                                    <ul className="navbar-nav mr-auto">
-                                        <li className="nav-item">
-                                            <a className="nav-link"  href={'#course-overview'}>Overview</a>
-                                        </li>
-                                        <li className="nav-item" >
-                                            <a className="nav-link" href={'#course-content'}>Course Content</a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link"  href={'#course-faqs'}>FAQs</a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href={'#course-instructors'}>Instructors</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                            <main className="container-fluid">
-                                <div className="row pt-5 p-3">
-                                    <ScrollableAnchor id={'course-overview'}>
-                                        <div>
-                                            <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>Recent Activity</h2>
+
+
+                            {(this.state.failed)?
+                                <main className="container-fluid">
+                                    <div className="alert alert-danger">
+                                        <strong>Failure!</strong> Course doenn't exists
+                                    </div>
+                                </main>
+                                :
+                                <div>
+                                    <Intro kurs={this.state.kurs} />
+                                    <nav id={'courseNav'} className="navbar navbar-expand-sm navbar-light bg-light sticky-top shadow-sm" style={{zIndex:100000}}>
+
+                                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                                data-target="#course-navigation" aria-controls="navbarSupportedContent"
+                                                aria-expanded="false" aria-label="Toggle navigation">
+                                            <span className="navbar-toggler-icon"></span>
+                                        </button>
+
+                                        <div className="collapse navbar-collapse" id="course-navigation">
+                                            <ul className="navbar-nav mr-auto">
+                                                <li className="nav-item">
+                                                    <a className="nav-link"  href={'#course-overview'}>Overview</a>
+                                                </li>
+                                                <li className="nav-item" >
+                                                    <a className="nav-link" href={'#course-content'}>Course Content</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link"  href={'#course-faqs'}>FAQs</a>
+                                                </li>
+                                                <li className="nav-item">
+                                                    <a className="nav-link" href={'#course-instructors'}>Instructors</a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </ScrollableAnchor>
-                                    <Overview/>
-                                </div>
-                                <div className="row pt-5 p-3">
-                                    <ScrollableAnchor id={'course-content'}>
-                                        <div>
-                                            <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>Events</h2>
+                                    </nav>
+                                    <main className="container-fluid">
+                                        <div className="row pt-5 p-3">
+                                            <ScrollableAnchor id={'course-overview'}>
+                                                <div>
+                                                    <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>Recent Activity</h2>
+                                                </div>
+                                            </ScrollableAnchor>
+                                            <Overview/>
                                         </div>
-                                    </ScrollableAnchor>
-                                    <CourseContent/>
-                                </div>
-                                <div className="row pt-5 p-3">
-                                    <ScrollableAnchor id={'course-faqs'}>
-                                        <div>
-                                            <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>FAQs</h2>
+                                        <div className="row pt-5 p-3">
+                                            <ScrollableAnchor id={'course-content'}>
+                                                <div>
+                                                    <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>Events</h2>
+                                                </div>
+                                            </ScrollableAnchor>
+                                            <CourseContent/>
                                         </div>
-                                    </ScrollableAnchor>
-                                    <FAQ/>
-                                </div>
-                                <div className="row pt-5 p-3">
-                                    <ScrollableAnchor id={'course-instructors'}>
-                                        <div>
-                                            <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>Meet the instructors</h2>
+                                        <div className="row pt-5 p-3">
+                                            <ScrollableAnchor id={'course-faqs'}>
+                                                <div>
+                                                    <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>FAQs</h2>
+                                                </div>
+                                            </ScrollableAnchor>
+                                            <FAQ/>
                                         </div>
-                                    </ScrollableAnchor>
-                                    <Instructor/>
+                                        <div className="row pt-5 p-3">
+                                            <ScrollableAnchor id={'course-instructors'}>
+                                                <div>
+                                                    <h2 style={{width:'100vw', borderBottom:'solid 1px black'}}>Meet the instructors</h2>
+                                                </div>
+                                            </ScrollableAnchor>
+                                            <Instructor/>
+                                        </div>
+                                    </main>
                                 </div>
-                            </main>
+
+                            }
                         </div>
-
                     }
-                    </div>
-                <Footer/>
+                    <Footer/>
 
-            </div>
-        )
+
+                </div>)
     }
 
 
