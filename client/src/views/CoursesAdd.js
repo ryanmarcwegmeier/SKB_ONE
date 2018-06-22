@@ -295,7 +295,6 @@ class CourseAdd extends Component {
                                                                data-target="#dateStart"/>
 
                                                     </div>
-
                                                     <div className="form-group">
                                                         <label htmlFor="dateEnd">Date-End</label>
                                                         <input  ref={(ref) => {this.dateEnd = ref}} type="text" className="form-control datetimepicker-input"
