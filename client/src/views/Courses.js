@@ -105,7 +105,7 @@ class Courses extends Component {
                 axios.post('/usercoursemapping/' , {
                     user:this.props.user._id,
                     course:course_id,
-                }).then(()=>alert('registration success'))
+                }).then(()=>this.getAllCourses())
                     .catch(()=>this.setState({deleteErr:true}))
                 this.getAllCourses()
             }

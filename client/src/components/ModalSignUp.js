@@ -64,7 +64,7 @@ class ModalSignUp extends Component {
             <span>
 
                 {(this.state.redirected)&&
-                    <Redirect to={'/'}>fdsafasd</Redirect>
+                    <Redirect to={'/index'}/>
 
                 }
 
@@ -90,10 +90,7 @@ class ModalSignUp extends Component {
                                         <label htmlFor="username"><span className={'text-muted'}><b>Username</b></span></label>
                                         <input required={true} ref={(ref) => {this.username = ref}} type="text" className="form-control" id="username" placeholder="Username"/>
                                     </div>
-                                         <div className="form-group">
-                                            <label htmlFor="signup_password"><span className={'text-muted'}><b>Password</b></span></label>
-                                            <input ref={(ref) => {this.password = ref}} type="password" className="form-control" id="signup_password" placeholder="Password" name={'password'} required={true}/>
-                                         </div>
+
                                          <div className="form-group">
                                         <label htmlFor="Email"><span className={'text-muted'}><b>Email</b></span></label>
                                         <input required={true}  ref={(ref) => {this.email = ref}} type="email" className="form-control" id="email" placeholder="Email"/>

@@ -23,8 +23,6 @@ class Logged extends Component {
         this.setState({
             redirect:true,
         })
-        event.preventDefault();
-
         let user={role:'guest', apikey:''};
         this.props.changeUser(user);
         this.setCookie('apikey',null,0);
@@ -38,7 +36,10 @@ class Logged extends Component {
     render() {
         return (
             (this.state.redirect)?
+                <div>
+                    {alert()}
                 <Redirect to='/index'/>
+                </div>
                 :
             <div>
                 <div className="dropdown ">
