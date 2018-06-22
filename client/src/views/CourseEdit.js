@@ -206,7 +206,7 @@ class CourseEdit extends Component {
                                                     <div className={'row'}>
                                                         <div className={'col-md-6'}>
                                                             <div className="form-group">
-                                                                <label htmlFor={'room'}>Room</label>
+                                                                <label htmlFor={'room'}>Room *</label>
                                                                 <input ref={(ref) => {
                                                                     this.room = ref
                                                                 }} id={'room'} className={'form-control'} type={'text'}
@@ -215,7 +215,7 @@ class CourseEdit extends Component {
                                                         </div>
                                                         <div className={'col-md-6'}>
                                                             <div className="form-group">
-                                                                <label htmlFor={'time'}>Time</label>
+                                                                <label htmlFor={'time'}>Time *</label>
                                                                 <input ref={(ref) => {
                                                                     this.time = ref
                                                                 }} id={'time'} className={'form-control'} type={'text'}
@@ -226,7 +226,7 @@ class CourseEdit extends Component {
                                                     <div className={'row'}>
                                                         <div className={'col-md-6'}>
                                                             <div className="form-group">
-                                                                <label htmlFor={'time'}>Day</label>
+                                                                <label htmlFor={'time'}>Day *</label>
                                                                 <input ref={(ref) => {
                                                                     this.day = ref
                                                                 }} id={'day'} className={'form-control'} type={'text'}
@@ -297,6 +297,9 @@ class CourseEdit extends Component {
                                                                 className="btn btn-outline-success p-3 mb-3"
                                                                 style={{margin: '0 auto', width: '50%'}}>Save
                                                         </button>
+                                                        <div className={'p-3'}>
+                                                            * Divide multiple records with simicolon (;)
+                                                        </div>
                                                     </div>
                                                 </form>
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Carousel from "../components/Carousel";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 /**
  * represents Home view (default)
@@ -41,8 +43,10 @@ class Home extends Component {
     render() {
         return (
             <div className="home">
-                {this.state.width>=992 &&
+                {(this.state.width>=992)?
                 <Carousel/>
+                    :
+                    <Header text={'Home'}/>
                 }
                 <main className={'container-fluid'}>
                     <div className={'row'}>
@@ -78,6 +82,7 @@ class Home extends Component {
                     </div>
 
                 </main>
+                <Footer/>
             </div>
 
 

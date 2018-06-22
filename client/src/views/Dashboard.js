@@ -63,14 +63,15 @@ class Dashboard extends Component {
                                         </div>
                                     </div>
                                 </Zoom>
+                                {(this.props.user.role!='admin')&&
                                 <Zoom>
-                                 <div className={"card border-rounded shadow mb-3"}>
-                                     <div className="card-header dashItem">
-                                         <b>
-                                             <i className="fas fa-graduation-cap mr-2"></i>
-                                             Your Courses
-                                         </b>
-                                     </div>
+                                    <div className={"card border-rounded shadow mb-3"}>
+                                        <div className="card-header dashItem">
+                                            <b>
+                                                <i className="fas fa-graduation-cap mr-2"></i>
+                                                Your Courses
+                                            </b>
+                                        </div>
                                         <div className="card-body">
                                             <nav id='nav_bar'>
                                                 <ul className='nav_links'>
@@ -82,6 +83,8 @@ class Dashboard extends Component {
                                         </div>
                                     </div>
                                 </Zoom>
+                                }
+
                             </div>
                             <div className={'col-md-8 mb-3'}>
                                 <span className={"card float-md-right ml-3 recentMessage mb-3 shadow"}>

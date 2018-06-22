@@ -111,7 +111,6 @@ class ModalSignUp extends Component {
                                  <div className="w3-container w3-border-top w3-padding-16 w3-light-grey">
                                      <button onClick={this.hide} type="button"
                                              className="btn btn-outline-danger">Cancel</button>
-                                     <span className="w3-right w3-padding w3-hide-small">Forgot <a href="#">password?</a></span>
                                  </div>
 
                              </div>
