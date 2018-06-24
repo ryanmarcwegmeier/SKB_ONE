@@ -29,6 +29,7 @@ class Main extends Component {
         this.state={
             isFetching:true,
             user:{role:'guest', apikey:''},
+            redirect:false,
         }
         this.changeUser=this.changeUser.bind(this)
         axios.defaults.headers.common['apikey'] = this.state.user.apikey;
@@ -57,6 +58,7 @@ class Main extends Component {
 
     changeUser(user){
         this.setState({user:user})
+        this.setState({redirect:true})
     }
 
     componentWillMount() {
@@ -155,6 +157,7 @@ class Main extends Component {
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User user={this.state.user}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
+
 
                     </div>
 

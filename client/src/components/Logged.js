@@ -26,19 +26,20 @@ class Logged extends Component {
         })
         document.getElementById('navbarSupportedContent').classList.remove('show')
         this.setCookie('apikey',null,0)
-        this.props.changeUser({role:'guest', apikey:''})
 
     };
 
 
 
     render() {
+
+        if (this.state.redirect){
+            this.props.changeUser({role:'guest', apikey:''})
+            return <Redirect to='/index'/>
+
+        }
+
         return (
-            (this.state.redirect)?
-                <div>
-                    <Redirect to='/index'/>
-                </div>
-                :
             <div>
                 <div className="dropdown ">
                     <button className="btn btn-outline-light rounded-circle text-center" type="button" id="dropdownMenuButton"

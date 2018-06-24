@@ -4,8 +4,8 @@ import ModalSignUp from './ModalSignUp';
 import Logged from './Logged'
 
 class Register extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
     }
 
