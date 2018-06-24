@@ -48,6 +48,19 @@ function insertCourse(req, res, next){
             res.sendStatus(400);
         } else {
 
+            // create slack channel
+            slackAPI.client.channels.create({name : course.language + "-" + course.level})
+                .then((res) => {
+                    courseModel.updateOne({_id : course._id}, {slackID : res.channel.id}, (err) => {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            console.log("updated slackID of course");
+                        }
+                    });    
+                })
+                .catch(console.error);
+
             //wenn sutdenten eingeladen werden
             if(req.body.students.length!=0) {
                 req.body.students.split(";").forEach(e => {
@@ -160,20 +173,31 @@ function updateCourse(req, res, next){
  * @param {object} next - Handler
  */
 function deleteCourse(req, res, next) {
-    console.log("DELETE")
-    console.log(req.params.id);
-    courseModel.findOneAndDelete({_id: req.params.id}, (err, course) => {
+    
+    console.log("/courses/delete/:" + req.params.language);
+    
+    courseModel.findOneAndDelete({language: req.params.language, level: req.params.level}, (err, course) => {
         if (err) {
-            res.send(400);
-            // res.json({ errorMessage: "Error occured trying to remove the course." });
+            res.sendStatus(400);
         } else {
-            console.log("course " + req.params.id + " removed");
-            res.send(200);
-            // res.json(course);
+            console.log("course " + req.params.language + "-" + req.params.level + " removed");
+            
+            // archive and rename slack channel (slack API allows no delete)
+            slackAPI.client.channels.archive({channel : course.slackID})
+                .then((res) => {
+                    console.log(res);
+                    slackAPI.client.channels.rename({channel : course.slackID, name : course.title + Date.now()})
+                        .then((res) => {
+                            console.log(res);
+                        })
+                        .catch(console.error);
+                })
+                .catch(console.error);
+            // 
+            res.sendStatus(200);
         }
     });
 }
-
 
 /**
  * sends a json object of courses (old,now,later => depending on act. time) depending on language
