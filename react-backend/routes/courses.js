@@ -7,6 +7,7 @@ var router = express.Router();
 var courseModel = require('../models/courseModel');
 var usercoursemappingModel = require('../models/usercoursemappingModel');
 var userModel=require('../models/userModel');
+var slackAPI = require("../bin/config/slackAPI.js");
 
 router.post("/", insertCourse);
 router.get("/:lang/view", getCoursesByLang)
