@@ -4,6 +4,7 @@
 var express = require("express");
 var router = express.Router();
 
+var slackAPI = require("../bin/config/slackAPI.js");
 var messageModel = require('../models/messageModel');
 
 // create message
@@ -11,20 +12,21 @@ router.post("/", insertMessage);
 // get message by message_id
 router.get("/:id", getMessageByID);
 // get message by course_id
-router.get("/:course", getMessageByCourse)
+router.get("/course/:slackID", getMessageByCourse)
 // get message by course_id and topic
-router.get("/:course", getMessageByCourseAndTopic)
+//router.get("/:course", getMessageByCourseAndTopic)
 // get message by user_id
-router.get("/:user", getMessageByUser)
+//router.get("/:user", getMessageByUser)
 // update message by message_id
 router.put("/:id", updateMessage);
 // delete message by message_id
 router.delete("/:id", deleteMessageByID);
 // delete all messages of specififc user
-router.delete("/:user", deleteMessageByUser);
+//router.delete("/:user", deleteMessageByUser);
 // delete all messages of specific course
-router.delete("/:course", deleteMessageByCourse);
-
+//router.delete("/:course", deleteMessageByCourse);
+// listen to slack channels
+router.post("/events", listenToSlack);
 
 /**
  * Insert new message in mongoDB.
@@ -34,13 +36,33 @@ router.delete("/:course", deleteMessageByCourse);
  * @param {object} next - Handler
  */
 function insertMessage(req, res, next){
+    
+    console.log("api/messages/"+req.body.courseSlackID);
+    console.log(req.body);
+    
+    /*
+    // post message in slack channel and sign with username
+    slackAPI.client.chat.postMessage({ channel: req.body.courseSlackID, text: req.body.message, username: req.body.userName })
+    .then((res) => {
+        console.log('Message sent: ', res.ts);
+    })
+    .catch(console.error);
+    res.status(200).json({msg: "message send to "});
+    */
+
     var msg = new messageModel(req.body);
     msg.save((err) => {
         if (err) {
             console.log(err)
             res.sendStatus(400);
-        } else {
-            res.sendStatus(200);
+        } else {    
+            // post message in slack channel and sign with username
+            slackAPI.client.chat.postMessage({ channel: req.body.courseSlackID, text: req.body.message, username: req.body.userName })
+                .then((res) => {
+                    console.log('Message sent: ', res.ts);
+                })
+                .catch(console.error);
+            res.status(200).json({msg: "message saved"});
         }
     });
 }
@@ -52,7 +74,7 @@ function insertMessage(req, res, next){
  * @param {object} res - Respondsobject
  * @param {object} next - Handler
  */
-function getMessageByID(req, res, next){
+function getMessageByID(req, res, next) {
     messageModel.findOne({_id: req.params.id}, function (err, msg) {
         if(err || msg == null) {
             console.log(err);
@@ -70,8 +92,11 @@ function getMessageByID(req, res, next){
  * @param {object} res - Respondsobject
  * @param {object} next - Handler
  */
-function getMessageByCourse(req, res, next){
-    messageModel.find({courseID: req.params.course}, (err, msg) => {
+function getMessageByCourse(req, res, next) {
+
+    console.log("api/messages/" + req.params.slackID);
+
+    messageModel.find({ courseSlackID : req.params.slackID }, (err, msg) => {
         if(err) {
             res.statusSend(500);
         } else {
@@ -196,6 +221,49 @@ function deleteMessageByCourse(req, res, next) {
             res.send(200);
         }
     });
+}
+
+/*
+called by slack server if new event happens in one of the channels
+the route then saves messages that happened at slack into the DB
+*/
+function listenToSlack(req, res) {
+    console.log("/messages/events");
+    
+    /* 
+    uncomment if setting up event subscription url for slack channel
+    to send back the 'challenge' value for verification    
+    */
+    //res.send({"challenge" : req.body.challenge});
+    
+    console.log("Event.type: " + req.body.event.type);
+    console.log("Event.subtype: " + req.body.event.subtype);
+    console.log("Channel: " + req.body.event.channel);
+    console.log("User: " + req.body.event.user);
+    console.log("Message: " + req.body.event.text);
+
+    //if(req.body.event.type === "message") {
+    if(req.body.event.type === "message" && req.body.event.subtype === undefined) {
+        
+        var msg = new messageModel({
+            timestamp : Date.now(),
+            courseSlackID : req.body.event.channel,
+            userSlackID : req.body.event.user,
+            message: req.body.event.text
+        });
+
+        // save message
+        msg.save((err) => {
+            if (err) {
+                console.log(err);
+                res.sendStatus(400);
+            } else {
+                res.sendStatus(200);
+            }
+        });
+    } else {
+        res.sendStatus(200);
+    }
 }
 
 module.exports = router;
