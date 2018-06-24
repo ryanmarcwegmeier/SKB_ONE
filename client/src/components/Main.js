@@ -8,6 +8,7 @@ import {
 import Home from "../views/Home";
 import Contact from "../views/Contact";
 import Register from "./Register";
+import TeachersLounge from "./TeachersLounge";
 import Courses from "../views/Courses";
 import User from "../views/User";
 import SingleUser from "../views/SingleUser";
@@ -108,7 +109,16 @@ class Main extends Component {
                                         </span>
                                     </NavLink>
                                 </li>
-
+                                {/*Show TeachersLounge when logged as teacher*/}
+                                {this.state.user.role === 'teacher' &&
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
+                                    <NavLink to="/teacherslounge">
+                                        <span className="nav-link" >
+                                            TeachersLounge
+                                        </span>
+                                    </NavLink>
+                                </li>
+                                }
                                 {this.state.user.role =='admin' &&
                                 <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <NavLink to="/users">
@@ -159,6 +169,7 @@ class Main extends Component {
                         <Route exact path="/users" render={()=><User user={this.state.user}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
                         <Route exact path="/login" render={(props)=><Login changeUser={this.changeUser} user={this.state.user} {...props}/>}/>
+                        <Route exact path="/teacherslounge"  render = { (props) => <TeachersLounge user = {this.state.user} {...props}/>}/>
 
 
                     </div>
