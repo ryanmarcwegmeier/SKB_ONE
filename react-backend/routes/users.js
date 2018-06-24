@@ -41,13 +41,12 @@ function insertUser(req,res,next){
 
             } else {
 
-                // let state=mailing(user, "de")
-                // if(state==400){
-                //     res.send(400)
-                // }else{
-                //     res.send(200);
-                // }
-                res.send(200)
+                let state=mailing(user, "de")
+                if(state==400){
+                    res.send(400)
+                }else{
+                    res.send(200);
+                }
 
             }
         });

@@ -2,7 +2,7 @@
 <br>
 <article>
     <div>Vielen Dank für ihre Registrierung bei der Sprach- und Kulturbörse Berlin (SKB).</div>
-    <div>Auf dem folgenden Link gelangen Sie auf ihre Startseite.</div>
+    <div>Auf dem folgenden Link gelangen Sie zur Anmeldung: <a href='http://localhost:3000/login'>link</a></div>
     <p>
         Hier können Sie auf unsere Startseite gelangen: <a href="http://localhost:3000/index">unsere Startseite</a>
     </p>

@@ -97,7 +97,7 @@ class CoursesDetail extends Component {
                                 </main>
                                 :
                                 <div>
-                                    <Intro kurs={this.state.kurs} />
+                                    <Intro kurs={this.state.kurs} user={this.props.user} />
                                     <nav id={'courseNav'} className="navbar navbar-expand-sm navbar-light bg-light sticky-top shadow-sm" style={{zIndex:100000}}>
 
                                         <button className="navbar-toggler" type="button" data-toggle="collapse"

@@ -19,6 +19,7 @@ import CoursesDetail from "../components/CourseDetail";
 import axios from 'axios';
 import CourseEdit from "../views/CourseEdit";
 import Logo from "../img/logo.png"
+import Login from "../views/Login";
 
 
 class Main extends Component {
@@ -157,6 +158,7 @@ class Main extends Component {
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User user={this.state.user}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
+                        <Route exact path="/login" render={(props)=><Login changeUser={this.changeUser} user={this.state.user} {...props}/>}/>
 
 
                     </div>
