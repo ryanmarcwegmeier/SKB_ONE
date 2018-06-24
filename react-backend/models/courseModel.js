@@ -67,9 +67,11 @@ var courseSchema = new Schema({
     capacity:{
         type:Number,
         required:true,
+    },
+
+    slackID : {
+        type : String
     }
-
-
 
 });
 
@@ -77,6 +79,3 @@ var courseSchema = new Schema({
 var courseModel = mongoose.model("Course", courseSchema);
 
 module.exports = courseModel;
-
-
-
