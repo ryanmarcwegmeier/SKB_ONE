@@ -65,7 +65,7 @@ class Home extends Component {
                                     <span className={"card float-right shadow"}>
                                         <div className="card-header bg-info">Über uns</div>
                                         <div className="card-body text-justify">
-Die Sprach- und Kulturbörse ist eine Einrichtung der TU Berlin, in der Studierende aus aller Welt zusammen arbeiten. Wir sind ca. 100 Mitglieder aus mehr als 40 Ländern. Unser Anliegen ist die Förderung von kulturellem und sprachlichem Austausch in Berlin. Wir bieten für Studierende aus aller Welt, Mitarbeiter der Berliner Hochschulen sowie Alumni der TU Berlin Veranstaltungen und Bildungsmöglichkeiten im Bereich Kultur und Sprache an.                                        </div>
+Die Test Sprach- und Kulturbörse ist eine Einrichtung der TU Berlin, in der Studierende aus aller Welt zusammen arbeiten. Wir sind ca. 100 Mitglieder aus mehr als 40 Ländern. Unser Anliegen ist die Förderung von kulturellem und sprachlichem Austausch in Berlin. Wir bieten für Studierende aus aller Welt, Mitarbeiter der Berliner Hochschulen sowie Alumni der TU Berlin Veranstaltungen und Bildungsmöglichkeiten im Bereich Kultur und Sprache an.                                        </div>
                                     </span>
 
                                 </div>
