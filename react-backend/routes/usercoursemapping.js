@@ -1,12 +1,81 @@
 var express = require('express');
 var router = express.Router();
+
+var userModel = require('../models/userModel');
 var courseModel = require('../models/courseModel');
 var usercoursemappingModel = require('../models/usercoursemappingModel');
 
 
 router.post("/", registerusercourse);
-router.get("/",getmyCourses);
+router.get("/courses/",getmyCourses);
+router.get("/courses/users/:userId",getmyCoursesByUser);
+router.get("/isuser/:courseId",getUsers);
+router.delete("/:user/:course", deleteRelation);
 
+function deleteRelation(req,res,next){
+    console.log("DELETE RElation")
+    console.log(req.params.user)
+    console.log(req.params.course)
+    usercoursemappingModel.findOneAndRemove({user:req.params.user, course:req.params.course},(err) => {
+        if (err) {
+            res.sendStatus(400);
+        } else {
+            courseModel.updateOne({_id: req.params.course}, { $inc: {capacity: +1}}, (err) => {
+                if(err) {
+                    res.status(400).json({ errorMessage: "Requested course update failed" });
+                    return
+                } else {
+                    res.sendStatus(200);
+                    return
+                }
+            })
+        }
+    })
+}
+
+function getUsers(req,res,next){
+    console.log("courseID")
+console.log(req.params.courseId)
+    usercoursemappingModel.find({course:req.params.courseId, user:req.user._id}, (err, usercoursemapping) => {
+        if(err) {
+            res.statusSend(500);
+        } else {
+            console.log("i bims")
+            if(usercoursemapping.length>0 || req.user.role=='admin'){
+                console.log("i bims2")
+
+                res.json(true)
+            }else{
+                console.log("i bims3")
+                console.log(usercoursemapping)
+
+                res.json(false)
+            }
+        }
+    });
+}
+
+function getmyCoursesByUser(req,res,next){
+    console.log("MEINE KURSE SIND")
+    console.log(req.user.username)
+    let courseids={}
+    usercoursemappingModel.find({user:req.params.userId}, {course:1, _id:0}, (err, usercoursemapping) => {        if(err) {
+        res.statusSend(500);
+    } else {
+        courseids=usercoursemapping.map(e=>e.course);
+        courseModel.find({_id: { $in: courseids}},(err, courses) => {
+                if(err) {
+                    res.send(400);
+                    return;
+                } else {
+                    res.send(courses)
+                }
+
+            }
+        )
+    }
+    });
+}
 
 /**
  * return all courses of a single user
@@ -15,11 +84,23 @@ router.get("/",getmyCourses);
  * @param next
  */
 function getmyCourses(req,res,next){
-    usercoursemappingModel.find({}, (err, usercoursemapping) => {
-        if(err) {
+    console.log("MEINE KURSE SIND")
+    console.log(req.user.username)
+    let courseids={}
+    usercoursemappingModel.find({user:req.user._id}, {course:1, _id:0}, (err, usercoursemapping) => {        if(err) {
             res.statusSend(500);
         } else {
-            res.json(usercoursemapping);
+            courseids=usercoursemapping.map(e=>e.course);
+            courseModel.find({_id: { $in: courseids}},(err, courses) => {
+                if(err) {
+                    res.send(400);
+                    return;
+                } else {
+                    res.send(courses)
+                }
+
+                }
+                )
         }
     });
 }

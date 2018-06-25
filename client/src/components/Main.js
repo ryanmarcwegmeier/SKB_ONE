@@ -8,6 +8,7 @@ import {
 import Home from "../views/Home";
 import Contact from "../views/Contact";
 import Register from "./Register";
+import TeachersLounge from "./TeachersLounge";
 import Courses from "../views/Courses";
 import User from "../views/User";
 import SingleUser from "../views/SingleUser";
@@ -18,6 +19,10 @@ import CoursesAdd from "../views/CoursesAdd";
 import CoursesDetail from "../components/CourseDetail";
 import axios from 'axios';
 import CourseEdit from "../views/CourseEdit";
+import Logo from "../img/logo.png"
+import Login from "../views/Login";
+
+
 class Main extends Component {
 
 
@@ -26,6 +31,7 @@ class Main extends Component {
         this.state={
             isFetching:true,
             user:{role:'guest', apikey:''},
+            redirect:false,
         }
         this.changeUser=this.changeUser.bind(this)
         axios.defaults.headers.common['apikey'] = this.state.user.apikey;
@@ -54,6 +60,7 @@ class Main extends Component {
 
     changeUser(user){
         this.setState({user:user})
+        this.setState({redirect:true})
     }
 
     componentWillMount() {
@@ -78,35 +85,42 @@ class Main extends Component {
                 &&
 
                 <div>
-                    <nav id={'navbar'} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid sticky-top" style={{background:'#1B566F'}}>
-                        <a href={"/index"} >
-                            <i className={'navbar-brand'}>SKB</i>
-                        </a>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse"
+                    <nav id={'navbar'} className="shadow-lg navbar navbar-expand-lg navbar-dark container-fluid sticky-top" style={{background:'#1B566F', zIndex:1000000}}>
+                            <img className={'navbar-brand p-0'} src={Logo} style={{position:'absolute',width:'5%', minWidth:'60px', top:'0'}}/>
+                        <button id={"colbtn"} className="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
                         </button>
 
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mr-auto ml-auto h5" >
-                                <li className={"nav-item "}>
+                        <div className="collapse navbar-collapse " id="navbarSupportedContent">
+                            <ul className="navbar-nav ml-auto mr-auto h5" >
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <NavLink exact to="/index">
                                         <span className={"nav-link "}>
                                             Home
                                         </span>
                                     </NavLink>
                                 </li>
-                                <li className={"nav-item "}>
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <NavLink to="/courses">
                                         <span className="nav-link" >
                                             Courses
                                         </span>
                                     </NavLink>
                                 </li>
-
+                                {/*Show TeachersLounge when logged as teacher*/}
+                                {this.state.user.role === 'teacher' &&
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
+                                    <NavLink to="/teacherslounge">
+                                        <span className="nav-link" >
+                                            TeachersLounge
+                                        </span>
+                                    </NavLink>
+                                </li>
+                                }
                                 {this.state.user.role =='admin' &&
-                                <li className={"nav-item "}>
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <NavLink to="/users">
                                         <span className="nav-link" >
                                             Users
@@ -115,7 +129,7 @@ class Main extends Component {
                                 </li>
                                 }
 
-                                <li className={"nav-item "}>
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <NavLink exact to="/contact">
                                         <span className="nav-link" >
                                             Contact
@@ -123,7 +137,7 @@ class Main extends Component {
                                     </NavLink>
                                 </li>
 
-                                <li className={"nav-item "}>
+                                <li className={"nav-item "} onClick={()=>document.getElementById('navbarSupportedContent').classList.remove('show')}>
                                     <NavLink exact to="/impressum">
                                         <span className="nav-link" >
                                             Impressum
@@ -141,7 +155,7 @@ class Main extends Component {
                     <div className="main">
                         <Route exact path="/" render={(props)=><Redirect to='/index' />}/>
                         {(this.state.user.role=='guest')?
-                            <Route path="/index" component={Home}/>
+                            <Route path="/index" render={(props)=><Home changeUser={this.changeUser} {...props}/>}/>
                             :
                             <Route path="/index" render={(props)=><Dashboard user={this.state.user} {...props}/>}/>
                         }
@@ -154,6 +168,9 @@ class Main extends Component {
                         <Route exact path="/impressum" component={Impressum}/>
                         <Route exact path="/users" render={()=><User user={this.state.user}/>} />
                         <Route exact path="/users/:username" render={(props)=><SingleUser user={this.state.user} {...props}/>}/>
+                        <Route exact path="/login" render={(props)=><Login changeUser={this.changeUser} user={this.state.user} {...props}/>}/>
+                        <Route exact path="/teacherslounge"  render = { (props) => <TeachersLounge user = {this.state.user} {...props}/>}/>
+
 
                     </div>
 

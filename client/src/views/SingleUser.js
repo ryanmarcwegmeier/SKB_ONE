@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import NotAllow from './NotAllow';
 import NoUser from './NoUser';
 import axios from 'axios';
+import {Link} from 'react-router-dom'
 
 class SingleUser extends Component {
 
@@ -13,18 +14,34 @@ class SingleUser extends Component {
         this.user_name=this.props.match.params.username
         this.getUser=this.getUser.bind(this)
         this.exitEdit=this.exitEdit.bind(this)
+        this.getmycourses=this.getmycourses.bind(this)
         this.state={
             user:{},
-            error:''
+            error:'',
+            courses:[]
 
         }
         this.sendEdit=this.sendEdit.bind(this);
         axios.defaults.headers.common['apikey'] = this.props.user.apikey;
     }
 
+
+    getmycourses(){
+        axios.get('/usercoursemapping/courses/users/'+this.state.user._id)
+            .then((res)=>{
+                const courses=res.data
+                this.setState({courses:courses})
+            }).catch((error)=>{
+            this.setState({error:true})
+        })
+    }
+
     getUser(){
         axios.get('/users/'+this.user_name)
-            .then((res)=>this.setState({user:res.data}))
+            .then((res)=>{
+                this.setState({user:res.data})
+                this.getmycourses()
+            })
             .catch((error)=>this.setState({failed:true}))
 
 
@@ -241,6 +258,23 @@ class SingleUser extends Component {
 
                                                     </table>
                                                 </form>
+                                                {( this.state.courses.length>0)&&
+                                                    <div>
+                                                        <h5><b>Courses</b></h5>
+                                                        <ul className='list-group'>
+                                                            {
+                                                                this.state.courses.map(course =>
+                                                                    <li className={'list-group-item shadow'} key={course._id}>
+                                                                        <Link to={'/courses/'+course._id}>
+                                                                            {course.level + " - " + course.language}
+                                                                        </Link>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                }
+
 
                                             </div>
 

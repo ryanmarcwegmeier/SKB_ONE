@@ -24,26 +24,24 @@ class ModalSignUp extends Component {
     }
 
     signup(event){
-
+        event.preventDefault();
         if(this.password.value!=this.confirmpassword.value || this.password.value==""){
             this.setState({'isRegisterFailed': true });
             return;
         }else{
-            event.preventDefault();
             axios.post('users',{
                 username: this.username.value,
                 email: this.email.value,
                 password: this.password.value,
             })
                 .then((res) => {
-                    document.getElementById('close').click()
-
-
+                    document.getElementById('signup').style.display = "none";
+                    document.getElementById('navbarSupportedContent').classList.remove('show')
                     this.setState({
                         redirected:true,
                     })
                 }).catch(function (error) {
-                console.log(error);
+                    alert(error.toString())
             });
         }
 
@@ -51,7 +49,7 @@ class ModalSignUp extends Component {
     };
 
     render() {
-        // damit sich das model schließt beim klicken außerhalb des logins
+        // damit sich das model schließt beim klicken außerhalb des sign up
         window.onclick = function (event) {
             if (event.target == document.getElementById('id01')) {
                 document.getElementById('id01').style.display = "none";
@@ -60,16 +58,17 @@ class ModalSignUp extends Component {
                 document.getElementById('signup').style.display = "none";
             }
         }
+
+        // if(this.state.redirected){
+        //     return <Redirect to={'/index'}/>
+        // }
+
         return (
             <span>
-
-                {(this.state.redirected)&&
+                {(this.state.redirected) &&
                     <Redirect to={'/index'}/>
 
                 }
-
-            <span>
-
                 <button type={"button"} onClick={this.open} id="signin" className={"btn btn-outline-light"}>
                     Sign UP <i className="fas fa-user-plus "></i>
                 </button>
@@ -114,8 +113,7 @@ class ModalSignUp extends Component {
                          </div>
         </span>
 
-            </span>
-            )
+        )
 
 
     }

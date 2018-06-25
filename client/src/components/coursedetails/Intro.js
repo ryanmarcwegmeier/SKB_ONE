@@ -1,49 +1,23 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
+import axios from 'axios'
 
 class Intro extends Component {
     constructor(props){
-        super()
-        this.updateCourse=this.updateCourse.bind(this)
+        super(props)
+        this.leaveCourse=this.leaveCourse.bind(this)
+        this.state={
+            redirect:false,
+        }
     }
 
-    updateCourse(event){
-        event.preventDefault();
-
-        let level=""
-        let language=""
-        let teachers=[]
-
-        alert(this.level)
-
-        if(this.level.value.length==0){level=this.props.kurs.level} else {level=this.level.value}
-        if(this.language.value.length==0){language=this.props.kurs.language} else {language = this.language.value}
-        if(this.teachers.value=="") {teachers=this.props.kurs.level} else {
-            let list=this.teachers.value.split(';')
-            list.forEach(e=>teachers.push({name:e}))
-        }
-
-
-        fetch('/courses/'+this.props.kurs._id, {
-            method: 'put',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({
-                "level":level,
-                "language":language,
-                "teachers":teachers,
-            })
-        }).then((res) => {
-            if (res.ok){
-                alert("success");
-                sessionStorage.clear()
-                window.location.reload()
-            } else {
-                throw new Error ('Something went wrong with your fetch');
-            }
-        }
-
-        )
-
+    leaveCourse(){
+        axios.delete('/usercoursemapping/'+this.props.user._id+"/"+this.props.kurs._id)
+            .then((res)=>{
+                this.setState({redirect:true})
+            }).catch((err)=>{
+                alert(err)
+        })
     }
 
     // exitEdit(){
@@ -57,6 +31,9 @@ class Intro extends Component {
     // }
 
     render() {
+        if(this.state.redirect){
+            return <Redirect to={"/index"}/>
+        }
         return (
             <div id="course-intro" className={"jumbotron jumbotron-fluid "+this.props.kurs.headerStyle}>
                 <div className="container-fluid">
@@ -69,6 +46,14 @@ class Intro extends Component {
                         <i className="fas fa-edit"></i>
                     </button>
                     </Link>
+                    <br/>
+                    {this.props.user.role!='admin' &&
+                    <button type="button" type={'button'} className={' mt-3 btn btn-secondary float-md-right'} data-toggle="modal" data-target="#exampleModal" onClick={this.leaveCourse}>
+                        <i className="fas fa-sign-out-alt"></i>
+                    </button>
+                    }
+
+
                 </div>
             </div>
         );

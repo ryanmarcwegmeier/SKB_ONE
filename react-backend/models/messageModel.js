@@ -8,12 +8,20 @@ var Schema = mongoose.Schema;
 /*
  * */
 var messageSchema = new Schema({
+    // when
     timestamp: Date,
+    
+    // where
     courseID: String,
+    courseSlackID : String,
+    
+    // who
+    userName : String,
     userID: String,
-    topic: String,
+    userSlackID: String,
+    
+    // what 
     message: String,
-    // save path to file
     attachment: String
 });
 
