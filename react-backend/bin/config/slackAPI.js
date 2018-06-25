@@ -9,7 +9,6 @@ for testing with localhost you can use ngrok.
 const { WebClient } = require('@slack/client');
 
 // An access token (from your Slack app or custom integration - xoxp, xoxb, or xoxa)
-var oauth_access_token = "xoxp-381902625953-383340119222-383342956326-0127c048d134d058eeeab00dbc625a9d";
-//var oauth_access_token = "xoxp-367365731831-367481251537-387087271906-1ab01471e2db953cc6b6d629620ff9fd";
+var oauth_access_token = "xoxp-"
 
 exports.client = new WebClient(oauth_access_token);
